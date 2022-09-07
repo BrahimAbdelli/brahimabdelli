@@ -1,0 +1,8 @@
+node_modules
+# Ignore artifacts:
+build
+coverage
+.next
+.vscode
+# In case we want to see it linted, comment the line below
+build.css
