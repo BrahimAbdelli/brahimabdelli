@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 
+import { useTheme } from 'next-themes';
 import {
   Camera,
   Color,
@@ -15,6 +16,7 @@ import { fragment, vertex } from './shaders';
 export function Standard() {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [animationId, { inc: incrementAnimationId }] = useCounter(1);
+  const { theme } = useTheme();
 
   useEffect(() => {
     const renderer = new Renderer({
@@ -28,7 +30,7 @@ export function Standard() {
     const camera = new Camera(gl, {
       fov: 15,
     });
-    camera.position.z = 15;
+    camera.position.z = 20;
 
     function handleReisze() {
       renderer.setSize(window.innerWidth, window.innerHeight);
@@ -38,17 +40,20 @@ export function Standard() {
     }
 
     try {
-      containerRef.current.appendChild(gl.canvas);
+      containerRef.current?.appendChild(gl.canvas);
       gl.clearColor(0, 0, 0, 0);
       window.addEventListener('resize', handleReisze, false);
       handleReisze();
-    } catch (error) {}
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(error);
+    }
 
-    const numParticles = 100;
+    const numParticles = 60;
     const position = new Float32Array(numParticles * 3);
     const random = new Float32Array(numParticles * 4);
 
-    for (let i = 0; i < numParticles; i++) {
+    for (let i = 0; i < numParticles; i += 1) {
       position.set([Math.random(), Math.random(), Math.random()], i * 3);
       random.set(
         [Math.random(), Math.random(), Math.random(), Math.random()],
@@ -75,7 +80,9 @@ export function Standard() {
           value: 0,
         },
         uColor: {
-          value: new Color(0.3, 0.2, 0.5),
+          // { value: `${theme == 'light' ? '#0000' : '#ffff'}` }
+          value:
+            theme == 'light' ? new Color(0.9, 0.8, 1) : new Color(0.9, 0.8, 1),
         },
       },
       transparent: true,
@@ -88,11 +95,11 @@ export function Standard() {
       program,
     });
 
-    function update(t) {
+    function update(t: any) {
       incrementAnimationId(requestAnimationFrame(update));
 
       particles.rotation.z += 0.0025;
-      program.uniforms.uTime.value = t * 0.00025;
+      program.uniforms.uTime!.value = t * 0.00025;
 
       renderer.render({
         scene: particles,
@@ -106,5 +113,5 @@ export function Standard() {
     };
   }, [containerRef]);
 
-  return <div className=" fixed -z-50" ref={containerRef} />;
+  return <div className="fixed inset-0 -z-20" ref={containerRef} />;
 }
