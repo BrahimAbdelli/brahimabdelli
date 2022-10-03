@@ -10,7 +10,6 @@
     "alwaysStrict": true,
     "strictNullChecks": true,
     "noUncheckedIndexedAccess": true,
-
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
@@ -19,18 +18,15 @@
     "allowUnreachableCode": false,
     "noFallthroughCasesInSwitch": true,
     "downlevelIteration": true,
-
     "target": "es5",
     "outDir": "out",
     "declaration": true,
     "sourceMap": true,
-
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "allowJs": false,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-
     "jsx": "preserve",
     "noEmit": true,
     "isolatedModules": true,
