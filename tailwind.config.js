@@ -38,5 +38,5 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: ['@emotion/babel-plugin', 'babel-plugin-macros'],
 };
