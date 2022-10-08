@@ -60,11 +60,11 @@ const Navbar: React.FC<{ menuOpen: any; setMenuOpen: any }> = ({
                 HOME
               </a>
             </Link>
-            <Link href="/articles">
+            {/*             <Link href="/articles">
               <a className="no-underline text-gray-300 hover:text-white font-montserrat text-xs font-extrabold">
                 ARTICLES
               </a>
-            </Link>
+            </Link> */}
             <div>
               <ThemeToggle />
             </div>

@@ -10,6 +10,7 @@ import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useInView } from 'react-intersection-observer';
+import DarkModeSwitch from '../components/background/CircleIndicator';
 
 import { Card } from '../components/cards/Card';
 import { CardGrid } from '../components/cards/CardGrid';
@@ -27,9 +28,9 @@ import {
   switchableTexts,
 } from '../components/styles';
 
-const StandardComponent = dynamic(() =>
-  import('../components/background/Standard.component').then(
-    ({ Standard }) => Standard
+const BackgroundComponent = dynamic(() =>
+  import('../components/background/Background').then(
+    ({ Background }) => Background
   )
 );
 
@@ -53,14 +54,13 @@ const Home: NextPage = () => {
       </Head>
 
       <main>
+        <DarkModeSwitch />
+        <BackgroundComponent />
         <Header />
-        <StandardComponent />
         <LazyMotion features={domAnimation}>
           <section className="z-50">
             <div className="min-h-screen flex flex-col justify-center relative">
               <div className={`${containerClasses}`}>
-                {/* <BackgroundParticles /> */}
-
                 <m.div
                   initial={{ opacity: 0, scale: 1, y: -100 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -216,7 +216,7 @@ const Home: NextPage = () => {
               </motion.div>
             </div>
 
-            <div className={containerClasses} id="projects">
+            <div className={containerClasses} id="internships">
               <motion.div
                 initial="hidden"
                 whileInView="visible"
@@ -291,7 +291,7 @@ const Home: NextPage = () => {
                   Activities
                 </SectionTitle>
                 <div className={sectionBodyClasses}>
-                  <p>Had my software engineering degree from ESPRIT in 2021.</p>
+                  <p>Life doesn't stop when you stop coding.</p>
                 </div>
                 <div className="h-8 lg:h-12"></div>
                 <Activities />
