@@ -118,6 +118,7 @@ const Navbar: React.FC<{ menuOpen: any; setMenuOpen: any }> = ({
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <header>
       <div className="">

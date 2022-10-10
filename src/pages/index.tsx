@@ -10,8 +10,9 @@ import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useInView } from 'react-intersection-observer';
-import DarkModeSwitch from '../components/background/CircleIndicator';
 
+import { withTranslation } from '../../i18n';
+import LanguageToggle from '../components/background/LanguageToggle';
 import { Card } from '../components/cards/Card';
 import { CardGrid } from '../components/cards/CardGrid';
 import Header from '../components/global/Header';
@@ -20,7 +21,7 @@ import { InternshipsList } from '../components/index/InternshipsList';
 import { LinkToSection } from '../components/index/LinkToSection';
 import { NameTitle } from '../components/index/NameTitle';
 import { ProjectsList } from '../components/index/ProjectsList';
-import { SectionTitle } from '../components/index/SectionTitle';
+import SectionTitle from '../components/index/SectionTitle';
 import {
   containerClasses,
   linkClasses,
@@ -34,9 +35,10 @@ const BackgroundComponent = dynamic(() =>
   )
 );
 
-const Home: NextPage = () => {
+const Home: NextPage = ({ t }) => {
   const { inView, entry, ref } = useInView();
   const animationControl = useAnimation();
+
   if (inView) {
     animationControl.start({
       x: 0,
@@ -54,7 +56,7 @@ const Home: NextPage = () => {
       </Head>
 
       <main>
-        <DarkModeSwitch />
+        <LanguageToggle />
         <BackgroundComponent />
         <Header />
         <LazyMotion features={domAnimation}>
@@ -338,5 +340,4 @@ const Home: NextPage = () => {
     </div>
   );
 };
-
 export default Home;
