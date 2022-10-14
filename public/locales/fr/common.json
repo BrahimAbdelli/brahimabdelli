@@ -1,0 +1,17 @@
+{
+  "lang": {
+    "title": "French"
+  },
+  "document": {
+    "items": [
+      {
+        "name": "nom test 1",
+        "description": "description test 1"
+      },
+      {
+        "name": "nom test 2",
+        "description": "description test 2"
+      }
+    ]
+  }
+}
