@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "country-flag-icons": "^1.5.5",
     "framer-motion": "^7.5.2",
     "next": "12.2.5",
     "next-i18next": "^11.0.0",
