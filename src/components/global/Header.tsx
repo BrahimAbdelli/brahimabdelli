@@ -25,7 +25,7 @@ const MenuAlt4Svg: React.FC<{ menuOpen: any }> = ({ menuOpen }) => (
   </svg>
 );
 
-const pages = ['HOME', 'ARTICLES'];
+const pages = ['HOME'];
 
 const navLinks = pages.map((page) => (
   <a
@@ -41,6 +41,7 @@ const Navbar: React.FC<{ menuOpen: any; setMenuOpen: any }> = ({
   menuOpen,
   setMenuOpen,
 }) => {
+  // eslint-disable-next-line unused-imports/no-unused-vars
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -60,11 +61,6 @@ const Navbar: React.FC<{ menuOpen: any; setMenuOpen: any }> = ({
                 HOME
               </a>
             </Link>
-            {/*             <Link href="/articles">
-              <a className="no-underline text-gray-300 hover:text-white font-montserrat text-xs font-extrabold">
-                ARTICLES
-              </a>
-            </Link> */}
             <div>
               <ThemeToggle />
             </div>

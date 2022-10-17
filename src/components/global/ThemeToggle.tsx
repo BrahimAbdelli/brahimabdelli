@@ -18,9 +18,7 @@ export default function ThemeToggle() {
     <button
       className="focus:outline-none ml-4"
       onClick={() => {
-        console.log(theme);
         setTheme(isDark() ? 'light' : 'dark');
-        console.log(theme);
       }}
       aria-label="Theme toggle"
     >
