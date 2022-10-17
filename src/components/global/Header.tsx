@@ -51,7 +51,7 @@ const Navbar: React.FC<{ menuOpen: any; setMenuOpen: any }> = ({
     <div className="flex items-center justify-between p-4">
       <div className="flex items-center">
         <div className="cursor-pointer">
-          <span className="no-underline text-gray-300 hover:text-gray-60 font-montserrat text-xs font-extrabold">
+          <span className="no-underline dark:text-gray-300 text-slate-600 hover:text-gray-60 font-montserrat text-xs font-extrabold">
             BRAHIM ABDELLI
           </span>
         </div>
@@ -60,25 +60,25 @@ const Navbar: React.FC<{ menuOpen: any; setMenuOpen: any }> = ({
         <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
           <div className="text-sm lg:flex-grow flex space-x-6 py-2">
             <Link href="/">
-              <a className="no-underline text-gray-300 hover:text-white font-montserrat text-xs font-extrabold">
+              <a className="no-underline dark:text-gray-300 text-slate-600 hover:text-gray-800 hover:dark:text-gray-300 font-montserrat text-xs font-extrabold pt-3">
                 {t('header.home')}
               </a>
             </Link>
-            <div>
+            <div className="pt-2">
               <ThemeToggle />
             </div>
             <div>
               <a
                 className="flex items-center justify-center px-2 font-medium rounded-md text-black dark:text-green-custom shadow uppercase dark:hover:bg-slate-700 hover:bg-slate-100 
                 hover:shadow-lg transform transition hover:-translate-y-1 focus:ring-2 focus:ring-blue-600 ring-offset-2 outline-none 
-                focus:bg-blue-800 focus:shadow-lg active:bg-blue-900"
+                focus:bg-blue-800 focus:shadow-lg active:bg-blue-900 pt-2"
                 href="#"
               >
                 {t('header.download')}
               </a>
             </div>
+            <LanguageToggle />
           </div>
-          <LanguageToggle />
         </div>
         {showModal ? (
           <>
