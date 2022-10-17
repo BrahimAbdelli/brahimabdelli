@@ -1,7 +1,9 @@
 import { useState } from 'react';
 
+import { useTranslation } from 'next-i18next';
 import Link from 'next/link';
 
+import LanguageToggle from '../background/LanguageToggle';
 import ThemeToggle from './ThemeToggle';
 
 const MobileMenu: React.FC<{ children: any }> = ({ children }) => (
@@ -41,6 +43,7 @@ const Navbar: React.FC<{ menuOpen: any; setMenuOpen: any }> = ({
   menuOpen,
   setMenuOpen,
 }) => {
+  const { t } = useTranslation('common');
   // eslint-disable-next-line unused-imports/no-unused-vars
   const [showModal, setShowModal] = useState(false);
 
@@ -58,7 +61,7 @@ const Navbar: React.FC<{ menuOpen: any; setMenuOpen: any }> = ({
           <div className="text-sm lg:flex-grow flex space-x-6 py-2">
             <Link href="/">
               <a className="no-underline text-gray-300 hover:text-white font-montserrat text-xs font-extrabold">
-                HOME
+                {t('header.home')}
               </a>
             </Link>
             <div>
@@ -71,10 +74,11 @@ const Navbar: React.FC<{ menuOpen: any; setMenuOpen: any }> = ({
                 focus:bg-blue-800 focus:shadow-lg active:bg-blue-900"
                 href="#"
               >
-                Download Resume
+                {t('header.download')}
               </a>
             </div>
           </div>
+          <LanguageToggle />
         </div>
         {showModal ? (
           <>
@@ -101,10 +105,13 @@ const Navbar: React.FC<{ menuOpen: any; setMenuOpen: any }> = ({
         className="rounded md:hidden focus:outline-none focus:ring focus:ring-gray-500 focus:ring-opacity-50"
       >
         <div className="flex">
-          <div onClick={() => setMenuOpen(!menuOpen)}>
+          <div onClick={() => setMenuOpen(!menuOpen)} className="pt-1">
             <MenuAlt4Svg menuOpen={menuOpen} />
           </div>
           <ThemeToggle />
+          <div className="pl-4">
+            <LanguageToggle />
+          </div>
         </div>
       </button>
       {/* {!menuOpen && } */}

@@ -1,17 +1,103 @@
 {
   "lang": {
-    "title": "French"
+    "title": "Français"
   },
-  "document": {
-    "items": [
-      {
-        "name": "nom test 1",
-        "description": "description test 1"
+  "header": { "download": "Télécharger mon CV", "home": "Acceuil" },
+  "home": {
+    "hello": "Salut! C'est moi",
+    "description": "Je construis des choses.",
+    "aboutme": {
+      "name": "A propos de moi",
+      "bio1": "Je suis un développeur Full Stack passionné par la construction des solutions webs, le développement est une activité que j'exerce quotidiennement avec passion.",
+      "bio2": "En dehors de ça, j'écoute et je fais de la musique, j'aime sortir et exploré des nouveaux endroits, J'aime les jeux videos, lire, regarder des anciens films et faire du sport",
+      "bio3": "Je m'efforce d'apporter une bonne énergie, les connaissances techniques et une forte envie d'apprendre avec moi partout où je vais.",
+      "description1": "J'ai acquis une expérience pendant deux ans dans la conception, développement, test et déploiement des solutions webs",
+      "description2": "J'ai un intérêt particulier pour Javascript, Typescript et Java.",
+      "description3": "Également dans l'optimisation, l'amélioration des performances des applications et du référencement."
+    },
+    "projects": {
+      "name": "PROJETS",
+      "bio": "Je suis toujours entrain de développer une nouvelle chose.",
+      "description": "Vous pouvez trouver tout mes respositories publique sur mon profil Github.",
+      "portfolio": {
+        "description": "Ce portfolio a été créé pour montrer exposer mes expériences. Je vais essayé de toujours mettre à jour le projet."
       },
-      {
-        "name": "nom test 2",
-        "description": "description test 2"
+      "autosansrisque": {
+        "description1": "Auparavant promu sous le nom de Karhabtek.",
+        "description2": "Développement d’une plateforme Web pour la mise en relation entre les experts et les demandeurs de services dans le secteur automobile. J'ai développé le MVP pour le projet intégrant même un service de paiement en ligne.",
+        "description3": "Ce projet est soutenu par l'incubateur BiatLabs.",
+        "description4": "et toujours en phase de développement avec d'autres développeurs."
+      },
+      "clothingcompany": {
+        "name": "ENTREPRISE DE VENTE DE VETEMENTS",
+        "description": "Développement d’un site web pour la commande en ligne et la gestion de stock."
+      },
+      "adventofcode": {
+        "description": "Ce repository contient ma tentative de résolution de Advent of Code groupée par année."
+      },
+      "tekmanda": {
+        "description": "J'ai contribué à ce projet en ajoutant des nouvelles fonctionnalitées pour cette plateforme, ma contribution était surtout sur la partie Frontend."
       }
-    ]
+    },
+    "workexperience": {
+      "name": "EXPERIENCES PROFESSIONNELLES",
+      "bio": "Actuellement Développeur Full Stack chez MSS.",
+      "description": "I'm currently working at MSS, developing websites for banking solutions and financial services. this is my first work experience excluding personal projects and contributions. You can check us out in Linkedin."
+    },
+    "internships": {
+      "name": "STAGES",
+      "bio": "En tant qu'étudiant en génie logiciel, j'ai effectué plusieurs stages.",
+      "description": "Ce sont les stages que j'ai effectué en étant un étudiant.",
+      "placeholder": {
+        "description1": "Développement d'une plateforme web pour connecter les demandeurs de services aux experts dans le domaine automobile.",
+        "description2": "Ce projet est encore en phase de développement avec d'autres développeurs."
+      },
+      "espritdsi": {
+        "description1": "Scrapping interne du site et mise à jour automatique du dictionnaire d’indexation.",
+        "description2": "Développement des modules de gestion des membres, projets et équipes RDI."
+      },
+      "steg": {
+        "name": "Société Tunisienne de l'Electricité et du Gaz",
+        "description": "Développement d’un site web pour la gestion de la bibliothèque."
+      }
+    },
+    "school": {
+      "name": "UNIVERSITES",
+      "bio": "En tant qu'étudiant en génie logiciel, j'ai effectué plusieurs stages.",
+      "description1": "Diplômé avec la plus haute distinction d'ESPRIT en 2021 après avoir poursuivi un diplôme en génie logiciel.",
+      "description2": "J'ai obtenu mon diplôme d'ingénieur en génie logiciel d'ESPRIT en 2021.",
+      "espritinfo": {
+        "description": "J'ai fait 3 ans d'études en ingénierie informatique en génie logiciel."
+      },
+      "espritelectro": {
+        "description": "J'ai fait 2 ans d'études en électromécanique avant de changer de parcours."
+      },
+      "isetrades": {
+        "description": "Licence appliquée en génie mécanique spécialitée énergétique."
+      }
+    },
+    "activities": {
+      "name": "ACTIVITEES",
+      "bio": "Plusieurs choses attirent mon attention.",
+      "description": "La vie ne s'arrête pas lorsque vous arrêtez de coder.",
+      "music": {
+        "name": "Musique",
+        "description1": "Faire et écouter de la musique est une partie essentielle de ma vie.",
+        "description2": "Ne soyez pas surpris sit cliquer sur cette partie vous redirigerais vers Spotify!"
+      },
+      "reading": {
+        "name": "LECTURE",
+        "description": "J'aime lire un peu de tout de l'histoire aux romans.",
+        "books": "Livres"
+      },
+      "sports": {
+        "description": "Tout ce qui fait pomper le sang et implique des défis.",
+        "jogging": "Jogging",
+        "swimming": "Natation"
+      }
+    },
+    "contanctme": "Contactez Moi",
+    "copyright": "Droits d'auteur",
+    "takecare": "Prenez soin de vous et rappelez-vous, votre santé est votre prioritié."
   }
 }
