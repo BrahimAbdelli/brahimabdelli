@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 
-export const Card = ({
+export default function Card({
   title,
   link,
   tags,
@@ -15,7 +15,7 @@ export const Card = ({
   children?: React.ReactNode;
   encrypted?: boolean;
   highlighted?: boolean;
-}) => {
+}) {
   const content = (
     <>
       <motion.div whileHover={{ scale: 1.009 }}>
@@ -77,4 +77,4 @@ export const Card = ({
       {content}
     </div>
   );
-};
+}

@@ -119,7 +119,7 @@ const Navbar: React.FC<{ menuOpen: any; setMenuOpen: any }> = ({
   );
 };
 
-const Header = () => {
+export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
@@ -130,6 +130,4 @@ const Header = () => {
       </div>
     </header>
   );
-};
-
-export default Header;
+}

@@ -13,15 +13,6 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useInView } from 'react-intersection-observer';
 
-import { Card } from '../components/cards/Card';
-import { CardGrid } from '../components/cards/CardGrid';
-import Header from '../components/global/Header';
-import { Activities } from '../components/index/Activities';
-import { InternshipsList } from '../components/index/InternshipsList';
-import { LinkToSection } from '../components/index/LinkToSection';
-import { NameTitle } from '../components/index/NameTitle';
-import { ProjectsList } from '../components/index/ProjectsList';
-import { SectionTitle } from '../components/index/SectionTitle';
 import {
   containerClasses,
   linkClasses,
@@ -34,6 +25,39 @@ const BackgroundComponent = dynamic(() =>
     ({ Background }) => Background
   )
 );
+const Card = dynamic(() => import('../components/cards/Card'), {
+  ssr: false,
+});
+const InternshipsList = dynamic(
+  () => import('../components/index/InternshipsList'),
+  {
+    ssr: false,
+  }
+);
+const Activities = dynamic(() => import('../components/index/Activities'), {
+  ssr: false,
+});
+const LinkToSection = dynamic(
+  () => import('../components/index/LinkToSection'),
+  {
+    ssr: false,
+  }
+);
+const CardGrid = dynamic(() => import('../components/cards/CardGrid'), {
+  ssr: false,
+});
+const Header = dynamic(() => import('../components/global/Header'), {
+  ssr: false,
+});
+const NameTitle = dynamic(() => import('../components/index/NameTitle'), {
+  ssr: false,
+});
+const ProjectsList = dynamic(() => import('../components/index/ProjectsList'), {
+  ssr: false,
+});
+const SectionTitle = dynamic(() => import('../components/index/SectionTitle'), {
+  ssr: false,
+});
 
 const Home: NextPage = () => {
   const { inView, ref } = useInView();

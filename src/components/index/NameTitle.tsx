@@ -2,7 +2,7 @@ import { useTranslation } from 'next-i18next';
 
 import { sectionTitleBigClasses, sectionTitleClasses } from '../styles';
 
-export const NameTitle = ({
+export default function NameTitle({
   accentText,
   children,
   big = false,
@@ -10,7 +10,7 @@ export const NameTitle = ({
   accentText?: string;
   children: React.ReactNode;
   big?: boolean;
-}) => {
+}) {
   const { t } = useTranslation('common');
   return (
     <>
@@ -55,4 +55,4 @@ export const NameTitle = ({
       <div className="h-6 md:h-8 lg:h-12 xl:h-16"></div>
     </>
   );
-};
+}

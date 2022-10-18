@@ -4,17 +4,19 @@ type Data = {
   children?: React.ReactNode;
 };
 
-export const LinkToSection = ({ title, href, children }: Data) => (
-  <a
-    href={`#${href}`}
-    className="block sm:text-lg lg:text-xl max-w-prose leading-relaxed group"
-  >
-    <span className="dark:group-hover:text-green-custom-highlighted group-hover:text-fuchsia-600 text-fuchsia-500 dark:text-green-custom uppercase font-mono">
-      {title}
-    </span>
-    <br />
-    <p className="dark:group-hover:text-slate-300 group-hover:text-slate-800 text-slate-900 dark:text-slate-400">
-      {children}
-    </p>
-  </a>
-);
+export default function LinkToSection({ title, href, children }: Data) {
+  return (
+    <a
+      href={`#${href}`}
+      className="block sm:text-lg lg:text-xl max-w-prose leading-relaxed group"
+    >
+      <span className="dark:group-hover:text-green-custom-highlighted group-hover:text-fuchsia-600 text-fuchsia-500 dark:text-green-custom uppercase font-mono">
+        {title}
+      </span>
+      <br />
+      <p className="dark:group-hover:text-slate-300 group-hover:text-slate-800 text-slate-900 dark:text-slate-400">
+        {children}
+      </p>
+    </a>
+  );
+}

@@ -1,9 +1,14 @@
 import { useTranslation } from 'next-i18next';
+import dynamic from 'next/dynamic';
 
-import { Card } from '../cards/Card';
-import { CardGrid } from '../cards/CardGrid';
+const CardGrid = dynamic(() => import('../cards/CardGrid'), {
+  ssr: false,
+});
+const Card = dynamic(() => import('../cards/Card'), {
+  ssr: false,
+});
 
-export const InternshipsList = () => {
+export default function InternshipsList() {
   const { t } = useTranslation('common');
   return (
     <CardGrid>
@@ -62,4 +67,4 @@ export const InternshipsList = () => {
       </Card>
     </CardGrid>
   );
-};
+}
