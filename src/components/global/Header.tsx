@@ -45,7 +45,7 @@ const Navbar: React.FC<{ menuOpen: any; setMenuOpen: any }> = ({
 }) => {
   const { t } = useTranslation('common');
   // eslint-disable-next-line unused-imports/no-unused-vars
-  const [showModal, setShowModal] = useState(false);
+  const [showModal] = useState(false);
 
   return (
     <div className="flex items-center justify-between p-4">

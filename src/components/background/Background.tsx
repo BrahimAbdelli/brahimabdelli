@@ -111,6 +111,7 @@ export function Background() {
     return () => {
       cancelAnimationFrame(animationId);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [containerRef]);
 
   return <div className="fixed inset-0 -z-20" ref={containerRef} />;
