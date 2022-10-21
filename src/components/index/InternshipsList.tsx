@@ -1,12 +1,8 @@
 import { useTranslation } from 'next-i18next';
 import dynamic from 'next/dynamic';
 
-const CardGrid = dynamic(() => import('../cards/CardGrid'), {
-  ssr: false,
-});
-const Card = dynamic(() => import('../cards/Card'), {
-  ssr: false,
-});
+const CardGrid = dynamic(() => import('../cards/CardGrid'));
+const Card = dynamic(() => import('../cards/Card'));
 
 export default function InternshipsList() {
   const { t } = useTranslation('common');

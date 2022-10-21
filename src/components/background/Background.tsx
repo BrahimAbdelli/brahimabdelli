@@ -13,7 +13,7 @@ import { useCounter } from 'react-use';
 
 import { fragment, vertex } from './shaders';
 
-export function Background() {
+export default function Background() {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [animationId, { inc: incrementAnimationId }] = useCounter(1);
   const { theme } = useTheme();

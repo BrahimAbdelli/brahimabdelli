@@ -20,44 +20,22 @@ import {
   switchableTexts,
 } from '../components/styles';
 
-const BackgroundComponent = dynamic(() =>
-  import('../components/background/Background').then(
-    ({ Background }) => Background
-  )
+const BackgroundComponent = dynamic(
+  () => import('../components/background/Background')
 );
-const Card = dynamic(() => import('../components/cards/Card'), {
-  ssr: false,
-});
+const Card = dynamic(() => import('../components/cards/Card'));
 const InternshipsList = dynamic(
-  () => import('../components/index/InternshipsList'),
-  {
-    ssr: false,
-  }
+  () => import('../components/index/InternshipsList')
 );
-const Activities = dynamic(() => import('../components/index/Activities'), {
-  ssr: false,
-});
+const Activities = dynamic(() => import('../components/index/Activities'));
 const LinkToSection = dynamic(
-  () => import('../components/index/LinkToSection'),
-  {
-    ssr: false,
-  }
+  () => import('../components/index/LinkToSection')
 );
-const CardGrid = dynamic(() => import('../components/cards/CardGrid'), {
-  ssr: false,
-});
-const Header = dynamic(() => import('../components/global/Header'), {
-  ssr: false,
-});
-const NameTitle = dynamic(() => import('../components/index/NameTitle'), {
-  ssr: false,
-});
-const ProjectsList = dynamic(() => import('../components/index/ProjectsList'), {
-  ssr: false,
-});
-const SectionTitle = dynamic(() => import('../components/index/SectionTitle'), {
-  ssr: false,
-});
+const CardGrid = dynamic(() => import('../components/cards/CardGrid'));
+const Header = dynamic(() => import('../components/global/Header'));
+const NameTitle = dynamic(() => import('../components/index/NameTitle'));
+const ProjectsList = dynamic(() => import('../components/index/ProjectsList'));
+const SectionTitle = dynamic(() => import('../components/index/SectionTitle'));
 
 const Home: NextPage = () => {
   const { inView, ref } = useInView();
