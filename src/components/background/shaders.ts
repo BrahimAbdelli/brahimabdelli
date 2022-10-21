@@ -1,7 +1,3 @@
-/**
- * @TODO Add raw file loader and move these to dedicated `.vs` / `.fs` files
- */
-
 export const vertex = `
 attribute vec3 position;
 attribute vec4 random;
