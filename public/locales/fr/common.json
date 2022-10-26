@@ -9,7 +9,7 @@
     "aboutme": {
       "name": "A propos de moi",
       "bio1": "Je suis un développeur Full Stack passionné par la construction des solutions webs, le développement est une activité que j'exerce quotidiennement avec passion.",
-      "bio2": "En dehors de ça, j'écoute et je fais de la musique, j'aime sortir et exploré des nouveaux endroits, J'aime les jeux videos, lire, regarder des anciens films et faire du sport",
+      "bio2": "En dehors de ça, j'écoute et je fais de la musique, j'aime sortir et exploré des nouveaux endroits, J'aime les jeux vidéo, lire, regarder des anciens films et faire du sport",
       "bio3": "Je m'efforce d'apporter une bonne énergie, les connaissances techniques et une forte envie d'apprendre avec moi partout où je vais.",
       "description1": "J'ai acquis une expérience pendant deux ans dans la conception, développement, test et déploiement des solutions webs",
       "description2": "J'ai un intérêt particulier pour Javascript, Typescript et Java.",
@@ -18,9 +18,9 @@
     "projects": {
       "name": "PROJETS",
       "bio": "Je suis toujours entrain de développer une nouvelle chose.",
-      "description": "Vous pouvez trouver tout mes respositories publique sur mon profil Github.",
+      "description": "Vous pouvez trouver toutes mes respositories publiques sur mon profil GitHub.",
       "portfolio": {
-        "description": "Ce portfolio a été créé pour montrer exposer mes expériences. Je vais essayé de toujours mettre à jour le projet."
+        "description": "Ce portfolio a été créé pour montrer exposer mes expériences. Je vais essayer de toujours mettre à jour le projet."
       },
       "autosansrisque": {
         "description1": "Auparavant promu sous le nom de Karhabtek.",
@@ -36,7 +36,7 @@
         "description": "Ce repository contient ma tentative de résolution de Advent of Code groupée par année."
       },
       "tekmanda": {
-        "description": "J'ai contribué à ce projet en ajoutant des nouvelles fonctionnalitées pour cette plateforme, ma contribution était surtout sur la partie Frontend."
+        "description": "J'ai contribué à ce projet en ajoutant des nouvelles fonctionnalités pour cette plateforme, ma contribution était surtout sur la partie Frontend."
       }
     },
     "workexperience": {
@@ -47,7 +47,7 @@
     "internships": {
       "name": "STAGES",
       "bio": "En tant qu'étudiant en génie logiciel, j'ai effectué plusieurs stages.",
-      "description": "Ce sont les stages que j'ai effectué en étant un étudiant.",
+      "description": "Ce sont les stages que j'ai effectués en étant un étudiant.",
       "placeholder": {
         "description1": "Développement d'une plateforme web pour connecter les demandeurs de services aux experts dans le domaine automobile.",
         "description2": "Ce projet est encore en phase de développement avec d'autres développeurs."
@@ -73,7 +73,7 @@
         "description": "J'ai fait 2 ans d'études en électromécanique avant de changer de parcours."
       },
       "isetrades": {
-        "description": "Licence appliquée en génie mécanique spécialitée énergétique."
+        "description": "Licence appliquée en génie mécanique spécialité énergétique."
       }
     },
     "activities": {
@@ -91,13 +91,13 @@
         "books": "Livres"
       },
       "sports": {
-        "description": "Tout ce qui fait pomper le sang et implique des défis.",
+        "description": "Tout ce qui fait pomper le sang et impliquent des défis.",
         "jogging": "Jogging",
         "swimming": "Natation"
       }
     },
-    "contanctme": "Contactez Moi",
+    "contanctme": "Contactez-Moi",
     "copyright": "Droits d'auteur",
-    "takecare": "Prenez soin de vous et rappelez-vous, votre santé est votre prioritié."
+    "takecare": "Prenez soin de vous et rappelez-vous, votre santé est votre priorité."
   }
 }

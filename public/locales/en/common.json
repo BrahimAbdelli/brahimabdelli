@@ -8,23 +8,23 @@
     "description": "I build things.",
     "aboutme": {
       "name": "ABOUT ME",
-      "bio1": "I'm a Full Stack developer with a passion for building web solutions. Coding is an activity i exercie everyday with passion.",
-      "bio2": "Outside coding, i listen and make music, go out and explore new places with my friends. I love video games, reading, watching old movies and sports.",
+      "bio1": "I'm a Full Stack developer with a passion for building web solutions. Coding is an activity I exercise every day with passion.",
+      "bio2": "Outside coding, I listen and make music, go out and explore new places with my friends. I love video games, reading, watching old movies, and sports.",
       "bio3": "I strive to bring good energy, technical knowledge, and a strong desire to learn with me wherever I go.",
-      "description1": "I have accumulated experience in designing, developing, testing and deploying web apps from scratch for 2 years.",
-      "description2": "I hold perticular interest in Javascript, Typescript and Java.",
+      "description1": "I have accumulated experience in designing, developing, testing, and deploying web apps from scratch for 2 years.",
+      "description2": "I hold a particular interest in Javascript, Typescript, and Java.",
       "description3": "Also in optimization, enhancing app performance and SEO."
     },
     "projects": {
       "name": "PROJECTS",
       "bio": "I'm always cooking something new.",
-      "description": "Catch all my public repositories on my Github profile.",
+      "description": "Catch all my public repositories on my GitHub profile.",
       "portfolio": {
-        "description": "This is a personal portfolio i created in order to showcase my work as a software engineer. I will try to always update this project."
+        "description": "This is a personal Portfolio I created to showcase my work as a software engineer. I will try to always update this project."
       },
       "autosansrisque": {
         "description1": "Previously promoted as Karhabtek.",
-        "description2": "It's a website that connects car experts and clients together. I developed the MVP for the project even integrating an online payment service.",
+        "description2": "It's a website that connects car experts and clients. I developed the MVP for the project even integrating an online payment service.",
         "description3": "This project is backed by BiatLabs incubator.",
         "description4": "and still in the development phase with other developers."
       },
@@ -46,8 +46,8 @@
     },
     "internships": {
       "name": "INTERNSHIPS",
-      "bio": "As a software engineering student i did multiple internships.",
-      "description": "These are the internships that i did in the past.",
+      "bio": "As a software engineering student I did multiple internships.",
+      "description": "These are the internships that I did in the past.",
       "placeholder": {
         "description1": "Development of a website that connects car experts and clients",
         "description2": "This project is still in the development phase with other developers."
@@ -63,8 +63,8 @@
     },
     "school": {
       "name": "SCHOOL",
-      "bio": "As a software engineering student i did multiple internships.",
-      "description1": "Graduated with the highest honours from ESPRIT in 2021 after pursuing a degree in software engineering.",
+      "bio": "As a software engineering student I did multiple internships.",
+      "description1": "Graduated with the highest honors from ESPRIT in 2021 after pursuing a degree in software engineering.",
       "description2": "Had my software engineering degree from ESPRIT in 2021.",
       "espritinfo": {
         "description": "Studied software engineering for 3 years."
