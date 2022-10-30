@@ -34,7 +34,7 @@ export default function ProjectsList() {
       </Card>
       <Card
         title={`${t('home.projects.clothingcompany.name')}`}
-        // link="https://auto-sans-risque.tn/home"
+        // link=""
         tags={['NextJS, React ,NestJS, TailwindCSS, MongoDB']}
       >
         {`${t('home.projects.clothingcompany.description')}`}

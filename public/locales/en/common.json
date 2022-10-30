@@ -2,7 +2,11 @@
   "lang": {
     "title": "English"
   },
-  "header": { "download": "Download Resume", "home": "Home" },
+  "header": {
+    "download": "Download Resume",
+    "home": "Home",
+    "resume": "resume.pdf"
+  },
   "home": {
     "hello": "Hello! It's me",
     "description": "I build things.",
@@ -29,7 +33,7 @@
         "description4": "and still in the development phase with other developers."
       },
       "clothingcompany": {
-        "name": "CLOTHING COMPANY",
+        "name": "Clothing Company",
         "description": "Developed a website for a clothing company allowing administrators to manage the stock."
       },
       "adventofcode": {

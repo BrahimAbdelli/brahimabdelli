@@ -2,7 +2,11 @@
   "lang": {
     "title": "Français"
   },
-  "header": { "download": "Télécharger mon CV", "home": "Acceuil" },
+  "header": {
+    "download": "Télécharger mon CV",
+    "home": "Acceuil",
+    "resume": "cv.pdf"
+  },
   "home": {
     "hello": "Salut! C'est moi",
     "description": "Je construis des choses.",
@@ -29,7 +33,7 @@
         "description4": "et toujours en phase de développement avec d'autres développeurs."
       },
       "clothingcompany": {
-        "name": "ENTREPRISE DE VENTE DE VETEMENTS",
+        "name": "Compagnie de Vêtements",
         "description": "Développement d’un site web pour la commande en ligne et la gestion de stock."
       },
       "adventofcode": {
