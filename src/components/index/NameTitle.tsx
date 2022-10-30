@@ -31,7 +31,9 @@ export default function NameTitle({
             {big && (
               <span className="dark:text-green-custom text-accent">.</span>
             )}
-            <span className="text-3xl md:text-5xl">👋</span>
+            <span className="text-3xl md:text-5xl inline-block animate-wiggle">
+              👋
+            </span>
           </span>
           <span
             className={`absolute -bottom-0 left-0 -top-1 inline-block 4 w-full `}
@@ -48,7 +50,7 @@ export default function NameTitle({
             {`${t('home.description')}`}
           </span>
           <span
-            className={`absolute -bottom-0 left-0 -top-1 inline-block 4 w-full dark:bg-gray-900 bg-gray-50 animate-type will-change`}
+            className={`inline-block 4 w-full dark:bg-gray-900 bg-gray-50`}
           ></span>
         </span>
       </h1>

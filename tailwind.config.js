@@ -25,6 +25,7 @@ module.exports = {
       type: 'type 2.7s ease-out .8s infinite alternate both',
       animation: 'bounce 0.5s infinite',
       ping: 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite',
+      wiggle: 'wave 2.25s ease-in-out infinite',
     },
     keyframes: {
       type: {
