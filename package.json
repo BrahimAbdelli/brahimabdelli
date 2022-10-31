@@ -21,6 +21,7 @@
     "framer-motion": "^7.5.2",
     "next": "12.2.5",
     "next-i18next": "^11.0.0",
+    "next-seo": "^5.13.0",
     "next-themes": "^0.2.0",
     "ogl-typescript": "^0.1.40",
     "react": "18.2.0",
