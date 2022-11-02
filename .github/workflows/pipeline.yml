@@ -41,14 +41,6 @@ jobs:
           npm run build
           npm test
 
-      #Cypress
-      - name: Checkout
-        uses: actions/checkout@v2
-      # Install NPM dependencies, cache them correctly
-      # and run all Cypress tests
-      - name: Cypress run
-        uses: cypress-io/github-action@v4
-
   push_to_Docker_Hub:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
@@ -87,6 +79,7 @@ jobs:
           run: |
             echo "runing the docker image"
   push_to_vercel:
+    needs: [build_test, push_to_Docker_Hub]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
