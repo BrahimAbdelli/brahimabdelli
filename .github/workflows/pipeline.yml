@@ -70,12 +70,12 @@ jobs:
           context: ./
           file: ./Dockerfile
           load: true
-          tags: ${{ secrets.REACTUSERNAME }}/brahimabdelli:tagname
+          tags: ${{ secrets.REACTUSERNAME }}/brahimabdelli:latest
 
       - name: Run the image in a container
         uses: addnab/docker-run-action@v3
         with:
-          image: ${{ secrets.REACTUSERNAME }}/brahimabdelli:tagname
+          image: ${{ secrets.REACTUSERNAME }}/brahimabdelli:latest
           run: |
             echo "runing the docker image"
   push_to_vercel:
