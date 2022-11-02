@@ -34,7 +34,7 @@ jobs:
       # install applicaion dependencies
       - name: Install dependencies
         run: |
-          yarn --frozen-lockfile --silent
+          npm install
       # build and test the apps
       - name: build
         run: |
@@ -42,14 +42,16 @@ jobs:
           npm test
   install-command-v10:
     runs-on: ubuntu-20.04
-    needs: [build_test]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      # Install NPM dependencies, cache them correctly
-      # and run all Cypress tests
-      - name: Cypress run
-        uses: cypress-io/github-action@v4
+
+      - name: Custom Yarn command
+        uses: ./
+        with:
+          working-directory: examples/v10/install-command
+          # https://classic.yarnpkg.com/en/docs/cli/install
+          install-command: yarn --frozen-lockfile --silent
 
   push_to_Docker_Hub:
     # The type of runner that the job will run on
@@ -80,12 +82,12 @@ jobs:
           context: ./
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.REACTUSERNAME }}/brahimabdelli:latest
+          tags: ${{ secrets.REACTUSERNAME }}/brahimabdelli:tagname
 
       - name: Run the image in a container
         uses: addnab/docker-run-action@v3
         with:
-          image: ${{ secrets.REACTUSERNAME }}/brahimabdelli:latest
+          image: ${{ secrets.REACTUSERNAME }}/brahimabdelli:tagname
           run: |
             echo "runing the docker image"
   push_to_vercel:
