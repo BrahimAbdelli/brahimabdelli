@@ -40,18 +40,19 @@ jobs:
         run: |
           npm run build
           npm test
-  cypress-run:
-    runs-on: ubuntu-20.04
-    needs: [build_test]
+  checkout-and-test:
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+
+      - name: Check out repository code
         uses: actions/checkout@v2
-      # Install NPM dependencies, cache them correctly
-      # and run all Cypress tests
-      - name: Cypress run
-        uses: cypress-io/github-action@v4
+
+      - name: run cypress tests with firefox
+        uses: cypress-io/github-action@v2
+        timeout-minutes: 10
         with:
-          install-command: yarn --frozen-lockfile --silent
+          browser: firefox
 
   push_to_Docker_Hub:
     # The type of runner that the job will run on
