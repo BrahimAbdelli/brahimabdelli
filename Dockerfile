@@ -16,10 +16,16 @@ COPY . /brahimabdelli
 # install dependencies
 RUN npm install
 
+RUN npm run lint
+
 # start app
 RUN npm run build
 
+#RUN npm run cypress
+
 EXPOSE 80
 EXPOSE 443
+
+
 
 CMD npm run start

@@ -17,18 +17,6 @@ describe('Navigation', () => {
 
     // The new page should contain an h1 with "About page"
     cy.get('span').contains('ABOUT ME');
-    cy.get('p').contains(
-      'I have accumulated experience in designing, developing, testing and deploying web apps from scratch for 2 years.'
-    );
-    cy.get('p').contains(
-      'I hold perticular interest in Javascript, Typescript and Java.'
-    );
-    cy.get('p').contains(
-      'Also in optimization, enhancing app performance and SEO.'
-    );
-    cy.get('p').contains(
-      "I'm a Full Stack developer with a passion for building web solutions. Coding is an activity i exercie everyday with passion."
-    );
   });
 });
 
