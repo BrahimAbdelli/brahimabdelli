@@ -80,7 +80,6 @@ export default function Background() {
           value: 0,
         },
         uColor: {
-          // { value: `${theme == 'light' ? '#0000' : '#ffff'}` }
           value:
             theme == 'light' ? new Color(0.9, 0.8, 1) : new Color(0.9, 0.8, 1),
         },
