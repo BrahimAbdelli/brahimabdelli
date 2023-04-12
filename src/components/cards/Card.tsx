@@ -52,7 +52,6 @@ export default function Card({
   }
   if (link && !encrypted) {
     if (link[0] === '/') {
-      // internal link
       return (
         <Link href={link}>
           <a className="flex flex-col dark:bg-blue-900 bg-blue-700 dark:bg-opacity-[15%] bg-opacity-[10%] hover:bg-opacity-25 group p-6 shadow-md">
