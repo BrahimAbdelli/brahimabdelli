@@ -44,7 +44,6 @@ const Navbar: React.FC<{ menuOpen: any; setMenuOpen: any }> = ({
   setMenuOpen,
 }) => {
   const { t } = useTranslation('common');
-  // eslint-disable-next-line unused-imports/no-unused-vars
   const [showModal] = useState(false);
 
   return (
@@ -73,8 +72,7 @@ const Navbar: React.FC<{ menuOpen: any; setMenuOpen: any }> = ({
                 hover:shadow-lg transform transition hover:-translate-y-1 focus:ring-2 focus:ring-blue-600 ring-offset-2 outline-none 
                 focus:bg-blue-800 focus:shadow-lg active:bg-blue-900 pt-2"
                 href="#"
-                // eslint-disable-next-line no-useless-concat
-                onClick={() => window.open('/' + `${t('header.resume')}`)}
+                onClick={() => window.open(`/${t('header.resume')}`)}
               >
                 {t('header.download')}
               </a>
@@ -116,7 +114,6 @@ const Navbar: React.FC<{ menuOpen: any; setMenuOpen: any }> = ({
           </div>
         </div>
       </button>
-      {/* {!menuOpen && } */}
     </div>
   );
 };
