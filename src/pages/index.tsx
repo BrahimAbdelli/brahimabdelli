@@ -256,7 +256,6 @@ const Home: NextPage = () => {
                 <div className="h-8 lg:h-12"></div>
                 <CardGrid>
                   <Card title="ESPRIT" link="https://esprit.tn/" highlighted>
-                    {`${t('home.school.espritinfo.bio')}`}
                     {`${t('home.school.espritinfo.description')}`}
                   </Card>
                   <Card title="ESPRIT" link="https://esprit.tn/" highlighted>
