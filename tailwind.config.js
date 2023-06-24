@@ -11,7 +11,7 @@ module.exports = {
   content: [
     './app/**/*.{js,ts,jsx,tsx}',
     './pages/**/*.{js,ts,jsx,tsx}',
-    './src/**/*.{js,ts,jsx,tsx}',
+    './src/**/*.{js,ts,jsx,tsx}'
   ],
   darkMode: 'class',
   theme: {
@@ -20,17 +20,17 @@ module.exports = {
       md: '768px',
       lg: '1024px',
       xl: '1280px',
-      '2xl': '1536px',
+      '2xl': '1536px'
     },
     extend: {
       height: {
-        'dvh-100': '100dvh',
+        'dvh-100': '100dvh'
       },
       maxHeight: {
-        'dvh-100': '100dvh',
+        'dvh-100': '100dvh'
       },
       minHeight: {
-        'dvh-100': '100dvh',
+        'dvh-100': '100dvh'
       },
       colors: {
         ...colors,
@@ -60,15 +60,15 @@ module.exports = {
             blue: 'rgb(var(--notion-color-tag-blue) / <alpha-value>)',
             purple: 'rgb(var(--notion-color-tag-purple) / <alpha-value>)',
             pink: 'rgb(var(--notion-color-tag-pink) / <alpha-value>)',
-            red: 'rgb(var(--notion-color-tag-red) / <alpha-value>)',
-          },
-        },
+            red: 'rgb(var(--notion-color-tag-red) / <alpha-value>)'
+          }
+        }
       },
       animation: {
         type: 'type 2.7s ease-out .8s infinite alternate both',
         animation: 'bounce 0.5s infinite',
         ping: 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite',
-        wiggle: 'wave 2.25s ease-in-out infinite',
+        wiggle: 'wave 2.25s ease-in-out infinite'
       },
       keyframes: {
         type: {
@@ -82,13 +82,12 @@ module.exports = {
           '65%, 70%': { transform: 'translateX(7ch)' },
           '75%, 80%': { transform: 'translateX(8ch)' },
           '85%, 90%': { transform: 'translateX(9ch)' },
-          '95%, 100%': { transform: 'translateX(11ch)' },
-        },
+          '95%, 100%': { transform: 'translateX(11ch)' }
+        }
       },
       backgroundColor: {
         notion: {
-          default:
-            'rgb(var(--notion-color-default_background) / <alpha-value>)',
+          default: 'rgb(var(--notion-color-default_background) / <alpha-value>)',
           gray: 'rgb(var(--notion-color-gray_background) / <alpha-value>)',
           brown: 'rgb(var(--notion-color-brown_background) / <alpha-value>)',
           orange: 'rgb(var(--notion-color-orange_background) / <alpha-value>)',
@@ -100,29 +99,23 @@ module.exports = {
           red: 'rgb(var(--notion-color-red_background) / <alpha-value>)',
           code: 'rgb(var(--notion-color-code_background) / 0.15)',
           tag: {
-            default:
-              'rgb(var(--notion-color-tag-default_background) / <alpha-value>)',
+            default: 'rgb(var(--notion-color-tag-default_background) / <alpha-value>)',
             gray: 'rgb(var(--notion-color-tag-gray_background) / <alpha-value>)',
-            brown:
-              'rgb(var(--notion-color-tag-brown_background) / <alpha-value>)',
-            orange:
-              'rgb(var(--notion-color-tag-orange_background) / <alpha-value>)',
-            yellow:
-              'rgb(var(--notion-color-tag-yellow_background) / <alpha-value>)',
-            green:
-              'rgb(var(--notion-color-tag-green_background) / <alpha-value>)',
+            brown: 'rgb(var(--notion-color-tag-brown_background) / <alpha-value>)',
+            orange: 'rgb(var(--notion-color-tag-orange_background) / <alpha-value>)',
+            yellow: 'rgb(var(--notion-color-tag-yellow_background) / <alpha-value>)',
+            green: 'rgb(var(--notion-color-tag-green_background) / <alpha-value>)',
             blue: 'rgb(var(--notion-color-tag-blue_background) / <alpha-value>)',
-            purple:
-              'rgb(var(--notion-color-tag-purple_background) / <alpha-value>)',
+            purple: 'rgb(var(--notion-color-tag-purple_background) / <alpha-value>)',
             pink: 'rgb(var(--notion-color-tag-pink_background) / <alpha-value>)',
-            red: 'rgb(var(--notion-color-tag-red_background) / <alpha-value>)',
-          },
-        },
+            red: 'rgb(var(--notion-color-tag-red_background) / <alpha-value>)'
+          }
+        }
       },
       fontFamily: {
-        emoji: 'emoji',
-      },
-    },
+        emoji: 'emoji'
+      }
+    }
   },
   daisyui: {
     darkTheme: 'dark',
@@ -137,8 +130,8 @@ module.exports = {
           info: '#3b82f6',
           success: '#34d399',
           warning: '#fde047',
-          error: '#e11d48',
-        },
+          error: '#e11d48'
+        }
       },
       {
         dark: {
@@ -150,15 +143,15 @@ module.exports = {
           info: '#3b82f6',
           success: '#34d399',
           warning: '#fde047',
-          error: '#e11d48',
-        },
-      },
-    ],
+          error: '#e11d48'
+        }
+      }
+    ]
   },
   plugins: [
-    require('@tailwindcss/line-clamp'),
-    require('daisyui'),
+    //require('@tailwindcss/line-clamp'),
+    require('daisyui')
     /*     require('@emotion/babel-plugin'),
     require('babel-plugin-macros') */
-  ],
+  ]
 };
