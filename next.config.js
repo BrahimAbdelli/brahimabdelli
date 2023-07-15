@@ -1,3 +1,12 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+/** @type {import('next').NextConfig} */
+const withPWA = require('next-pwa');
+const { i18n } = require('./next-i18next.config');
+const isProduction = process.env.NODE_ENV === 'production';
+const debugLogs = Boolean(process.env.DEBUG_LOGS);
+const enableProgressiveWebApp =
+  process.env.ENABLE_PROGRESSIVE_WEB_APP === 'true';
+
 try {
   if (!process.env.NOTION_API_SECRET_KEY) {
     throw 'NOTION_API_SECRET_KEY';
@@ -16,13 +25,58 @@ try {
     throw `\`${err}\` is invalide value`;
   }
 }
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  // reactStrictMode: false,
+  i18n,
+  reactStrictMode: false,
+  swcMinify: true,
+  // experimental: {
+  //   appDir: true
+  // },
+  // staticPageGenerationTimeout: 300, // In seconds, 5 minutes applied (default is 1 minute)
+  // images: {
+  //   domains: [
+  //     'www.notion.so',
+  //     'notion.so',
+  //     's3.us-west-2.amazonaws.com',
+  //     's3-us-west-2.amazonaws.com',
+  //     'images.unsplash.com'
+  //   ],
+  //   formats: ['image/avif', 'image/webp'],
+  //   dangerouslyAllowSVG: true,
+  //   contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+  //   minimumCacheTTL: 1800
+  // },
+  // async rewrites() {
+  //   return [
+  //     {
+  //       source: '/aws-secure-notion-static/:path*',
+  //       destination: 'https://s3.us-west-2.amazonaws.com/secure.notion-static.com/:path*'
+  //     },
+  //     {
+  //       source: '/aws-public-notion-static/:path*',
+  //       destination: 'https://s3.us-west-2.amazonaws.com/public.notion-static.com/:path*'
+  //     }
+  //   ];
+  // }
+};
+
+module.exports = enableProgressiveWebApp
+  ? withPWA({
+      dest: 'public',
+      disable: !isProduction,
+      disableDevLogs: debugLogs,
+      runtimeCaching: [],
+    })(nextConfig)
+  : nextConfig;
+
 /* eslint-disable import/no-extraneous-dependencies */
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
   openAnalyzer: false,
 });
-
-const { i18n } = require('./next-i18next.config');
 
 module.exports = withBundleAnalyzer({
   poweredByHeader: false,
@@ -33,12 +87,5 @@ module.exports = withBundleAnalyzer({
   // You can remove `basePath` if you don't need it.
   reactStrictMode: true,
 });
-
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  i18n,
-  reactStrictMode: true,
-  swcMinify: true,
-};
 
 module.exports = withBundleAnalyzer(nextConfig);
