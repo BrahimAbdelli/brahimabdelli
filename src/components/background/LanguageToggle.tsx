@@ -1,3 +1,5 @@
+import type React from 'react';
+
 import { US, FR } from 'country-flag-icons/react/3x2';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
@@ -5,10 +7,13 @@ import { useRouter } from 'next/router';
 
 export default function LanguageToggle() {
   const router = useRouter();
+
+  const isDynamicSlug = router.query.slug !== undefined;
+  const href = isDynamicSlug ? '/[slug]' : router.pathname;
   const spring = {
     type: 'spring',
     stiffness: 700,
-    damping: 30,
+    damping: 30
   };
 
   return (
@@ -19,40 +24,52 @@ export default function LanguageToggle() {
         }`}
       >
         <motion.div
-          className="flex h-[30px] w-[30px] items-center justify-center rounded-full bg-black/90"
+          className='flex h-[30px] w-[30px] items-center justify-center rounded-full bg-black/90'
           layout
           transition={spring}
         >
           <motion.div whileTap={{ rotate: 360 }}>
             {router.locale === 'en' ? (
               <>
-                <Link
-                  href={router.pathname}
-                  locale={router.locale === 'en' ? 'fr' : 'en'}
-                  passHref
-                >
-                  <a>
-                    <US
-                      title="United States"
-                      className="h-6 w-6 text-yellow-300"
-                    />
-                  </a>
-                </Link>
+                {router.query.slug ? (
+                  <Link
+                    href='/[slug]'
+                    as={`/${router.query.slug}`}
+                    locale={router.locale === 'en' ? 'fr' : 'en'}
+                    passHref
+                  >
+                    <US title='United States' className='h-6 w-6 text-yellow-300' />
+                  </Link>
+                ) : (
+                  <Link
+                    href={router.pathname}
+                    locale={router.locale === 'en' ? 'fr' : 'en'}
+                    passHref
+                  >
+                    <US title='United States' className='h-6 w-6 text-yellow-300' />
+                  </Link>
+                )}
               </>
             ) : (
               <>
-                <Link
-                  href={router.pathname}
-                  locale={router.locale === 'fr' ? 'en' : 'fr'}
-                  passHref
-                >
-                  <a>
-                    <FR
-                      title="United States"
-                      className="h-6 w-6 text-slate-200"
-                    />
-                  </a>
-                </Link>
+                {router.query.slug ? (
+                  <Link
+                    href='/[slug]'
+                    as={`/${router.query.slug}`}
+                    locale={router.locale === 'fr' ? 'en' : 'fr'}
+                    passHref
+                  >
+                    <FR title='France' className='h-6 w-6 text-slate-200' />
+                  </Link>
+                ) : (
+                  <Link
+                    href={router.pathname}
+                    locale={router.locale === 'fr' ? 'en' : 'fr'}
+                    passHref
+                  >
+                    <FR title='France' className='h-6 w-6 text-slate-200' />
+                  </Link>
+                )}
               </>
             )}
           </motion.div>
