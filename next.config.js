@@ -1,3 +1,21 @@
+try {
+  if (!process.env.NOTION_API_SECRET_KEY) {
+    throw 'NOTION_API_SECRET_KEY';
+  }
+  if (!process.env.NEXT_PUBLIC_NOTION_DATABASE_ID) {
+    throw 'NEXT_PUBLIC_NOTION_DATABASE_ID';
+  }
+  if (!process.env.NEXT_PUBLIC_INFOMATION_BLOGNAME) {
+    throw 'NEXT_PUBLIC_INFOMATION_BLOGNAME';
+  }
+} catch (err) {
+  if (typeof err === 'string') {
+    const message = `The environment variable \`${err}\` is required. Please check the \`/.env.sample\` and correct it.`;
+    console.log('\x1b[37m\x1b[41m');
+    console.log('ERROR - ' + message, '\x1b[0m');
+    throw `\`${err}\` is invalide value`;
+  }
+}
 /* eslint-disable import/no-extraneous-dependencies */
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
