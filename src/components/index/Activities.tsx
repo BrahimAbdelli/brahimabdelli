@@ -1,8 +1,9 @@
-import { useTranslation } from 'next-i18next';
-import dynamic from 'next/dynamic';
+import type React from 'react';
 
-const CardGrid = dynamic(() => import('../cards/CardGrid'));
-const Card = dynamic(() => import('../cards/Card'));
+import { useTranslation } from 'next-i18next';
+
+import Card from '../cards/Card';
+import CardGrid from '../cards/CardGrid';
 
 export default function Activities() {
   const { t } = useTranslation('common');
