@@ -1,3 +1,5 @@
+import type React from 'react';
+
 export default function CardGrid({ children }: { children: any }) {
   return (
     <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8">
