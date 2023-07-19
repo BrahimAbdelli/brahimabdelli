@@ -4,8 +4,7 @@ const withPWA = require('next-pwa');
 const { i18n } = require('./next-i18next.config');
 const isProduction = process.env.NODE_ENV === 'production';
 const debugLogs = Boolean(process.env.DEBUG_LOGS);
-const enableProgressiveWebApp =
-  process.env.ENABLE_PROGRESSIVE_WEB_APP === 'true';
+const enableProgressiveWebApp = process.env.ENABLE_PROGRESSIVE_WEB_APP === 'true';
 
 try {
   if (!process.env.NOTION_API_SECRET_KEY) {
@@ -28,10 +27,9 @@ try {
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // reactStrictMode: false,
   i18n,
   reactStrictMode: false,
-  swcMinify: true,
+  swcMinify: true
   // experimental: {
   //   appDir: true
   // },
@@ -68,14 +66,14 @@ module.exports = enableProgressiveWebApp
       dest: 'public',
       disable: !isProduction,
       disableDevLogs: debugLogs,
-      runtimeCaching: [],
+      runtimeCaching: []
     })(nextConfig)
   : nextConfig;
 
 /* eslint-disable import/no-extraneous-dependencies */
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
-  openAnalyzer: false,
+  openAnalyzer: false
 });
 
 module.exports = withBundleAnalyzer({
@@ -85,7 +83,7 @@ module.exports = withBundleAnalyzer({
   // The starter code load resources from `public` folder with `router.basePath` in React components.
   // So, the source code is "basePath-ready".
   // You can remove `basePath` if you don't need it.
-  reactStrictMode: true,
+  reactStrictMode: true
 });
 
 module.exports = withBundleAnalyzer(nextConfig);

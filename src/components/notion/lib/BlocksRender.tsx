@@ -5,26 +5,24 @@ import React, { Fragment } from 'react';
 import type { NotionBlocksRetrieve } from 'src/types/notion';
 
 import {
-  NotionHasChildrenRender,
   NotionCalloutBlock,
   NotionChildDatabaseBlock,
+  NotionCodeBlock,
   NotionColumnListBlock,
+  NotionFileBlock,
+  NotionHasChildrenRender,
   NotionHeadingBlock,
   NotionImageBlock,
   NotionLinkPreviewBlock,
   NotionListBlock,
   NotionParagraphBlock,
-  NotionQuoteBlock,
-  NotionTableBlock,
-  NotionTodoBlock,
-  NotionToggleBlock,
-  NotionVideoBlock,
   NotionParagraphText,
-  NotionCodeBlock,
+  NotionQuoteBlock,
   NotionSyncedBlock,
-  NotionEquationBlock,
-  NotionFileBlock,
-  NotionTableOfContents
+  NotionTableBlock,
+  NotionTableOfContents,
+  NotionTodoBlock,
+  NotionToggleBlock
 } from '.';
 
 export type NotionBlocksProps = {
@@ -85,13 +83,6 @@ export const BlocksRender: React.FC<NotionBlocksProps> = ({ blocks }) => {
             return (
               <NotionHasChildrenRender key={`block-${block.id}-${i}`} block={block}>
                 <hr className='my-2 border-base-content/40' />
-              </NotionHasChildrenRender>
-            );
-          }
-          case 'equation': {
-            return (
-              <NotionHasChildrenRender key={`block-${block.id}-${i}`} block={block}>
-                <NotionEquationBlock block={block} />
               </NotionHasChildrenRender>
             );
           }
@@ -174,13 +165,6 @@ export const BlocksRender: React.FC<NotionBlocksProps> = ({ blocks }) => {
           case 'toggle': {
             // Toggle BlockRender inside.
             return <NotionToggleBlock key={`block-${block.id}-${i}`} block={block} />;
-          }
-          case 'video': {
-            return (
-              <NotionHasChildrenRender key={`block-${block.id}-${i}`} block={block}>
-                <NotionVideoBlock block={block} />
-              </NotionHasChildrenRender>
-            );
           }
           case 'synced_block': {
             return <NotionSyncedBlock key={`block-${block.id}`} block={block} />;

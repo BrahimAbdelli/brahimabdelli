@@ -1,6 +1,6 @@
 import { useLayoutEffect } from 'react';
 
-import create, { StoreApi } from 'zustand';
+import { create, StoreApi } from 'zustand';
 import createContext from 'zustand/context';
 
 import {
@@ -8,7 +8,7 @@ import {
   BlogProperties,
   ChildrensRecord,
   DatabasesRecord,
-  GetNotionBlock,
+  GetNotionBlock
 } from 'src/types/notion';
 
 export interface NotionState {
@@ -23,16 +23,12 @@ export interface NotionState {
 }
 
 export interface NotionStore extends NotionState {
-  // setSlug: (slug: string) => void;
-  // setBaseBlock: (block: NotionState['baseBlock']) => void;
-  // setDatabasesRecord: (databaseRecord: NotionState['databasesRecord']) => void;
-  // setChildrensRecord: (childrenRecord: NotionState['childrensRecord']) => void;
   init: (params: NotionState) => void;
 }
 
 const defaultState: NotionState = {
   childrensRecord: {},
-  databasesRecord: {},
+  databasesRecord: {}
 };
 
 const initialState = { ...defaultState };
@@ -43,9 +39,9 @@ export const initializeNotionStore = (preloadedState = {}) =>
     ...preloadedState,
     init(params) {
       set({
-        ...params,
+        ...params
       });
-    },
+    }
   }));
 
 /** Dashboard Store with zustand and context api */
@@ -63,7 +59,7 @@ export const useCreateNotionStore = (initialState: NotionState) => {
     if (initialState && store) {
       store.setState({
         ...store.getState(),
-        ...initialState,
+        ...initialState
       });
     }
   }, [initialState]);
