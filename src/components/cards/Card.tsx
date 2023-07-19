@@ -1,3 +1,5 @@
+import type React from 'react';
+
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 
@@ -7,7 +9,7 @@ export default function Card({
   tags,
   encrypted = false,
   children,
-  highlighted = false,
+  highlighted = false
 }: {
   title: string;
   link?: string;
@@ -19,25 +21,25 @@ export default function Card({
   const content = (
     <>
       <motion.div whileHover={{ scale: 1.009 }}>
-        <div className="flex justify-between">
-          <h2 className="text-fuchsia-500 dark:text-slate-300 font-mono font-bold text-xl mb-4 dark:group-hover:text-green-custom group-hover:text-accent">
+        <div className='flex justify-between'>
+          <h2 className='text-fuchsia-500 dark:text-slate-300 font-mono font-bold text-xl mb-4 dark:group-hover:text-green-custom group-hover:text-accent'>
             {title}
           </h2>
           {highlighted && (
             <span className={`flex h-4 w-4 animate-animation`}>
-              <span className="animate-ping absolute inline-flex h-4 w-4 rounded-full bg-sky-400 dark:bg-green-300 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-4 w-4 bg-sky-500 dark:bg-green-500"></span>
+              <span className='animate-ping absolute inline-flex h-4 w-4 rounded-full bg-sky-400 dark:bg-green-300 opacity-75'></span>
+              <span className='relative inline-flex rounded-full h-4 w-4 bg-sky-500 dark:bg-green-500'></span>
             </span>
           )}
         </div>
       </motion.div>
       {children && (
-        <p className="text-slate-900 dark:text-slate-400 dark:group-hover:text-slate-200 group-hover:text-slate-600 flex-1">
+        <p className='text-slate-900 dark:text-slate-400 dark:group-hover:text-slate-200 group-hover:text-slate-600 flex-1'>
           {children}
         </p>
       )}
       {tags && (
-        <div className="mt-6 text-sm text-slate-600 dark:text-slate-500 dark:group-hover:text-slate-400 group-hover:text-slate-700 font-mono">
+        <div className='mt-6 text-sm text-slate-600 dark:text-slate-500 dark:group-hover:text-slate-400 group-hover:text-slate-700 font-mono'>
           {tags.join(` · `)}
         </div>
       )}
@@ -45,7 +47,7 @@ export default function Card({
   );
   if (link && encrypted) {
     return (
-      <button className="flex flex-col dark:bg-blue-900 bg-blue-700 dark:bg-opacity-[15%] bg-opacity-[10%] hover:bg-opacity-25 group p-6 shadow-md text-left">
+      <button className='flex flex-col dark:bg-blue-900 bg-blue-700 dark:bg-opacity-[15%] bg-opacity-[10%] hover:bg-opacity-25 group p-6 shadow-md text-left'>
         {content}
       </button>
     );
@@ -54,7 +56,7 @@ export default function Card({
     if (link[0] === '/') {
       return (
         <Link href={link}>
-          <a className="flex flex-col dark:bg-blue-900 bg-blue-700 dark:bg-opacity-[15%] bg-opacity-[10%] hover:bg-opacity-25 group p-6 shadow-md">
+          <a className='flex flex-col dark:bg-blue-900 bg-blue-700 dark:bg-opacity-[15%] bg-opacity-[10%] hover:bg-opacity-25 group p-6 shadow-md'>
             {content}
           </a>
         </Link>
@@ -63,16 +65,16 @@ export default function Card({
     return (
       <a
         href={link}
-        target="_blank"
-        className="flex flex-col dark:bg-blue-900 bg-blue-700 dark:bg-opacity-[15%] bg-opacity-[10%] hover:bg-opacity-25 group p-6 shadow-md"
-        rel="noreferrer"
+        target='_blank'
+        className='flex flex-col dark:bg-blue-900 bg-blue-700 dark:bg-opacity-[15%] bg-opacity-[10%] hover:bg-opacity-25 group p-6 shadow-md'
+        rel='noreferrer'
       >
         {content}
       </a>
     );
   }
   return (
-    <div className="flex flex-col dark:bg-blue-900 bg-blue-700 dark:bg-opacity-[15%] bg-opacity-[10%] p-6 shadow-md">
+    <div className='flex flex-col dark:bg-blue-900 bg-blue-700 dark:bg-opacity-[15%] bg-opacity-[10%] p-6 shadow-md'>
       {content}
     </div>
   );

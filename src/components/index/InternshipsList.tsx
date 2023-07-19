@@ -1,16 +1,17 @@
-import { useTranslation } from 'next-i18next';
-import dynamic from 'next/dynamic';
+import type React from 'react';
 
-const CardGrid = dynamic(() => import('../cards/CardGrid'));
-const Card = dynamic(() => import('../cards/Card'));
+import { useTranslation } from 'next-i18next';
+
+import Card from '../cards/Card';
+import CardGrid from '../cards/CardGrid';
 
 export default function InternshipsList() {
   const { t } = useTranslation('common');
   return (
     <CardGrid>
       <Card
-        title="Placeholder"
-        link="https://auto-sans-risque.tn/home"
+        title='Placeholder'
+        link='https://auto-sans-risque.tn/home'
         tags={[
           'NodeJS',
           'NestJS',
@@ -26,7 +27,7 @@ export default function InternshipsList() {
           'Redis',
           'GPG Checkout',
           'Jest',
-          'Firebase Google Storage',
+          'Firebase Google Storage'
         ]}
         highlighted
       >
@@ -35,17 +36,9 @@ export default function InternshipsList() {
         {`${t('home.internships.placeholder.description2')}`}
       </Card>
       <Card
-        title="ESPRIT DSI"
-        link="https://esprit.tn/"
-        tags={[
-          'NestJS',
-          'NodeJS',
-          'React',
-          'Javascript',
-          'Typescript',
-          'MongoDB',
-          'TypeORM',
-        ]}
+        title='ESPRIT DSI'
+        link='https://esprit.tn/'
+        tags={['NestJS', 'NodeJS', 'React', 'Javascript', 'Typescript', 'MongoDB', 'TypeORM']}
         highlighted
       >
         {`${t('home.internships.espritdsi.description1')}`}

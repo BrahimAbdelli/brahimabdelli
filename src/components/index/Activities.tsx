@@ -1,8 +1,9 @@
-import { useTranslation } from 'next-i18next';
-import dynamic from 'next/dynamic';
+import type React from 'react';
 
-const CardGrid = dynamic(() => import('../cards/CardGrid'));
-const Card = dynamic(() => import('../cards/Card'));
+import { useTranslation } from 'next-i18next';
+
+import Card from '../cards/Card';
+import CardGrid from '../cards/CardGrid';
 
 export default function Activities() {
   const { t } = useTranslation('common');
@@ -16,13 +17,10 @@ export default function Activities() {
         <br />
         {`${t('home.activities.music.description2')}`}
       </Card>
-      <Card title="Reading" tags={[t('home.activities.reading.books')]}>
+      <Card title='Reading' tags={[t('home.activities.reading.books')]}>
         {`${t('home.activities.reading.description')}`}
       </Card>
-      <Card
-        title="Sports"
-        tags={['Jogging', 'Football', t('home.activities.music.name')]}
-      >
+      <Card title='Sports' tags={['Jogging', 'Football', t('home.activities.music.name')]}>
         {`${t('home.activities.sports.description')}`}
       </Card>
     </CardGrid>

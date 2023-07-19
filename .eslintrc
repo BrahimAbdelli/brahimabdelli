@@ -14,11 +14,7 @@
     {
       "files": ["**/*.ts", "**/*.tsx"],
       "plugins": ["@typescript-eslint", "unused-imports"],
-      "extends": [
-        "airbnb-typescript",
-        "next/core-web-vitals",
-        "plugin:prettier/recommended"
-      ],
+      "extends": ["airbnb-typescript", "next/core-web-vitals", "plugin:prettier/recommended"],
       "parserOptions": {
         "project": "./tsconfig.json"
       },
@@ -58,15 +54,13 @@
         "class-methods-use-this": "off", // _document.tsx use render method without `this` keyword
         "@typescript-eslint/no-unused-vars": "off",
         "unused-imports/no-unused-imports": "error",
-        "unused-imports/no-unused-vars": [
-          "error",
-          { "argsIgnorePattern": "^_" }
-        ],
+        "unused-imports/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
         // to avoid == & === problems when comparing variables i disabled this rule
         "eqeqeq": "off",
         // i disabled this rule because it gives me this error in the state variable in the slices :
         //Assignment to property of function parameter 'state'
-        "no-param-reassign": 0
+        "no-param-reassign": 0,
+        "default-case": 0
       }
     }
   ]
