@@ -12,37 +12,30 @@ interface TableOfContentsProps {
   block: NotionBlocksRetrieve;
 }
 
-export const TableOfContents: React.FC<TableOfContentsProps> = ({
-  blocks,
-  block,
-}) => {
-  const headers = blocks.filter((block) =>
-    /^heading_(1|2|3)/i.test(block.type)
-  );
+export const TableOfContents: React.FC<TableOfContentsProps> = ({ blocks, block }) => {
+  const headers = blocks.filter((block) => /^heading_(1|2|3)/i.test(block.type));
 
   return (
     <div className={notionColorClasses[block.table_of_contents.color]}>
       {headers.map((header) => {
         const headerBlock = header?.[header?.type] as RichTextObject;
         const title = richTextToPlainText(headerBlock?.rich_text);
-        const headingLevel = Number(
-          header.type.match(/^heading_(1|2|3)/)?.[1] || 1
-        );
+        const headingLevel = Number(header.type.match(/^heading_(1|2|3)/)?.[1] || 1);
 
         return (
           <div
-            className="my-1"
+            className='my-1'
             key={header.id}
             style={
               headingLevel !== 1
                 ? {
-                    paddingLeft: `${(headingLevel - 1) * 1.5}rem`,
+                    paddingLeft: `${(headingLevel - 1) * 1.5}rem`
                   }
                 : undefined
             }
           >
             <Link
-              className="underline"
+              className='underline'
               href={`#${encodeURIComponent(title)}`}
               prefetch={false}
               shallow

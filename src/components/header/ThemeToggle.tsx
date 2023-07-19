@@ -17,11 +17,11 @@ export default function ThemeToggle() {
 
   return (
     <button
-      className="focus:outline-none ml-4"
+      className='focus:outline-none ml-4'
       onClick={() => {
         setTheme(isDark() ? 'light' : 'dark');
       }}
-      aria-label="Theme toggle"
+      aria-label='Theme toggle'
     >
       {isDark() ? <BiSun size={20} /> : <BiMoon size={20} />}
     </button>

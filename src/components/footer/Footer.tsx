@@ -7,17 +7,17 @@ import { siteConfig } from 'site-config';
 
 const Footer: React.FC = (): JSX.Element => {
   return (
-    <footer className="text-base-content">
+    <footer className='text-base-content'>
       {!siteConfig.hidePoweredBy && (
-        <div className="mt-4 mb-2 text-zinc-400 dark:text-zinc-700 text-center text-xs">
+        <div className='mt-4 mb-2 text-zinc-400 dark:text-zinc-700 text-center text-xs'>
           <p>
             Powered by
             <a
-              className="underline"
-              href="https://github.com/sooros5132/notion-blog-kit"
-              rel="noreferrer"
-              target="_blank"
-              aria-label="notion blog kit repository"
+              className='underline'
+              href='https://github.com/sooros5132/notion-blog-kit'
+              rel='noreferrer'
+              target='_blank'
+              aria-label='notion blog kit repository'
               tabIndex={-1}
             >
               Notion-Blog-Kit
@@ -25,26 +25,21 @@ const Footer: React.FC = (): JSX.Element => {
           </p>
         </div>
       )}
-      <div className="bg-base-200">
-        <div className="flex justify-between align-center mx-auto py-2 px-4">
-          <div className="text-xl font-bold">
-            {siteConfig.infomation.blogname}
-          </div>
-          <div className="flex items-center gap-2 text-2xl">
+      <div className='bg-base-200'>
+        <div className='flex justify-between align-center mx-auto py-2 px-4'>
+          <div className='text-xl font-bold'>{siteConfig.infomation.blogname}</div>
+          <div className='flex items-center gap-2 text-2xl'>
             {siteConfig.infomation.email && (
-              <a
-                href={`mailto:${siteConfig.infomation.email}`}
-                aria-label="send mail link"
-              >
+              <a href={`mailto:${siteConfig.infomation.email}`} aria-label='send mail link'>
                 <SiMaildotru />
               </a>
             )}
             {siteConfig.infomation.github && (
               <a
                 href={siteConfig.infomation.github}
-                rel="noreferrer"
-                target="_blank"
-                aria-label="visit github"
+                rel='noreferrer'
+                target='_blank'
+                aria-label='visit github'
               >
                 <SiGithub />
               </a>
@@ -52,9 +47,9 @@ const Footer: React.FC = (): JSX.Element => {
             {siteConfig.infomation.repository && (
               <a
                 href={siteConfig.infomation.repository}
-                rel="noreferrer"
-                target="_blank"
-                aria-label="visit repository"
+                rel='noreferrer'
+                target='_blank'
+                aria-label='visit repository'
               >
                 <RiGitRepositoryFill />
               </a>

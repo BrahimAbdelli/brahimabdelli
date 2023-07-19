@@ -12,7 +12,6 @@ export const OptionalNextLink: React.FC<
   if (wrappingAnchor) {
     return <Link {...props}>{children}</Link>;
   }
-  const { scroll, shallow, prefetch, as, replace, passHref, ...spanProps } =
-    props;
+  const { scroll, shallow, prefetch, as, replace, passHref, ...spanProps } = props;
   return <span {...spanProps}>{children}</span>;
 };
