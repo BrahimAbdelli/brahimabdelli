@@ -1,4 +1,4 @@
-import create from 'zustand';
+import { create } from 'zustand';
 
 interface ISiteSettingState {
   hydrated: boolean;
@@ -7,7 +7,7 @@ interface ISiteSettingState {
 
 const defaultState: ISiteSettingState = {
   hydrated: false,
-  enableSideBarMenu: false,
+  enableSideBarMenu: false
 };
 
 interface ISiteSettingStore extends ISiteSettingState {
@@ -20,17 +20,17 @@ export const useSiteSettingStore = create<ISiteSettingStore>((set, get) => ({
   ...defaultState,
   setHydrated() {
     set({
-      hydrated: true,
+      hydrated: true
     });
   },
   openSideBarMenu() {
     set({
-      enableSideBarMenu: true,
+      enableSideBarMenu: true
     });
   },
   closeSideBarMenu() {
     set({
-      enableSideBarMenu: false,
+      enableSideBarMenu: false
     });
-  },
+  }
 }));

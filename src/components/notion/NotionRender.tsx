@@ -9,7 +9,7 @@ import { useTranslation } from 'next-i18next';
 import Link from 'next/link';
 import { GrLinkNext, GrLinkPrevious } from 'react-icons/gr';
 import { HiHome, HiMenu } from 'react-icons/hi';
-import shallow from 'zustand/shallow';
+import { shallow } from 'zustand/shallow';
 
 import { siteConfig } from 'site-config';
 import { useNotionStore } from 'src/store/notion';

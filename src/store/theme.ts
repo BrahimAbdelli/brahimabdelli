@@ -1,5 +1,5 @@
-import create from 'zustand';
-import { persist } from 'zustand/middleware';
+import { create } from 'zustand';
+import { createJSONStorage, persist } from 'zustand/middleware';
 
 export interface ThemeState {
   mode: 'light' | 'dark';
@@ -10,7 +10,7 @@ export interface ThemeStore extends ThemeState {
 }
 
 const defaultState: ThemeState = {
-  mode: 'dark',
+  mode: 'dark'
 };
 
 const initialState = { ...defaultState };
@@ -24,23 +24,23 @@ export const useThemeStore = create(
           case 'dark':
           case 'light': {
             set(() => ({
-              mode,
+              mode
             }));
             break;
           }
           default: {
             set(() => ({
-              mode: 'dark',
+              mode: 'dark'
             }));
             break;
           }
         }
-      },
+      }
     }),
     {
       name: 'theme', // unique name
-      getStorage: () => localStorage, // (optional) by default, 'localStorage' is used
-      version: 0.4,
+      storage: createJSONStorage(() => localStorage), // (optional) by default, 'localStorage' is used
+      version: 0.4
     }
   )
 );
