@@ -31,7 +31,9 @@ export async function get<T>(blockId: string) {
     }
 
     return parsedData as T;
-  } catch (e) {}
+  } catch (e) {
+    console.error(e);
+  }
 }
 
 export async function set(blockId: string, content: any) {
@@ -74,10 +76,7 @@ export async function deleteCache(blockId: string) {
     await fs.unlink(cachePath);
     if (process.env.DEBUG_LOGS) {
       console.log('\x1b[37m\x1b[42m');
-      console.log(
-        `delete cache \`${blockId}\` into \`${cachePath}\``,
-        '\x1b[0m'
-      );
+      console.log(`delete cache \`${blockId}\` into \`${cachePath}\``, '\x1b[0m');
     }
     return true;
   } catch (e) {
