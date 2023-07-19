@@ -19,9 +19,7 @@ export {
   NotionTableBlock,
   NotionTodoBlock,
   NotionToggleBlock,
-  NotionVideoBlock,
   NotionDatabasePageView,
-  NotionEquationBlock,
   NotionFileBlock,
   NotionSyncedBlock,
   NotionTableOfContents

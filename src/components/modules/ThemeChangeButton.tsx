@@ -31,20 +31,14 @@ export const ThemeChangeButton: React.FC = () => {
 
   return isHydrated ? (
     <label
-      className="swap swap-rotate btn btn-circle btn-ghost btn-sm text-lg items-center"
+      className='swap swap-rotate btn btn-circle btn-ghost btn-sm text-lg items-center'
       onClickCapture={handleClickThemeSwap}
     >
-      <input type="checkbox" aria-label="theme-mode-change-button" />
-      <HiSun
-        key="light"
-        className={classNames(mode === 'dark' ? 'swap-on' : 'swap-off')}
-      />
-      <HiMoon
-        key="dark"
-        className={classNames(mode === 'light' ? 'swap-on' : 'swap-off')}
-      />
+      <input type='checkbox' aria-label='theme-mode-change-button' />
+      <HiSun key='light' className={classNames(mode === 'dark' ? 'swap-on' : 'swap-off')} />
+      <HiMoon key='dark' className={classNames(mode === 'light' ? 'swap-on' : 'swap-off')} />
     </label>
   ) : (
-    <div className="w-8"></div>
+    <div className='w-8'></div>
   );
 };

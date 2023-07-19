@@ -17,7 +17,7 @@ interface SearchFormProps {
 export const SearchForm: React.FC<SearchFormProps> = ({
   searchValue,
   autoInputHidden = false,
-  autoFocus = false,
+  autoFocus = false
 }): JSX.Element => {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -52,7 +52,7 @@ export const SearchForm: React.FC<SearchFormProps> = ({
         autoInputHidden ? 'sm:bg-base-content/5' : 'bg-base-content/5'
       )}
     >
-      <div className="form-control md:overflow-visible">
+      <div className='form-control md:overflow-visible'>
         <div className={autoInputHidden ? 'sm:input-group' : 'input-group'}>
           <input
             ref={inputRef}
@@ -61,14 +61,14 @@ export const SearchForm: React.FC<SearchFormProps> = ({
               autoInputHidden ? 'hidden sm:block' : null
             )}
             defaultValue={searchValue}
-            type="text"
-            name="search"
-            placeholder="Title Search"
-            aria-label="search-input"
+            type='text'
+            name='search'
+            placeholder='Title Search'
+            aria-label='search-input'
           />
           <button
-            className="btn btn-sm btn-ghost btn-circle sm:btn-square text-lg"
-            aria-label="search-button"
+            className='btn btn-sm btn-ghost btn-circle sm:btn-square text-lg'
+            aria-label='search-button'
           >
             <AiOutlineSearch />
           </button>

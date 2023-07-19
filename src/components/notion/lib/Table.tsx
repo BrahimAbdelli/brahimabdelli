@@ -41,10 +41,7 @@ export const Table: React.FC<TableProps> = ({ block }) => {
             <tr key={`table-row-${rowBlock.id}`}>
               {rowBlock.table_row.cells.map((cellBlocks, cellIdx) => (
                 <td key={`table-row-${rowBlock.id}-cell-${cellIdx}`}>
-                  <NotionParagraphBlock
-                    blockId={rowBlock.id}
-                    richText={cellBlocks}
-                  />
+                  <NotionParagraphBlock blockId={rowBlock.id} richText={cellBlocks} />
                 </td>
               ))}
             </tr>

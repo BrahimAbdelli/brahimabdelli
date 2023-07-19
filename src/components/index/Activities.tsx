@@ -17,13 +17,10 @@ export default function Activities() {
         <br />
         {`${t('home.activities.music.description2')}`}
       </Card>
-      <Card title="Reading" tags={[t('home.activities.reading.books')]}>
+      <Card title='Reading' tags={[t('home.activities.reading.books')]}>
         {`${t('home.activities.reading.description')}`}
       </Card>
-      <Card
-        title="Sports"
-        tags={['Jogging', 'Football', t('home.activities.music.name')]}
-      >
+      <Card title='Sports' tags={['Jogging', 'Football', t('home.activities.music.name')]}>
         {`${t('home.activities.sports.description')}`}
       </Card>
     </CardGrid>

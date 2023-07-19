@@ -10,19 +10,17 @@ export default function ProjectsList() {
   return (
     <CardGrid>
       <Card
-        title="Personal Portfolio"
-        link="https://github.com/BrahimAbdelli/brahimabdelli"
+        title='Personal Portfolio'
+        link='https://github.com/BrahimAbdelli/brahimabdelli'
         tags={['NextJS, TailwindCSS, Typescript']}
         highlighted
       >
         {`${t('home.projects.portfolio.description')}`}
       </Card>
       <Card
-        title="Auto Sans Risque"
-        link="https://auto-sans-risque.tn/home"
-        tags={[
-          'React, NestJS, TailwindCSS, Javascript, Typescript, MongoDB, TypeORM',
-        ]}
+        title='Auto Sans Risque'
+        link='https://auto-sans-risque.tn/home'
+        tags={['React, NestJS, TailwindCSS, Javascript, Typescript, MongoDB, TypeORM']}
         highlighted
       >
         {`${t('home.projects.autosansrisque.description1')}`}
@@ -41,8 +39,8 @@ export default function ProjectsList() {
         {`${t('home.projects.clothingcompany.description')}`}
       </Card>
       <Card
-        title="Advent of Code"
-        link="https://github.com/BrahimAbdelli/advent-of-code"
+        title='Advent of Code'
+        link='https://github.com/BrahimAbdelli/advent-of-code'
         tags={['Javascript']}
         highlighted
       >
@@ -50,8 +48,8 @@ export default function ProjectsList() {
       </Card>
 
       <Card
-        title="Tekmanda"
-        link="https://www.tekmanda.com/"
+        title='Tekmanda'
+        link='https://www.tekmanda.com/'
         tags={['NextJS, ReactJS, Styled Components']}
         highlighted
       >

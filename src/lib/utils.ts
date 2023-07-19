@@ -1,8 +1,5 @@
 export function copyTextAtClipBoard(text: string) {
-  if (
-    !document.queryCommandSupported &&
-    document.queryCommandSupported('copy')
-  ) {
+  if (!document.queryCommandSupported && document.queryCommandSupported('copy')) {
     return false;
   }
   const textarea = document.createElement('textarea');

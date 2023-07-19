@@ -8,7 +8,7 @@ import {
   NotionBlocksRetrieve,
   NotionDatabasesRetrieve,
   NotionPagesRetrieve,
-  RichText,
+  RichText
 } from 'src/types/notion';
 
 export type NotionImageFetcherParams = {
@@ -20,10 +20,7 @@ export type NotionImageFetcherParams = {
   refreshInterval?: number;
 };
 
-export function isExpired({
-  expiry_time,
-  url,
-}: NonNullable<FileObject['file']>) {
+export function isExpired({ expiry_time, url }: NonNullable<FileObject['file']>) {
   const now = Date.now();
   if (url && expiry_time && new Date(expiry_time).getTime() < now) {
     return true;
@@ -37,7 +34,7 @@ export const useRenewExpiredFile = ({
   useType,
   initialFileObject,
   autoRefresh = true,
-  refreshInterval = 5 * 60 * 1000, // 5분
+  refreshInterval = 5 * 60 * 1000 // 5분
 }: NotionImageFetcherParams) => {
   // const EXTERNAL_IS_AVAILABLE = 'external is available.';
 
@@ -77,17 +74,11 @@ export const useRenewExpiredFile = ({
           case 'video':
           case 'callout':
           case 'image': {
-            if (
-              useType !== 'image' &&
-              useType !== 'video' &&
-              useType !== 'icon'
-            ) {
+            if (useType !== 'image' && useType !== 'video' && useType !== 'icon') {
               throw 'not support use type';
             }
             const block = await axios
-              .get<NotionBlocksRetrieve>(
-                `${siteConfig.path}/notion/blocks/${blockId}`
-              )
+              .get<NotionBlocksRetrieve>(`${siteConfig.path}/notion/blocks/${blockId}`)
               .then((res) => res?.data);
 
             if (blockType === 'callout') {
@@ -116,8 +107,8 @@ export const useRenewExpiredFile = ({
               //   table: 'block'
               // })
               null,
-            expiry_time: '',
-          },
+            expiry_time: ''
+          }
         };
       }
     },
@@ -125,7 +116,7 @@ export const useRenewExpiredFile = ({
       errorRetryCount: 1,
       fallbackData: initialFileObject,
       revalidateOnFocus: false,
-      refreshInterval: autoRefresh ? refreshInterval : undefined,
+      refreshInterval: autoRefresh ? refreshInterval : undefined
     }
   ) as SWRResponse<FileObject & IconObject>;
 };
