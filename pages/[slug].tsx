@@ -72,6 +72,7 @@ export const getStaticProps: GetStaticProps<SlugProps> = async ({ params, locale
       throw 'type error "slug"';
     }
     if (slug === siteConfig.notion.baseBlock) {
+      //console.log('heyyyy' + process.env.CLI_COMMAND_TYPE);
       return {
         redirect: {
           permanent: false,
@@ -79,7 +80,6 @@ export const getStaticProps: GetStaticProps<SlugProps> = async ({ params, locale
         }
       };
     }
-
     const notionClient = new NotionClient();
 
     {
@@ -124,6 +124,7 @@ export const getStaticProps: GetStaticProps<SlugProps> = async ({ params, locale
         if (pageInfo.parent.database_id?.replace(/-/g, '') === siteConfig.notion.baseBlock) {
           const newSlug = richTextToPlainText(pageInfo.properties.slug?.rich_text);
           if (newSlug) {
+            //console.log('heyyyy2' + process.env.CLI_COMMAND_TYPE);
             return {
               redirect: {
                 permanent: false,
@@ -191,6 +192,7 @@ export const getStaticProps: GetStaticProps<SlugProps> = async ({ params, locale
       }
 
       if (searchedPageSlug) {
+        //console.log('heyyyy3' + process.env.CLI_COMMAND_TYPE);
         return {
           redirect: {
             permanent: false,
@@ -205,12 +207,19 @@ export const getStaticProps: GetStaticProps<SlugProps> = async ({ params, locale
     throw 'page is not found';
   } catch (e) {
     if (typeof slug === 'string') {
-      return {
-        redirect: {
-          permanent: false,
-          destination: `/s/${encodeURIComponent(slug)}`
-        }
-      };
+      //console.log('heyyyy4' + process.env.CLI_COMMAND_TYPE);
+      if (process.env.CLI_COMMAND_TYPE === 'build') {
+        return {
+          notFound: true
+        };
+      } else {
+        return {
+          redirect: {
+            permanent: false,
+            destination: `/s/${encodeURIComponent(slug)}`
+          }
+        };
+      }
     }
     return {
       notFound: true

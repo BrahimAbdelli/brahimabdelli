@@ -14,7 +14,6 @@ const enableProgressiveWebApp = process.env.ENABLE_PROGRESSIVE_WEB_APP === 'true
 
 try {
   if (!process.env.NOTION_API_SECRET_KEY) {
-    // const e = new Error('NOTION_API_SECRET_KEY');
     throw String('NOTION_API_SECRET_KEY');
   }
   if (!process.env.NEXT_PUBLIC_NOTION_DATABASE_ID) {
