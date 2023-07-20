@@ -1,4 +1,5 @@
 import type React from 'react';
+
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import type { BlogProperties, GetNotionBlock } from 'src/types/notion';
 import { siteConfig } from 'site-config';
