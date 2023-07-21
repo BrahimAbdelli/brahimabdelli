@@ -208,18 +208,18 @@ export const getStaticProps: GetStaticProps<SlugProps> = async ({ params, locale
   } catch (e) {
     if (typeof slug === 'string') {
       //console.log('heyyyy4' + process.env.CLI_COMMAND_TYPE);
-      if (process.env.CLI_COMMAND_TYPE === 'build') {
-        return {
-          notFound: true
-        };
-      } else {
-        return {
-          redirect: {
-            permanent: false,
-            destination: `/s/${encodeURIComponent(slug)}`
-          }
-        };
-      }
+      // if (process.env.CLI_COMMAND_TYPE === 'build') {
+      //   return {
+      //     notFound: true
+      //   };
+      // } else {
+      return {
+        redirect: {
+          permanent: false,
+          destination: `/s/${encodeURIComponent(slug)}`
+        }
+      };
+      //}
     }
     return {
       notFound: true
