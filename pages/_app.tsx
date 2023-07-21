@@ -1,4 +1,5 @@
 import type React from 'react';
+
 import { useEffect } from 'react';
 
 import { appWithTranslation } from 'next-i18next';
