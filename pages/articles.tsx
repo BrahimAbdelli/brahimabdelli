@@ -25,26 +25,26 @@ const Articles: NextPage<HomeProps> = () => {
 };
 
 export const getStaticProps = async ({ locale }: { locale: string }) => {
-  try {
-    const notionClient = new NotionClient();
+  //try {
+  const notionClient = new NotionClient();
 
-    const database = await notionClient.getMainDatabase();
-    const blogProperties = await notionClient.getBlogProperties();
+  const database = await notionClient.getMainDatabase();
+  const blogProperties = await notionClient.getBlogProperties();
 
-    return {
-      props: {
-        ...(await serverSideTranslations(locale, ['common'])),
-        slug: siteConfig.notion.baseBlock,
-        notionBlock: database,
-        blogProperties
-      },
-      revalidate: REVALIDATE
-    };
-  } catch (e) {
-    return {
-      notFound: true
-    };
-  }
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common'])),
+      slug: siteConfig.notion.baseBlock,
+      notionBlock: database,
+      blogProperties
+    },
+    revalidate: REVALIDATE
+  };
+  // } catch (e) {
+  //   return {
+  //     notFound: true
+  //   };
+  // }
 };
 
 export default Articles;
