@@ -42,7 +42,7 @@ export const getStaticProps = async ({ locale }: { locale: string }) => {
     };
   } catch (e) {
     return {
-      notFound: false
+      notFound: true
     };
   }
 };
