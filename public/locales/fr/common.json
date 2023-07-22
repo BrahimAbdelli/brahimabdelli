@@ -5,7 +5,8 @@
   "header": {
     "download": "Télécharger mon CV",
     "home": "Acceuil",
-    "resume": "cv.pdf"
+    "resume": "cv.pdf",
+    "titlesearch": "Recherche par titre"
   },
   "home": {
     "hello": "Salut! C'est moi",
@@ -103,5 +104,10 @@
     "contanctme": "Contactez-Moi",
     "copyright": "Droits d'auteur",
     "takecare": "Prenez soin de vous et rappelez-vous, votre santé est votre priorité."
+  },
+  "articles": {
+    "searchs": {
+      "searchbytitle": "Recherche par titre"
+    }
   }
 }

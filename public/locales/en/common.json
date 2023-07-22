@@ -5,7 +5,8 @@
   "header": {
     "download": "Download Resume",
     "home": "Home",
-    "resume": "resume.pdf"
+    "resume": "resume.pdf",
+    "titlesearch": "Title Search"
   },
   "home": {
     "hello": "Hello! It's me",
@@ -103,5 +104,10 @@
     "contanctme": "Contact Me",
     "copyright": "Copyright ",
     "takecare": "Take care and remember, health comes first."
+  },
+  "articles": {
+    "searchs": {
+      "searchbytitle": "Search by title"
+    }
   }
 }

@@ -34,7 +34,6 @@ export const NotionDatabasePageView: React.FC<NotionDatabasePageViewProps> = ({
 }) => {
   const router = useRouter();
   const { t } = useTranslation('common');
-  console.log(t('articles.searchs.searchbytitle'));
   const isBaseDatabase = siteConfig.notion.baseBlock === databaseInfo.id.replace(/-/g, '');
   const pages = notionBlock.results;
 
