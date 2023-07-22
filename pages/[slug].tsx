@@ -1,7 +1,6 @@
 import type React from 'react';
 
 import type { GetStaticPaths, GetStaticProps } from 'next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 import { NotionClient } from 'lib/notion/Notion';
 import { siteConfig } from 'site-config';
@@ -65,14 +64,13 @@ export const getStaticPaths: GetStaticPaths<{ slug: string }> = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps<SlugProps> = async ({ params, locale }) => {
+export const getStaticProps: GetStaticProps<SlugProps> = async ({ params }) => {
   const slug = params?.slug;
   try {
     if (typeof slug !== 'string') {
       throw 'type error "slug"';
     }
     if (slug === siteConfig.notion.baseBlock) {
-      //console.log('heyyyy' + process.env.CLI_COMMAND_TYPE);
       return {
         redirect: {
           permanent: false,
@@ -105,8 +103,7 @@ export const getStaticProps: GetStaticProps<SlugProps> = async ({ params, locale
             slug,
             notionBlock: page,
             blogProperties,
-            blogArticleRelation,
-            ...(await serverSideTranslations(locale as string, ['common']))
+            blogArticleRelation
           },
           revalidate: REVALIDATE
         };
@@ -124,7 +121,6 @@ export const getStaticProps: GetStaticProps<SlugProps> = async ({ params, locale
         if (pageInfo.parent.database_id?.replace(/-/g, '') === siteConfig.notion.baseBlock) {
           const newSlug = richTextToPlainText(pageInfo.properties.slug?.rich_text);
           if (newSlug) {
-            //console.log('heyyyy2' + process.env.CLI_COMMAND_TYPE);
             return {
               redirect: {
                 permanent: false,
@@ -148,8 +144,7 @@ export const getStaticProps: GetStaticProps<SlugProps> = async ({ params, locale
             slug,
             notionBlock: page,
             blogProperties,
-            blogArticleRelation,
-            ...(await serverSideTranslations(locale as string, ['common']))
+            blogArticleRelation
           },
           revalidate: REVALIDATE
         };
@@ -192,7 +187,6 @@ export const getStaticProps: GetStaticProps<SlugProps> = async ({ params, locale
       }
 
       if (searchedPageSlug) {
-        //console.log('heyyyy3' + process.env.CLI_COMMAND_TYPE);
         return {
           redirect: {
             permanent: false,
@@ -207,19 +201,12 @@ export const getStaticProps: GetStaticProps<SlugProps> = async ({ params, locale
     throw 'page is not found';
   } catch (e) {
     if (typeof slug === 'string') {
-      //console.log('heyyyy4' + process.env.CLI_COMMAND_TYPE);
-      // if (process.env.CLI_COMMAND_TYPE === 'build') {
-      //   return {
-      //     notFound: true
-      //   };
-      // } else {
       return {
         redirect: {
           permanent: false,
           destination: `/s/${encodeURIComponent(slug)}`
         }
       };
-      //}
     }
     return {
       notFound: true

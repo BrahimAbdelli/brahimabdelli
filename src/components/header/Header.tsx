@@ -22,7 +22,7 @@ const Header: React.FC = (): JSX.Element => {
   const [visibleHeader, setVisibleHeader] = useState(true);
   const { hydrated, enableSideBarMenu, closeSideBarMenu, openSideBarMenu } = useSiteSettingStore();
   const blogProperties = useNotionStore(({ blogProperties }) => blogProperties, shallow);
-  const { t } = useTranslation('common');
+  //const { t } = useTranslation('common');
 
   const handleClickSideBarMenuButton = () => {
     if (enableSideBarMenu) {
@@ -85,7 +85,7 @@ const Header: React.FC = (): JSX.Element => {
         <div className='max-w-[150px] sm:max-w-[200px]'>
           <SearchForm />
         </div>
-        <div>
+        {/*         <div>
           <a
             className='flex items-center justify-center px-2 font-medium rounded-md text-black dark:text-green-custom shadow uppercase dark:hover:bg-slate-700 hover:bg-slate-100 
                 hover:shadow-lg transform transition hover:-translate-y-1 focus:ring-2 focus:ring-blue-600 ring-offset-2 outline-none 
@@ -95,7 +95,7 @@ const Header: React.FC = (): JSX.Element => {
           >
             {t('header.download')}
           </a>
-        </div>
+        </div> */}
         <div className='flex items-center'>
           <ThemeChangeButton />
           <LanguageToggle />
