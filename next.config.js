@@ -35,36 +35,36 @@ try {
 const nextConfig = {
   i18n,
   reactStrictMode: false,
-  swcMinify: true
-  // experimental: {
-  //   appDir: true
-  // },
-  // staticPageGenerationTimeout: 300, // In seconds, 5 minutes applied (default is 1 minute)
-  // images: {
-  //   domains: [
-  //     'www.notion.so',
-  //     'notion.so',
-  //     's3.us-west-2.amazonaws.com',
-  //     's3-us-west-2.amazonaws.com',
-  //     'images.unsplash.com'
-  //   ],
-  //   formats: ['image/avif', 'image/webp'],
-  //   dangerouslyAllowSVG: true,
-  //   contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
-  //   minimumCacheTTL: 1800
-  // },
-  // async rewrites() {
-  //   return [
-  //     {
-  //       source: '/aws-secure-notion-static/:path*',
-  //       destination: 'https://s3.us-west-2.amazonaws.com/secure.notion-static.com/:path*'
-  //     },
-  //     {
-  //       source: '/aws-public-notion-static/:path*',
-  //       destination: 'https://s3.us-west-2.amazonaws.com/public.notion-static.com/:path*'
-  //     }
-  //   ];
-  // }
+  swcMinify: true,
+  experimental: {
+    appDir: true
+  },
+  staticPageGenerationTimeout: 300, // In seconds, 5 minutes applied (default is 1 minute)
+  images: {
+    domains: [
+      'www.notion.so',
+      'notion.so',
+      's3.us-west-2.amazonaws.com',
+      's3-us-west-2.amazonaws.com',
+      'images.unsplash.com'
+    ],
+    formats: ['image/avif', 'image/webp'],
+    dangerouslyAllowSVG: true,
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    minimumCacheTTL: 1800
+  },
+  async rewrites() {
+    return [
+      {
+        source: '/aws-secure-notion-static/:path*',
+        destination: 'https://s3.us-west-2.amazonaws.com/secure.notion-static.com/:path*'
+      },
+      {
+        source: '/aws-public-notion-static/:path*',
+        destination: 'https://s3.us-west-2.amazonaws.com/public.notion-static.com/:path*'
+      }
+    ];
+  }
 };
 
 module.exports = enableProgressiveWebApp

@@ -10,6 +10,7 @@ import {
   NotionPagesRetrieve,
   RichText
 } from 'src/types/notion';
+import { awsImageObjectUrlToNotionUrl } from '../../../lib/notion';
 
 export type NotionImageFetcherParams = {
   blockId: string;
@@ -100,13 +101,11 @@ export const useRenewExpiredFile = ({
         return {
           type: 'file',
           file: {
-            url:
-              // awsImageObjectUrlToNotionUrl({
-              //   s3ObjectUrl: initialFileObject?.file?.url || initialFileObject?.external?.url || '',
-              //   blockId,
-              //   table: 'block'
-              // })
-              null,
+            url: awsImageObjectUrlToNotionUrl({
+              s3ObjectUrl: initialFileObject?.file?.url || initialFileObject?.external?.url || '',
+              blockId,
+              table: 'block'
+            }),
             expiry_time: ''
           }
         };

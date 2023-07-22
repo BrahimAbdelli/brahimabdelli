@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 
 import { siteConfig } from 'site-config';
-import { NEXT_IMAGE_DOMAINS } from 'src/lib/notion';
+import { awsImageObjectUrlToNotionUrl, NEXT_IMAGE_DOMAINS } from 'src/lib/notion';
 import { FileObject, IconObject } from 'src/types/notion';
 
 import { isExpired, NotionImageFetcherParams, useRenewExpiredFile } from './utils';
@@ -51,17 +51,18 @@ export const NotionSecureImage: React.FC<NotionSecureImageProps> = ({
     autoRefresh: loading !== 'eager'
   });
 
-  const bulrImage: string | null = null;
+  let bulrImage: string | null = null;
   {
     if (fileObject?.file?.url) {
       const s3AmazonImageSrc = fileObject?.file?.url;
       const { host } = new URL(s3AmazonImageSrc);
       if (NEXT_IMAGE_DOMAINS.includes(host)) {
-        // const notiomImageSrc = awsImageObjectUrlToNotionUrl({
-        //   s3ObjectUrl: s3AmazonImageSrc,
-        //   blockId
-        // });
-        // bulrImage = notiomImageSrc + '&width=24';
+        const notiomImageSrc = awsImageObjectUrlToNotionUrl({
+          s3ObjectUrl: s3AmazonImageSrc,
+          blockId
+        });
+
+        bulrImage = notiomImageSrc + '&width=24';
       }
     }
   }
