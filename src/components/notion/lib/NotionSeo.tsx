@@ -4,7 +4,6 @@ import { NextSeo } from 'next-seo';
 import Head from 'next/head';
 
 import { GetNotionBlock, URL_PAGE_TITLE_MAX_LENGTH } from 'src/types/notion';
-import { awsImageObjectUrlToNotionUrl } from '../../../lib/notion';
 
 export interface NotionSeoProps {
   page: GetNotionBlock['pageInfo'];
@@ -17,19 +16,18 @@ export const NotionSeo: React.FC<NotionSeoProps> = ({ page, title, description }
     ? page?.cover?.type === 'external'
       ? page.cover.external?.url ?? ''
       : page?.cover?.type === 'file'
-      ? awsImageObjectUrlToNotionUrl({
-          blockId: page.id,
-          s3ObjectUrl: page.cover.file?.url || ''
-        }) + '&width=1200'
+      ? // ? awsImageObjectUrlToNotionUrl({
+        //     blockId: page.id,
+        //     s3ObjectUrl: page.cover.file?.url || ''
+        //   }) + '&width=1200'
+        ''
       : ''
     : '';
-  const icon =
-    page.icon?.file &&
-    page.icon?.type === 'file' &&
-    awsImageObjectUrlToNotionUrl({
-      blockId: page.id,
-      s3ObjectUrl: page.icon.file.url
-    });
+  const icon = page.icon?.file && page.icon?.type === 'file' && '?';
+  // && awsImageObjectUrlToNotionUrl({
+  //   blockId: page.id,
+  //   s3ObjectUrl: page.icon.file.url
+  // });
 
   return (
     <>
