@@ -14,7 +14,7 @@ interface SearchResult {
 }
 
 export default function Search({ searchValue, searchResult }: SearchResult) {
-  const { t } = useTranslation('');
+  const { t } = useTranslation('common');
   return (
     <div className='w-full max-w-[var(--article-max-width)] m-auto my-6 px-3'>
       <div>

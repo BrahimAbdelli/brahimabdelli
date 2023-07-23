@@ -8,6 +8,9 @@
     "resume": "cv.pdf",
     "titlesearch": "Recherche par titre"
   },
+  "footer": {
+    "poweredby": "Réalisé par"
+  },
   "home": {
     "hello": "Salut! C'est moi",
     "description": "Je construis des choses.",
@@ -107,7 +110,8 @@
   },
   "articles": {
     "searchs": {
-      "searchbytitle": "Recherche par titre"
+      "searchbytitle": "Recherche par titre",
+      "entersearch": "Enter your search"
     }
   }
 }

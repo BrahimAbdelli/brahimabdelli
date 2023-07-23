@@ -8,6 +8,9 @@
     "resume": "resume.pdf",
     "titlesearch": "Title Search"
   },
+  "footer": {
+    "poweredby": "Powered by"
+  },
   "home": {
     "hello": "Hello! It's me",
     "description": "I build things.",
@@ -107,7 +110,8 @@
   },
   "articles": {
     "searchs": {
-      "searchbytitle": "Search by title"
+      "searchbytitle": "Search by title",
+      "entersearch": "Tapez votre recherche"
     }
   }
 }

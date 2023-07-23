@@ -12,7 +12,7 @@ type SearchIndexProps = {
 };
 
 const SearchIndex: NextPage<SearchIndexProps> = ({ blogProperties }) => {
-  const { t } = useTranslation('');
+  const { t } = useTranslation('common');
   return (
     <div className='w-full max-w-[var(--article-max-width)] m-auto my-6 px-3'>
       <div className='max-w-screen-sm mt-4 mx-auto text-center'>
