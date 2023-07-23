@@ -4,6 +4,7 @@ import { Fragment, useMemo, useState } from 'react';
 import classNames from 'classnames';
 import formatInTimeZone from 'date-fns-tz/formatInTimeZone';
 import { sortBy } from 'lodash';
+import { useTranslation } from 'next-i18next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { AiOutlineSearch } from 'react-icons/ai';
@@ -32,7 +33,7 @@ export const NotionDatabasePageView: React.FC<NotionDatabasePageViewProps> = ({
   notionBlock
 }) => {
   const router = useRouter();
-  //const { t } = useTranslation('common');
+  const { t } = useTranslation('common');
   const isBaseDatabase = siteConfig.notion.baseBlock === databaseInfo.id.replace(/-/g, '');
   const pages = notionBlock.results;
 
@@ -241,7 +242,7 @@ export const NotionDatabasePageView: React.FC<NotionDatabasePageViewProps> = ({
                 value={searchValue}
                 type='text'
                 name='search'
-                placeholder='Search by title'
+                placeholder={t('articles.searchs.searchbytitle')}
                 onChange={handleChangeSearchValue}
               />
               <button className='btn btn-sm btn-ghost btn-circle sm:btn-square text-lg'>
@@ -263,6 +264,14 @@ export const NotionDatabasePageView: React.FC<NotionDatabasePageViewProps> = ({
     </div>
   );
 };
+
+/* export const getStaticProps = async ({ locale }: { locale: string }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common']))
+    }
+  };
+}; */
 
 type ArticleSummaryProps = {
   article: NotionPagesRetrieve;

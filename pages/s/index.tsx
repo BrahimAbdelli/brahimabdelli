@@ -4,6 +4,7 @@ import { SearchForm } from 'src/components/search/SearchForm';
 import { BlogProperties } from 'src/types/notion';
 import { NotionClient } from 'lib/notion/Notion';
 import { REVALIDATE } from 'src/lib/notion';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
 
 type SearchIndexProps = {
@@ -15,7 +16,7 @@ const SearchIndex: NextPage<SearchIndexProps> = ({ blogProperties }) => {
   return (
     <div className='w-full max-w-[var(--article-max-width)] m-auto my-6 px-3'>
       <div className='max-w-screen-sm mt-4 mx-auto text-center'>
-        <h1 className='text-2xl'>Search</h1>
+        <h1 className='text-2xl'>{t('articles.searchs.entersearch')}</h1>
         <div className='mt-10'>
           <SearchForm autoFocus />
         </div>
@@ -24,7 +25,7 @@ const SearchIndex: NextPage<SearchIndexProps> = ({ blogProperties }) => {
   );
 };
 
-export const getStaticProps: GetStaticProps<SearchIndexProps> = async () => {
+export const getStaticProps: GetStaticProps<SearchIndexProps> = async ({ locale }) => {
   try {
     const notionClient = new NotionClient();
 
@@ -32,7 +33,8 @@ export const getStaticProps: GetStaticProps<SearchIndexProps> = async () => {
 
     return {
       props: {
-        blogProperties
+        blogProperties,
+        ...(await serverSideTranslations(locale as string, ['common']))
       },
       revalidate: REVALIDATE
     };

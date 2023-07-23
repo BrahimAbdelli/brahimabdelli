@@ -4,6 +4,8 @@ import { BlogProperties, NotionPagesRetrieve, NotionSearch } from 'src/types/not
 import { ChildDatabaseItem } from 'src/components/notion/lib/ChildDatabaseItem';
 import { SearchForm } from 'src/components/search/SearchForm';
 import { NotionClient } from 'lib/notion/Notion';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
 
 interface SearchResult {
   searchValue?: string;
@@ -12,12 +14,13 @@ interface SearchResult {
 }
 
 export default function Search({ searchValue, searchResult }: SearchResult) {
-  //const { t } = useTranslation('');
+  const { t } = useTranslation('');
+  ('');
   return (
     <div className='w-full max-w-[var(--article-max-width)] m-auto my-6 px-3'>
       <div>
         <div className='max-w-screen-sm mt-4 mx-auto text-center'>
-          <h1 className='text-2xl'>Search</h1>
+          <h1 className='text-2xl'>{t('articles.searchs.entersearch')}</h1>
           <div className='mt-10'>
             <SearchForm key={searchValue} searchValue={searchValue} autoFocus />
           </div>
@@ -34,7 +37,7 @@ export default function Search({ searchValue, searchResult }: SearchResult) {
               ))}
             </div>
           ) : (
-            <div className='text-center'>No results found</div>
+            <div className='text-center'>{`${t('articles.searchs.noresultsfound')}`}</div>
           )}
         </div>
       </div>
@@ -44,8 +47,8 @@ export default function Search({ searchValue, searchResult }: SearchResult) {
 
 export const getServerSideProps: GetServerSideProps<SearchResult> = async ({
   query,
-  params
-  //locale
+  params,
+  locale
 }) => {
   const slug = params?.slug;
 
@@ -85,7 +88,8 @@ export const getServerSideProps: GetServerSideProps<SearchResult> = async ({
     props: {
       blogProperties,
       searchValue: slug,
-      searchResult: result
+      searchResult: result,
+      ...(await serverSideTranslations(locale as string, ['common']))
     }
   };
 };

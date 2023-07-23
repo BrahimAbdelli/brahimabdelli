@@ -31,7 +31,7 @@ export interface NotionRenderProps {
 
 export const NotionRender: React.FC<NotionRenderProps> = () => {
   const { baseBlock, pageInfo, userInfo } = useNotionStore((state) => state, shallow);
-  //const { t } = useTranslation('common');
+  const { t } = useTranslation('common');
   const blocks = baseBlock?.results;
 
   if (!blocks || !pageInfo) {

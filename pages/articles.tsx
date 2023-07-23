@@ -1,6 +1,7 @@
 import type React from 'react';
 
 import type { NextPage } from 'next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 import { NotionClient } from 'lib/notion/Notion';
 import { siteConfig } from 'site-config';
@@ -12,6 +13,7 @@ interface HomeProps {
   slug: string;
   notionBlock: GetNotionBlock;
   blogProperties: BlogProperties;
+  // local: string;
 }
 
 const Articles: NextPage<HomeProps> = () => {
@@ -22,7 +24,7 @@ const Articles: NextPage<HomeProps> = () => {
   );
 };
 
-export const getStaticProps = async () => {
+export const getStaticProps = async ({ locale }: { locale: string }) => {
   try {
     const notionClient = new NotionClient();
 
@@ -31,6 +33,7 @@ export const getStaticProps = async () => {
 
     return {
       props: {
+        ...(await serverSideTranslations(locale, ['common'])),
         slug: siteConfig.notion.baseBlock,
         notionBlock: database,
         blogProperties
