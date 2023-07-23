@@ -13,7 +13,6 @@ interface HomeProps {
   slug: string;
   notionBlock: GetNotionBlock;
   blogProperties: BlogProperties;
-  // local: string;
 }
 
 const Articles: NextPage<HomeProps> = () => {
