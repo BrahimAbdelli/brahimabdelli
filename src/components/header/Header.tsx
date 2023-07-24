@@ -75,7 +75,7 @@ const Header: React.FC = (): JSX.Element => {
             className='no-underline dark:text-gray-300 text-slate-600 hover:text-gray-800 hover:dark:text-gray-300 font-montserrat text-xs font-extrabold btn btn-ghost btn-sm'
             href='/'
           >
-            {siteConfig.infomation.blogname}
+            {t('header.home')}
           </Link>
           <Link
             className='no-underline dark:text-gray-300 text-slate-600 hover:text-gray-800 hover:dark:text-gray-300 font-montserrat text-xs font-extrabold btn btn-ghost btn-sm'
