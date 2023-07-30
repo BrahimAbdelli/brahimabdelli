@@ -60,27 +60,6 @@ export const ChildDatabaseItem: React.FC<{
   }, []);
 
   return (
-    // borderRadius: theme.size.px10,
-    // minWidth: 100,
-    // backgroundColor: theme.color.cardBackground,
-    // /**
-    //  * Safari 브라우저 borderRadius 오류.
-    //  * 쌓임 맥락에 추가 https://www.sungikchoi.com/blog/safari-overflow-border-radius/
-    //  * isolation: isolate
-    //  * will-change: transform;
-    //  * 추가하기
-    //  */
-    // isolation: 'isolate',
-    // overflow: 'hidden',
-    // '& .page-cover': {
-    //   filter: 'brightness(0.75)'
-    // },
-    // '&:hover .page-cover': {
-    //   filter: 'brightness(1)',
-    //   '& .image': {
-    //     transform: 'scale(1.05)'
-    //   }
-    // }
     <div>
       <div className='rounded-xl min-w-[100px] bg-base-content/5 isolate overflow-hidden [&>a>.page-cover]:brightness-90 [&:hover>a>.page-cover]:brightness-100 [&:hover>a>.page-cover>div>img]:scale-[1.05] [&:hover>a>.page-cover>.notion-database-item-empty-cover]:scale-[1.05]'>
         <Link href={href}>

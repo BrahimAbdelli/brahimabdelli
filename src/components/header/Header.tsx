@@ -84,9 +84,9 @@ const Header: React.FC = (): JSX.Element => {
             Articles
           </Link>
         </div>
-        <div className='max-w-[150px] sm:max-w-[200px]'>
+        {/*         <div className='max-w-[150px] sm:max-w-[200px]'>
           <SearchForm />
-        </div>
+        </div> */}
 
         <div>
           <a

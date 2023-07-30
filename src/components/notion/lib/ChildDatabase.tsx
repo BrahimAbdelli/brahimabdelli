@@ -41,20 +41,6 @@ export const ChildDatabase: React.FC<ChildDatabaseProps> = ({ block }) => {
   const { databasesRecord } = useNotionStore();
   const database = databasesRecord?.[block.id];
 
-  // const sortKeyRecord = {
-  //   ...defaultSortRecord
-  // };
-
-  // Object.keys(database?.results?.[0]?.properties || {}).forEach((key) => {
-  //   const property = database?.results?.[0]?.properties[key];
-  //   if (sortablePropertyTypes.includes(property?.type)) {
-  //     sortKeyRecord[key] = {
-  //       name: key,
-  //       type: property?.type
-  //     };
-  //   }
-  // });
-
   const pathname = usePathname();
 
   const [blocks, setBlocks] = useState(
