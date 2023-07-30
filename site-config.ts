@@ -1,7 +1,7 @@
 import { createSiteConfig } from './src/lib/siteConfig';
 
 export const siteConfig = createSiteConfig({
-  TZ: 'Asia/Seoul',
+  TZ: 'Europe/Paris',
   path: '/api/v1',
   notion: {
     baseBlock: (

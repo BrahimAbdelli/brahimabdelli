@@ -45,16 +45,16 @@ function MyApp({ Component, pageProps }: AppProps) {
         openGraph={{
           site_name: siteConfig.infomation.blogname,
           title: siteConfig.infomation.blogname,
-          locale: 'ko_KR',
+          locale: 'en_IE',
           type: 'website',
           description: siteConfig.infomation.blogname
-            ? `${siteConfig.infomation.blogname} is the blog of.`
-            : 'notion blog is a platform.'
+            ? `${siteConfig.infomation.blogname} is a software engineer who loves to build solutions.`
+            : 'A personal portfolio.'
         }}
         description={
           siteConfig.infomation.blogname
-            ? `${siteConfig.infomation.blogname} is the blog of.`
-            : 'notion blog platform.'
+            ? `${siteConfig.infomation.blogname} is a software engineer who loves to build solutions.`
+            : 'A personal portfolio.'
         }
       />
       <Head>
