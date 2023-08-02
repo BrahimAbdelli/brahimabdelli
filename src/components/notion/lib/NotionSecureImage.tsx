@@ -92,7 +92,7 @@ export const NotionSecureImage: React.FC<NotionSecureImageProps> = ({
               'image',
               isOriginalImageLoaded ? null : 'opacity-0 w-0 h-0 absolute top-0 left-0'
             )}
-            loading={loading || 'lazy'}
+            loading={loading || 'eager'}
             src={fileObject?.file?.url || fileObject?.external?.url || ''}
             alt={alt!}
             fill={sizes ? undefined : true}
@@ -112,7 +112,7 @@ export const NotionSecureImage: React.FC<NotionSecureImageProps> = ({
               'image',
               isOriginalImageLoaded ? null : 'opacity-0 w-0 h-0 absolute top-0 left-0'
             )}
-            loading={loading || 'lazy'}
+            loading={loading || 'eager'}
             src={fileObject?.file?.url || fileObject?.external?.url || ''}
             alt={alt}
             onLoad={() => {

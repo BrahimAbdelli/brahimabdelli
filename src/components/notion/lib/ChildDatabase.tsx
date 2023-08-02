@@ -1,12 +1,12 @@
 'use client';
 
 import type React from 'react';
-import { useState, useMemo } from 'react';
+import { useMemo, useState } from 'react';
 
 import { sortBy } from 'lodash';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { BsArrowUpShort, BsArrowDownShort } from 'react-icons/bs';
+import { BsArrowDownShort, BsArrowUpShort } from 'react-icons/bs';
 
 import { useNotionStore } from 'src/store/notion';
 import type { NotionBlocksRetrieve, PropertyType } from 'src/types/notion';
