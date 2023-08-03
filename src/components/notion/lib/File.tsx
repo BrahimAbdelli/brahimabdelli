@@ -1,4 +1,5 @@
 import type React from 'react';
+
 import { useEffect, useRef } from 'react';
 
 import { AWS_SECURE_NOTION_STATIC, PROXY_SECURE_NOTION_STATIC } from 'src/lib/notion';
