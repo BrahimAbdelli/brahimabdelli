@@ -41,3 +41,5 @@ next-env.d.ts
 
 # notion block cache
 /lib/notion/cache/*
+
+.env
