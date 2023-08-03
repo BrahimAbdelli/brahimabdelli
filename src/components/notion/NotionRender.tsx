@@ -149,7 +149,8 @@ const NotionFooter: React.FC<{
       <div className='flex justify-between m-2 mt-6 [&>a]:normal-case'>
         <Link
           className='ml-auto btn btn-sm text-zinc-500 shadow-md bg-base-content/5 hover:bg-base-content/10 border-0'
-          href={parentDatabaseId === siteConfig.notion.baseBlock ? '/' : `/${parentDatabaseId}`}
+          // href={parentDatabaseId === siteConfig.notion.baseBlock ? '/' : `/${parentDatabaseId}`}
+          href='/articles'
         >
           <HiMenu /> Post List
         </Link>
