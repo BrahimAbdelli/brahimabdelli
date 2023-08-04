@@ -111,7 +111,8 @@
   "articles": {
     "searchs": {
       "searchbytitle": "Recherche par titre",
-      "entersearch": "Enter your search"
+      "entersearch": "Tapez votre recherche",
+      "noresultsfound": "Aucun résultat trouvé"
     }
   }
 }

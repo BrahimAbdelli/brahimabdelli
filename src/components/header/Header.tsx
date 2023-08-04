@@ -62,8 +62,6 @@ const Header: React.FC = (): JSX.Element => {
   }, []);
 
   const { pathname } = useRouter();
-  console.log('this is the router');
-  console.log(pathname);
   return (
     <nav
       className={classNames(

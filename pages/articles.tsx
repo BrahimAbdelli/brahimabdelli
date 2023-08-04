@@ -24,8 +24,6 @@ const Articles: NextPage<HomeProps> = () => {
 };
 
 export const getStaticProps = async ({ locale }: { locale: any }) => {
-  console.log(locale);
-  console.log(process.env.ENV);
   try {
     const notionClient = new NotionClient();
 
@@ -48,7 +46,6 @@ export const getStaticProps = async ({ locale }: { locale: any }) => {
           slug: siteConfig.notion.baseBlock,
           notionBlock: database,
           blogProperties
-          //...(await serverSideTranslations(locale, ['common']))
         },
         revalidate: REVALIDATE
       };

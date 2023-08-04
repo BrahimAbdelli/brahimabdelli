@@ -6,6 +6,7 @@ import { SearchForm } from 'src/components/search/SearchForm';
 import { NotionClient } from 'lib/notion/Notion';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
+import { useRouter } from 'next/router';
 
 interface SearchResult {
   searchValue?: string;
@@ -15,13 +16,16 @@ interface SearchResult {
 
 export default function Search({ searchValue, searchResult }: SearchResult) {
   const { t } = useTranslation('common');
+  const { pathname } = useRouter();
   return (
     <div className='w-full max-w-[var(--article-max-width)] m-auto my-6 px-3'>
       <div>
         <div className='max-w-screen-sm mt-4 mx-auto text-center'>
-          <h1 className='text-2xl'>{t('articles.searchs.entersearch')}</h1>
+          <h1 className='text-2xl'>
+            {pathname == '/' ? `${t('articles.searchs.entersearch')}` : 'Type your search'}
+          </h1>
           <div className='mt-10'>
-            <SearchForm key={searchValue} searchValue={searchValue} autoFocus />
+            {/* <SearchForm key={searchValue} searchValue={searchValue} autoFocus /> */}
           </div>
         </div>
         <div className='mt-10'>
@@ -36,7 +40,9 @@ export default function Search({ searchValue, searchResult }: SearchResult) {
               ))}
             </div>
           ) : (
-            <div className='text-center'>{`${t('articles.searchs.noresultsfound')}`}</div>
+            <div className='text-center'>
+              {pathname == '/' ? `${t('articles.searchs.noresultsfound')}` : 'No results found'}
+            </div>
           )}
         </div>
       </div>

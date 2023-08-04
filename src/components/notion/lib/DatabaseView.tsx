@@ -235,7 +235,7 @@ export const NotionDatabasePageView: React.FC<NotionDatabasePageViewProps> = ({
               </div>
             </div>
             <div className='self-center flex-[0] shrink-0 input-group min-w-[180px] bg-base-100 rounded-md shadow-md dark:bg-base-content/5 sm:order-1'>
-              <input
+              {/*               <input
                 className={classNames(
                   'input input-sm w-full bg-transparent focus:outline-none placeholder:text-base-content/60'
                 )}
@@ -247,7 +247,7 @@ export const NotionDatabasePageView: React.FC<NotionDatabasePageViewProps> = ({
               />
               <button className='btn btn-sm btn-ghost btn-circle sm:btn-square text-lg'>
                 <AiOutlineSearch />
-              </button>
+              </button> */}
             </div>
           </aside>
         </div>
