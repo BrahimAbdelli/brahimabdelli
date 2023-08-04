@@ -14,7 +14,6 @@ import { useNotionStore } from 'src/store/notion';
 import { useSiteSettingStore } from 'src/store/siteSetting';
 
 import { useRouter } from 'next/router';
-import LanguageToggle from '../background/LanguageToggle';
 import { ThemeChangeButton } from '../modules/ThemeChangeButton';
 
 const Header: React.FC = (): JSX.Element => {
@@ -94,7 +93,6 @@ const Header: React.FC = (): JSX.Element => {
         </div>
         <div className='flex items-center'>
           <ThemeChangeButton />
-          {pathname == '/' && <LanguageToggle />}
 
           {hydrated ? (
             blogProperties && (
