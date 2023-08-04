@@ -203,14 +203,14 @@ export const getStaticProps: GetStaticProps<SlugProps> = async ({ params, locale
 
     throw 'page is not found';
   } catch (e) {
-    // if (typeof slug === 'string') {
-    //   return {
-    //     redirect: {
-    //       permanent: false,
-    //       destination: `/s/${encodeURIComponent(slug)}`
-    //     }
-    //   };
-    // }
+    if (typeof slug === 'string') {
+      return {
+        redirect: {
+          permanent: false,
+          destination: `/s/${encodeURIComponent(slug)}`
+        }
+      };
+    }
     return {
       notFound: true
     };

@@ -112,14 +112,14 @@ export const getStaticProps: GetStaticProps<SlugProps> = async ({ params }) => {
       };
     }
   } catch (e) {
-    // if (uuid && slug) {
-    //   return {
-    //     redirect: {
-    //       permanent: false,
-    //       destination: `/s/${encodeURIComponent(`${uuid} ${slug}`)}`
-    //     }
-    //   };
-    // }
+    if (uuid && slug) {
+      return {
+        redirect: {
+          permanent: false,
+          destination: `/s/${encodeURIComponent(`${uuid} ${slug}`)}`
+        }
+      };
+    }
     return {
       notFound: true
     };
