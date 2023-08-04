@@ -23,11 +23,8 @@ const Header: React.FC = (): JSX.Element => {
   const [visibleHeader, setVisibleHeader] = useState(true);
   const { hydrated, enableSideBarMenu, closeSideBarMenu, openSideBarMenu } = useSiteSettingStore();
   const blogProperties = useNotionStore(({ blogProperties }) => blogProperties, shallow);
-  const router = useRouter();
   const { t } = useTranslation('common');
 
-  console.log('this is the router');
-  console.log(router);
   const handleClickSideBarMenuButton = () => {
     if (enableSideBarMenu) {
       closeSideBarMenu();
@@ -65,6 +62,8 @@ const Header: React.FC = (): JSX.Element => {
   }, []);
 
   const { pathname } = useRouter();
+  console.log('this is the router');
+  console.log(pathname);
   return (
     <nav
       className={classNames(
@@ -103,7 +102,7 @@ const Header: React.FC = (): JSX.Element => {
         </div>
         <div className='flex items-center'>
           <ThemeChangeButton />
-          {pathname === '/' && <LanguageToggle />}
+          {pathname == '/' && <LanguageToggle />}
 
           {hydrated ? (
             blogProperties && (
