@@ -10,11 +10,13 @@ import { FaArrowRight } from 'react-icons/fa';
 import { HiMenu } from 'react-icons/hi';
 import { shallow } from 'zustand/shallow';
 
+import { siteConfig } from 'site-config';
+import { SearchForm } from 'src/components/search/SearchForm';
 import { useNotionStore } from 'src/store/notion';
 import { useSiteSettingStore } from 'src/store/siteSetting';
 
-import { useRouter } from 'next/router';
 import { ThemeChangeButton } from '../modules/ThemeChangeButton';
+import { useRouter } from 'next/router';
 
 const Header: React.FC = (): JSX.Element => {
   const [visibleHeader, setVisibleHeader] = useState(true);
@@ -81,6 +83,9 @@ const Header: React.FC = (): JSX.Element => {
             Articles
           </Link>
         </div>
+        {/*         <div className='max-w-[150px] sm:max-w-[200px]'>
+          <SearchForm />
+        </div> */}
 
         <div>
           <a
@@ -89,6 +94,7 @@ const Header: React.FC = (): JSX.Element => {
                 focus:bg-blue-800 focus:shadow-lg active:bg-blue-900'
             href='#'
             onClick={() => window.open(pathname == '/' ? `${t('header.resume')}` : 'resume.pdf')}
+            /* `/${t('header.resume')}` */
           ></a>
         </div>
         <div className='flex items-center'>

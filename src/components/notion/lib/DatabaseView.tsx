@@ -7,6 +7,7 @@ import { sortBy } from 'lodash';
 import { useTranslation } from 'next-i18next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { AiOutlineSearch } from 'react-icons/ai';
 import { SiNotion } from 'react-icons/si';
 
 import { siteConfig } from 'site-config';
@@ -127,6 +128,29 @@ export const NotionDatabasePageView: React.FC<NotionDatabasePageViewProps> = ({
       setFilterdBlocks(newFilterdBlocks);
     };
 
+  const handleChangeSearchValue = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (!haveTitleProperty) {
+      return;
+    }
+    const { value } = event.target;
+    setSearchValue(value);
+    if (!value) {
+      setFilterdBlocks([...pages]);
+      return;
+    }
+    if (categoryFilterKey) setCategoryFilterKey(null);
+    if (tagFilterKey) setTagFilterKey(null);
+
+    const newFilterdBlocks = pages.filter((block) => {
+      const title = block.properties.title?.title
+        ? block.properties.title.title.map((text) => text?.plain_text).join('') || null
+        : null;
+      if (title) return title.match(new RegExp(value, 'igm'));
+      return false;
+    });
+    setFilterdBlocks(newFilterdBlocks);
+  };
+
   const categories = useMemo(() => {
     if (databaseInfo.properties.category?.type !== 'select') {
       return {};
@@ -210,7 +234,21 @@ export const NotionDatabasePageView: React.FC<NotionDatabasePageViewProps> = ({
                 ))}
               </div>
             </div>
-            <div className='self-center flex-[0] shrink-0 input-group min-w-[180px] bg-base-100 rounded-md shadow-md dark:bg-base-content/5 sm:order-1'></div>
+            <div className='self-center flex-[0] shrink-0 input-group min-w-[180px] bg-base-100 rounded-md shadow-md dark:bg-base-content/5 sm:order-1'>
+              {/*               <input
+                className={classNames(
+                  'input input-sm w-full bg-transparent focus:outline-none placeholder:text-base-content/60'
+                )}
+                value={searchValue}
+                type='text'
+                name='search'
+                placeholder={t('articles.searchs.searchbytitle')}
+                onChange={handleChangeSearchValue}
+              />
+              <button className='btn btn-sm btn-ghost btn-circle sm:btn-square text-lg'>
+                <AiOutlineSearch />
+              </button> */}
+            </div>
           </aside>
         </div>
       )}
@@ -226,6 +264,14 @@ export const NotionDatabasePageView: React.FC<NotionDatabasePageViewProps> = ({
     </div>
   );
 };
+
+/* export const getStaticProps = async ({ locale }: { locale: string }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common']))
+    }
+  };
+}; */
 
 type ArticleSummaryProps = {
   article: NotionPagesRetrieve;
