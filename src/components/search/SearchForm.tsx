@@ -29,10 +29,10 @@ export const SearchForm: React.FC<SearchFormProps> = ({
     evt.preventDefault();
     const form = evt.target as HTMLFormElement;
     const value = form?.search?.value?.trim();
-    if (value) {
-      useSiteSettingStore.getState().closeSideBarMenu();
-      router.push(`/s/${value}`);
-    }
+    // if (value) {
+    //   useSiteSettingStore.getState().closeSideBarMenu();
+    //   router.push(`/s/${value}`);
+    // }
   };
 
   useEffect(() => {
