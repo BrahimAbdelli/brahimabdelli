@@ -23,8 +23,8 @@ export default function ProjectsList() {
       >
         Previously promoted as Karhabtek.
         <br />
-        It's a website that connects car experts and clients. I developed the MVP for the project
-        even integrating an online payment service.
+        It&apos;s a website that connects car experts and clients. I developed the MVP for the
+        project even integrating an online payment service.
         <br />
         This project is backed by BiatLabs incubator.
         <br />

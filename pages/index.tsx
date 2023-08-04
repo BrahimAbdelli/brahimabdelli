@@ -69,7 +69,7 @@ const Home: NextPage<HomeProps> = () => {
                       Also in optimization, enhancing app performance and SEO.
                     </LinkToSection>
                     <LinkToSection title='PROJECTS' href='projects'>
-                      I'm always cooking something new.
+                      I&apos;m always cooking something new.
                     </LinkToSection>
                     <LinkToSection title='WORK EXPERIENCE' href='experience'>
                       Currently a Full Stack Developer at MSS.
@@ -127,8 +127,8 @@ const Home: NextPage<HomeProps> = () => {
                   </SectionTitle>
                   <div className={`${sectionBodyClasses}`}>
                     <p className={`${switchableTexts}`}>
-                      I'm a Full Stack developer with a passion for building web solutions. Coding
-                      is an activity I exercise every day with passion.
+                      I&apos;m a Full Stack developer with a passion for building web solutions.
+                      Coding is an activity I exercise every day with passion.
                     </p>
                     <p className={`${switchableTexts}`}>
                       Outside coding, I listen and make music, go out and explore new places with my
@@ -182,8 +182,8 @@ const Home: NextPage<HomeProps> = () => {
                   </SectionTitle>
                   <div className={`${sectionBodyClasses} ${switchableTexts}`}>
                     <p>
-                      I'm currently working at MSS, developing websites for banking solutions and
-                      financial services. this is my first work experience excluding personal
+                      I&apos;m currently working at MSS, developing websites for banking solutions
+                      and financial services. this is my first work experience excluding personal
                       projects and contributions. You can check us out in Linkedin.
                     </p>
                     <a
@@ -245,7 +245,7 @@ const Home: NextPage<HomeProps> = () => {
                       the course.
                     </Card>
                     <Card title='ISET Rades' link='http://www.isetr.rnu.tn/' highlighted>
-                      Bachelor's degree in mechanical engineering specializing in energy.
+                      Bachelor&apos;s degree in mechanical engineering specializing in energy.
                     </Card>
                   </CardGrid>
                 </motion.div>
@@ -266,7 +266,7 @@ const Home: NextPage<HomeProps> = () => {
                     ACTIVITIES
                   </SectionTitle>
                   <div className={sectionBodyClasses}>
-                    <p>Life doesn't stop when you stop coding.</p>
+                    <p>Life doesn&apos;t stop when you stop coding.</p>
                   </div>
                   <div className='h-8 lg:h-12'></div>
                   <Activities />

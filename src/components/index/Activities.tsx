@@ -9,7 +9,7 @@ export default function Activities() {
       <Card title='Music' tags={['Music', 'FL Studio']}>
         Making and listening to music is a huge part of my life.
         <br />
-        Don't be surprised if clicking on this section one day will redirect you to Spotify.
+        Don&apos;t be surprised if clicking on this section one day will redirect you to Spotify.
       </Card>
       <Card title='Reading' tags={['Books']}>
         I Love reading anything from history to novels.
