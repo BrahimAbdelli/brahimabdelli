@@ -23,22 +23,36 @@ const Articles: NextPage<HomeProps> = () => {
   );
 };
 
-export const getStaticProps = async ({ locale }: { locale: string }) => {
+export const getStaticProps = async ({ locale }: { locale: any }) => {
+  console.log(locale);
+  console.log(process.env.ENV);
   try {
     const notionClient = new NotionClient();
 
     const database = await notionClient.getMainDatabase();
     const blogProperties = await notionClient.getBlogProperties();
 
-    return {
-      props: {
-        slug: siteConfig.notion.baseBlock,
-        notionBlock: database,
-        blogProperties,
-        ...(await serverSideTranslations(locale, ['common']))
-      },
-      revalidate: REVALIDATE
-    };
+    if (process.env.ENV == 'dev') {
+      return {
+        props: {
+          slug: siteConfig.notion.baseBlock,
+          notionBlock: database,
+          blogProperties,
+          ...(await serverSideTranslations(locale, ['common']))
+        },
+        revalidate: REVALIDATE
+      };
+    } else {
+      return {
+        props: {
+          slug: siteConfig.notion.baseBlock,
+          notionBlock: database,
+          blogProperties
+          //...(await serverSideTranslations(locale, ['common']))
+        },
+        revalidate: REVALIDATE
+      };
+    }
   } catch (e) {
     return {
       notFound: true

@@ -23,8 +23,11 @@ const Header: React.FC = (): JSX.Element => {
   const [visibleHeader, setVisibleHeader] = useState(true);
   const { hydrated, enableSideBarMenu, closeSideBarMenu, openSideBarMenu } = useSiteSettingStore();
   const blogProperties = useNotionStore(({ blogProperties }) => blogProperties, shallow);
+  const router = useRouter();
   const { t } = useTranslation('common');
 
+  console.log('this is the router');
+  console.log(router);
   const handleClickSideBarMenuButton = () => {
     if (enableSideBarMenu) {
       closeSideBarMenu();
@@ -75,7 +78,7 @@ const Header: React.FC = (): JSX.Element => {
             className='no-underline dark:text-gray-300 text-slate-600 hover:text-gray-800 hover:dark:text-gray-300 font-montserrat text-xs font-extrabold btn btn-ghost btn-sm'
             href='/'
           >
-            {t('header.home')}
+            {pathname == '/' ? `${t('header.home')}` : 'HOME'}
           </Link>
           <Link
             className='no-underline dark:text-gray-300 text-slate-600 hover:text-gray-800 hover:dark:text-gray-300 font-montserrat text-xs font-extrabold btn btn-ghost btn-sm'
@@ -94,10 +97,9 @@ const Header: React.FC = (): JSX.Element => {
                 hover:shadow-lg transform transition hover:-translate-y-1 focus:ring-2 focus:ring-blue-600 ring-offset-2 outline-none 
                 focus:bg-blue-800 focus:shadow-lg active:bg-blue-900'
             href='#'
-            onClick={() => window.open(`/${t('header.resume')}`)}
-          >
-            {t('header.download')}
-          </a>
+            onClick={() => window.open(pathname == '/' ? `${t('header.resume')}` : 'resume.pdf')}
+            /* `/${t('header.resume')}` */
+          ></a>
         </div>
         <div className='flex items-center'>
           <ThemeChangeButton />
