@@ -7,7 +7,6 @@ import isEqual from 'react-fast-compare';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 
 import { ThemeChangeButton } from 'src/components/modules/ThemeChangeButton';
-import { SearchForm } from 'src/components/search/SearchForm';
 import { notionTagColorClasses } from 'src/lib/notion';
 import { useNotionStore } from 'src/store/notion';
 import { useSiteSettingStore } from 'src/store/siteSetting';
@@ -58,9 +57,6 @@ const SideBarMenuInner: React.FC<SideBarMenuInnerProps> = ({
               {enableSideBarMenu ? <FaArrowRight /> : <FaArrowLeft />}
             </button>
           </div>
-          {/*           <div className='m-2 p-4 py-3 sm:py-2 sm:px-3 bg-base-100/60 rounded-md shadow-xl'>
-            <SearchForm />
-          </div> */}
         </div>
         <div className='flex-auto grow shrink overflow-y-auto'>
           <div className='m-2 mt-0 p-4 sm:py-2 sm:px-3 bg-base-100/60 rounded-md shadow-xl'>
