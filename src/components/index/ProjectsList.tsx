@@ -1,12 +1,9 @@
 import type React from 'react';
 
-import { useTranslation } from 'next-i18next';
-
 import Card from '../cards/Card';
 import CardGrid from '../cards/CardGrid';
 
 export default function ProjectsList() {
-  const { t } = useTranslation('common');
   return (
     <CardGrid>
       <Card
@@ -15,7 +12,8 @@ export default function ProjectsList() {
         tags={['NextJS, TailwindCSS, Typescript']}
         highlighted
       >
-        {`${t('home.projects.portfolio.description')}`}
+        This is a personal Portfolio I created to showcase my work as a software engineer. I will
+        try to always update this project.
       </Card>
       <Card
         title='Auto Sans Risque'
@@ -23,20 +21,17 @@ export default function ProjectsList() {
         tags={['React, NestJS, TailwindCSS, Javascript, Typescript, MongoDB, TypeORM']}
         highlighted
       >
-        {`${t('home.projects.autosansrisque.description1')}`}
+        Previously promoted as Karhabtek.
         <br />
-        {`${t('home.projects.autosansrisque.description2')}`}
+        It's a website that connects car experts and clients. I developed the MVP for the project
+        even integrating an online payment service.
         <br />
-        {`${t('home.projects.autosansrisque.description3')}`}
+        This project is backed by BiatLabs incubator.
         <br />
-        {`${t('home.projects.autosansrisque.description4')}`}
+        and still in the development phase with other developers.
       </Card>
-      <Card
-        title={`${t('home.projects.clothingcompany.name')}`}
-        // link=""
-        tags={['NextJS, React ,NestJS, TailwindCSS, MongoDB']}
-      >
-        {`${t('home.projects.clothingcompany.description')}`}
+      <Card title='Clothing Company' tags={['NextJS, React ,NestJS, TailwindCSS, MongoDB']}>
+        Developed a website for a clothing company allowing administrators to manage the stock.
       </Card>
       <Card
         title='Advent of Code'
@@ -44,7 +39,7 @@ export default function ProjectsList() {
         tags={['Javascript']}
         highlighted
       >
-        {`${t('home.projects.adventofcode.description')}`}
+        This repository contains my attempt at solving Advent of Code by annual set.
       </Card>
 
       <Card
@@ -53,7 +48,8 @@ export default function ProjectsList() {
         tags={['NextJS, ReactJS, Styled Components']}
         highlighted
       >
-        {`${t('home.projects.tekmanda.description')}`}
+        I contributed by adding and implementing some features for this food services platform, my
+        contribution was mainly in the Frontend part.
       </Card>
     </CardGrid>
   );

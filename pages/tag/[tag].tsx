@@ -6,7 +6,6 @@ import { siteConfig } from 'site-config';
 import { NotionClient } from 'lib/notion/Notion';
 import { NotionRender } from 'src/components/notion';
 import { REVALIDATE } from 'src/lib/notion';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 interface TagProps {
   slug: string;
@@ -61,8 +60,7 @@ export const getStaticProps: GetStaticProps<TagProps> = async ({ params, locale 
       props: {
         slug: siteConfig.notion.baseBlock,
         notionBlock: database,
-        blogProperties,
-        ...(await serverSideTranslations(locale as string, ['common']))
+        blogProperties
       },
       revalidate: REVALIDATE
     };

@@ -7,8 +7,6 @@ import { useRouter } from 'next/navigation';
 import { AiOutlineSearch } from 'react-icons/ai';
 
 import { useSiteSettingStore } from 'src/store/siteSetting';
-import { useTranslation } from 'next-i18next';
-
 interface SearchFormProps {
   searchValue?: string;
   autoInputHidden?: boolean;
@@ -22,7 +20,6 @@ export const SearchForm: React.FC<SearchFormProps> = ({
 }): JSX.Element => {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
-  const { t } = useTranslation('common');
 
   const handleSearchSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.stopPropagation();
@@ -65,7 +62,7 @@ export const SearchForm: React.FC<SearchFormProps> = ({
             defaultValue={searchValue}
             type='text'
             name='search'
-            placeholder={t('header.titlesearch')}
+            placeholder='Title Search'
             aria-label='search-input'
           />
           <button

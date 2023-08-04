@@ -6,7 +6,6 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
   openAnalyzer: false
 });
-const { i18n } = require('./next-i18next.config');
 
 const isProduction = process.env.NODE_ENV === 'production';
 const debugLogs = Boolean(process.env.DEBUG_LOGS);
@@ -33,7 +32,6 @@ try {
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  i18n,
   reactStrictMode: false,
   swcMinify: true,
   images: {

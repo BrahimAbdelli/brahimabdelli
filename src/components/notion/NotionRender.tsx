@@ -5,7 +5,6 @@
 import type React from 'react';
 
 import classNames from 'classnames';
-import { useTranslation } from 'next-i18next';
 import Link from 'next/link';
 import { GrLinkNext, GrLinkPrevious } from 'react-icons/gr';
 import { HiHome, HiMenu } from 'react-icons/hi';
@@ -31,7 +30,6 @@ export interface NotionRenderProps {
 
 export const NotionRender: React.FC<NotionRenderProps> = () => {
   const { baseBlock, pageInfo, userInfo } = useNotionStore((state) => state, shallow);
-  const { t } = useTranslation('common');
   const blocks = baseBlock?.results;
 
   if (!blocks || !pageInfo) {

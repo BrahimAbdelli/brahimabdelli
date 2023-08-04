@@ -1,12 +1,9 @@
 import type React from 'react';
 
-import { useTranslation } from 'next-i18next';
-
 import Card from '../cards/Card';
 import CardGrid from '../cards/CardGrid';
 
 export default function InternshipsList() {
-  const { t } = useTranslation('common');
   return (
     <CardGrid>
       <Card
@@ -31,9 +28,9 @@ export default function InternshipsList() {
         ]}
         highlighted
       >
-        {`${t('home.internships.placeholder.description1')}`}
+        Development of a website that connects car experts and clients
         <br />
-        {`${t('home.internships.placeholder.description2')}`}
+        This project is still in the development phase with other developers.
       </Card>
       <Card
         title='ESPRIT DSI'
@@ -41,18 +38,18 @@ export default function InternshipsList() {
         tags={['NestJS', 'NodeJS', 'React', 'Javascript', 'Typescript', 'MongoDB', 'TypeORM']}
         highlighted
       >
-        {`${t('home.internships.espritdsi.description1')}`}
+        Internal site scrapping and automatic update of the indexing dictionary.
         <br />
-        {`${t('home.internships.espritdsi.description2')}`}
+        Development of member management, a project management and an RDI (Research, Development and
+        Innovation).
         <br />
       </Card>
 
       <Card
-        title={`${t('home.internships.steg.name')}`}
-        // link=""
+        title='Tunisian Company of Electricity and Gas'
         tags={['Spring Boot', 'Angular', 'MySQL']}
       >
-        {`${t('home.internships.steg.description')}`}
+        Development of an internal website for library management.
       </Card>
     </CardGrid>
   );

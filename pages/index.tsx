@@ -2,8 +2,6 @@ import type React from 'react';
 
 import { LazyMotion, domAnimation, m, motion, useAnimation } from 'framer-motion';
 import type { NextPage } from 'next';
-import { useTranslation } from 'next-i18next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Link from 'next/link';
 import { useInView } from 'react-intersection-observer';
 
@@ -28,13 +26,11 @@ interface HomeProps {
   slug: string;
   notionBlock: GetNotionBlock;
   blogProperties: BlogProperties;
-  // local: string;
 }
 
 const Home: NextPage<HomeProps> = () => {
   const { inView, ref } = useInView();
   const animationControl = useAnimation();
-  const { t } = useTranslation('common');
 
   if (inView) {
     animationControl.start({
@@ -58,33 +54,35 @@ const Home: NextPage<HomeProps> = () => {
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 1, y: 100 }}
                   >
-                    <NameTitle big accentText={`${t('home.hello')}`}>
+                    <NameTitle big accentText="Hello! It's me">
                       Brahim Abdelli
                     </NameTitle>
                   </m.div>
                   <div className='h-4 sm:h-0 mt-8'></div>
                   <div className={sectionBodyClasses}>
-                    <LinkToSection title={`${t('home.aboutme.name')}`} href='about'>
-                      {`${t('home.aboutme.description1')}`}
+                    <LinkToSection title='ABOUT ME' href='about'>
+                      I have accumulated experience in designing, developing, testing, and deploying
+                      web apps from scratch for 2 years.
                       <br />
-                      {`${t('home.aboutme.description2')}`}
+                      I hold a particular interest in Javascript, Typescript, and Java.
                       <br />
-                      {`${t('home.aboutme.description3')}`}
+                      Also in optimization, enhancing app performance and SEO.
                     </LinkToSection>
-                    <LinkToSection title={`${t('home.projects.name')}`} href='projects'>
-                      {t('home.projects.bio')}
+                    <LinkToSection title='PROJECTS' href='projects'>
+                      I'm always cooking something new.
                     </LinkToSection>
-                    <LinkToSection title={`${t('home.workexperience.name')}`} href='experience'>
-                      {`${t('home.workexperience.bio')}`}
+                    <LinkToSection title='WORK EXPERIENCE' href='experience'>
+                      Currently a Full Stack Developer at MSS.
                     </LinkToSection>
-                    <LinkToSection title={`${t('home.internships.name')}`} href='internships'>
-                      {`${t('home.internships.bio')}`}
+                    <LinkToSection title='INTERNSHIPS' href='internships'>
+                      As a software engineering student I did multiple internships.
                     </LinkToSection>
-                    <LinkToSection title={`${t('home.school.name')}`} href='school'>
-                      {`${t('home.school.description1')}`}
+                    <LinkToSection title='SCHOOL' href='school'>
+                      Graduated with the highest honors from ESPRIT in 2021 after pursuing a degree
+                      in software engineering.
                     </LinkToSection>
-                    <LinkToSection title={`${t('home.activities.name')}`} href='activities'>
-                      {`${t('home.activities.bio')}`}
+                    <LinkToSection title='ACTIVITIES' href='activities'>
+                      Multiple things catch my attention.
                     </LinkToSection>
                   </div>
                   <div className='h-6 md:h-8 xl:h-16'></div>
@@ -125,12 +123,21 @@ const Home: NextPage<HomeProps> = () => {
                   whileHover={{ scale: 1.009 }}
                 >
                   <SectionTitle big accentText='01'>
-                    {`${t('home.aboutme.name')}`}
+                    ABOUT ME
                   </SectionTitle>
                   <div className={`${sectionBodyClasses}`}>
-                    <p className={`${switchableTexts}`}>{`${t('home.aboutme.bio1')}`}</p>
-                    <p className={`${switchableTexts}`}>{`${t('home.aboutme.bio2')}`}</p>
-                    <p className={`${switchableTexts}`}>{`${t('home.aboutme.bio3')}`}</p>
+                    <p className={`${switchableTexts}`}>
+                      I'm a Full Stack developer with a passion for building web solutions. Coding
+                      is an activity I exercise every day with passion.
+                    </p>
+                    <p className={`${switchableTexts}`}>
+                      Outside coding, I listen and make music, go out and explore new places with my
+                      friends. I love video games, reading, watching old movies, and sports.
+                    </p>
+                    <p className={`${switchableTexts}`}>
+                      I strive to bring good energy, technical knowledge, and a strong desire to
+                      learn with me wherever I go.
+                    </p>
                   </div>
                 </motion.div>
               </div>
@@ -147,10 +154,12 @@ const Home: NextPage<HomeProps> = () => {
                   }}
                 >
                   <SectionTitle big accentText='02'>
-                    {`${t('home.projects.name')}`}
+                    PROJECTS
                   </SectionTitle>
                   <div className={sectionBodyClasses}>
-                    <p className={`${switchableTexts}`}>{`${t('home.projects.description')}`}</p>
+                    <p className={`${switchableTexts}`}>
+                      Catch all my public repositories on my GitHub profile.
+                    </p>
                   </div>
                   <div className='h-8 lg:h-12'></div>
                   <ProjectsList />
@@ -169,10 +178,14 @@ const Home: NextPage<HomeProps> = () => {
                   }}
                 >
                   <SectionTitle big accentText='03'>
-                    {`${t('home.workexperience.name')}`}
+                    WORK EXPERIENCE
                   </SectionTitle>
                   <div className={`${sectionBodyClasses} ${switchableTexts}`}>
-                    <p>{`${t('home.workexperience.description')}`}</p>
+                    <p>
+                      I'm currently working at MSS, developing websites for banking solutions and
+                      financial services. this is my first work experience excluding personal
+                      projects and contributions. You can check us out in Linkedin.
+                    </p>
                     <a
                       href='https://tn.linkedin.com/company/majda-smart-solutions'
                       className='inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-slate-800 hover:bg-slate-700 md:py-4 md:text-lg md:px-8 transition'
@@ -195,10 +208,10 @@ const Home: NextPage<HomeProps> = () => {
                   }}
                 >
                   <SectionTitle big accentText='04'>
-                    {`${t('home.internships.name')}`}
+                    INTERNSHIPS
                   </SectionTitle>
                   <div className={sectionBodyClasses}>
-                    <p>{`${t('home.internships.description')}`}</p>
+                    <p>These are the internships that I did in the past.</p>
                   </div>
                   <div className='h-8 lg:h-12'></div>
                   <InternshipsList />
@@ -217,21 +230,22 @@ const Home: NextPage<HomeProps> = () => {
                   }}
                 >
                   <SectionTitle big accentText='05'>
-                    {`${t('home.school.name')}`}
+                    SCHOOL
                   </SectionTitle>
                   <div className={sectionBodyClasses}>
-                    <p>{`${t('home.school.description2')}`}</p>
+                    <p>Had my software engineering degree from ESPRIT in 2021.</p>
                   </div>
                   <div className='h-8 lg:h-12'></div>
                   <CardGrid>
                     <Card title='ESPRIT' link='https://esprit.tn/' highlighted>
-                      {`${t('home.school.espritinfo.description')}`}
+                      Studied software engineering for 3 years.
                     </Card>
                     <Card title='ESPRIT' link='https://esprit.tn/' highlighted>
-                      {`${t('home.school.espritelectro.description')}`}
+                      Pursued studies in electromechanical engineering for 2 years before changing
+                      the course.
                     </Card>
                     <Card title='ISET Rades' link='http://www.isetr.rnu.tn/' highlighted>
-                      {`${t('home.school.isetrades.description')}`}
+                      Bachelor's degree in mechanical engineering specializing in energy.
                     </Card>
                   </CardGrid>
                 </motion.div>
@@ -249,10 +263,10 @@ const Home: NextPage<HomeProps> = () => {
                   }}
                 >
                   <SectionTitle big accentText='06'>
-                    {`${t('home.activities.name')}`}
+                    ACTIVITIES
                   </SectionTitle>
                   <div className={sectionBodyClasses}>
-                    <p>{`${t('home.activities.description')}`}</p>
+                    <p>Life doesn't stop when you stop coding.</p>
                   </div>
                   <div className='h-8 lg:h-12'></div>
                   <Activities />
@@ -261,7 +275,7 @@ const Home: NextPage<HomeProps> = () => {
 
               <div className={containerClasses} id='contact'>
                 <SectionTitle big accentText='07'>
-                  {`${t('home.contanctme')}`}
+                  Contact Me
                 </SectionTitle>
                 <div className='flex space-x-3 font-mono text-slate-400 sm:text-lg md:text-xl'>
                   <Link
@@ -290,9 +304,9 @@ const Home: NextPage<HomeProps> = () => {
 
               <div className={`${containerClasses} pb-6 md:pb-12 lg:pb-24`}>
                 <div className='font-mono dark:text-slate-400 text-slate-600 text-xs md:text-sm lg:text-base'>
-                  {`${t('home.copyright')}`} {new Date().getFullYear()} Brahim Abdelli.
+                  Copyright {new Date().getFullYear()} Brahim Abdelli.
                   <br />
-                  {`${t('home.takecare')}`}
+                  Take care and remember, health comes first.
                 </div>
               </div>
             </section>
@@ -301,14 +315,6 @@ const Home: NextPage<HomeProps> = () => {
       </div>
     </>
   );
-};
-
-export const getStaticProps = async ({ locale }: { locale: string }) => {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ['common']))
-    }
-  };
 };
 
 export default Home;

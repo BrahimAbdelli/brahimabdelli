@@ -1,7 +1,6 @@
 import type React from 'react';
 
 import type { GetStaticPaths, GetStaticProps } from 'next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 import { NotionClient } from 'lib/notion/Notion';
 import { siteConfig } from 'site-config';
@@ -104,8 +103,7 @@ export const getStaticProps: GetStaticProps<SlugProps> = async ({ params, locale
             slug,
             notionBlock: page,
             blogProperties,
-            blogArticleRelation,
-            ...(await serverSideTranslations(locale as string, ['common']))
+            blogArticleRelation
           },
           revalidate: REVALIDATE
         };
@@ -146,8 +144,7 @@ export const getStaticProps: GetStaticProps<SlugProps> = async ({ params, locale
             slug,
             notionBlock: page,
             blogProperties,
-            blogArticleRelation,
-            ...(await serverSideTranslations(locale as string, ['common']))
+            blogArticleRelation
           },
           revalidate: REVALIDATE
         };

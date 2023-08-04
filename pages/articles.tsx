@@ -1,7 +1,6 @@
 import type React from 'react';
 
 import type { NextPage } from 'next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 import { NotionClient } from 'lib/notion/Notion';
 import { siteConfig } from 'site-config';
@@ -35,8 +34,7 @@ export const getStaticProps = async ({ locale }: { locale: any }) => {
         props: {
           slug: siteConfig.notion.baseBlock,
           notionBlock: database,
-          blogProperties,
-          ...(await serverSideTranslations(locale, ['common']))
+          blogProperties
         },
         revalidate: REVALIDATE
       };

@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 
 import classNames from 'classnames';
 import { throttle } from 'lodash';
-import { useTranslation } from 'next-i18next';
 import Link from 'next/link';
 import { FaArrowRight } from 'react-icons/fa';
 import { HiMenu } from 'react-icons/hi';
@@ -22,7 +21,6 @@ const Header: React.FC = (): JSX.Element => {
   const [visibleHeader, setVisibleHeader] = useState(true);
   const { hydrated, enableSideBarMenu, closeSideBarMenu, openSideBarMenu } = useSiteSettingStore();
   const blogProperties = useNotionStore(({ blogProperties }) => blogProperties, shallow);
-  const { t } = useTranslation('common');
 
   const handleClickSideBarMenuButton = () => {
     if (enableSideBarMenu) {
@@ -74,7 +72,7 @@ const Header: React.FC = (): JSX.Element => {
             className='no-underline dark:text-gray-300 text-slate-600 hover:text-gray-800 hover:dark:text-gray-300 font-montserrat text-xs font-extrabold btn btn-ghost btn-sm'
             href='/'
           >
-            {pathname == '/' ? `${t('header.home')}` : 'HOME'}
+            HOME
           </Link>
           <Link
             className='no-underline dark:text-gray-300 text-slate-600 hover:text-gray-800 hover:dark:text-gray-300 font-montserrat text-xs font-extrabold btn btn-ghost btn-sm'
@@ -93,7 +91,7 @@ const Header: React.FC = (): JSX.Element => {
                 hover:shadow-lg transform transition hover:-translate-y-1 focus:ring-2 focus:ring-blue-600 ring-offset-2 outline-none 
                 focus:bg-blue-800 focus:shadow-lg active:bg-blue-900'
             href='#'
-            onClick={() => window.open(pathname == '/' ? `${t('header.resume')}` : 'resume.pdf')}
+            onClick={() => window.open('resume.pdf')}
             /* `/${t('header.resume')}` */
           ></a>
         </div>

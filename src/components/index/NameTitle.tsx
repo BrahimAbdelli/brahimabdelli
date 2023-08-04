@@ -1,7 +1,5 @@
 import type React from 'react';
 
-import { useTranslation } from 'next-i18next';
-
 import { sectionTitleBigClasses, sectionTitleClasses } from '../styles';
 
 export default function NameTitle({
@@ -13,7 +11,6 @@ export default function NameTitle({
   children: React.ReactNode;
   big?: boolean;
 }) {
-  const { t } = useTranslation('common');
   return (
     <>
       {accentText && (
@@ -43,7 +40,7 @@ export default function NameTitle({
       >
         <span className='relative'>
           <span className='h-20 pt-2 overflow-x-hidden whitespace-nowrap text-brand-accent text-3xl'>
-            {`${t('home.description')}`}
+            I build things.
           </span>
           <span className={`inline-block 4 w-full dark:bg-gray-900 bg-gray-50`}></span>
         </span>

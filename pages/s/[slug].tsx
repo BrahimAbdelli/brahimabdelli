@@ -4,9 +4,6 @@ import { BlogProperties, NotionPagesRetrieve, NotionSearch } from 'src/types/not
 import { ChildDatabaseItem } from 'src/components/notion/lib/ChildDatabaseItem';
 import { SearchForm } from 'src/components/search/SearchForm';
 import { NotionClient } from 'lib/notion/Notion';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { useTranslation } from 'next-i18next';
-import { useRouter } from 'next/router';
 
 interface SearchResult {
   searchValue?: string;
@@ -15,15 +12,11 @@ interface SearchResult {
 }
 
 export default function Search({ searchValue, searchResult }: SearchResult) {
-  const { t } = useTranslation('common');
-  const { pathname } = useRouter();
   return (
     <div className='w-full max-w-[var(--article-max-width)] m-auto my-6 px-3'>
       <div>
         <div className='max-w-screen-sm mt-4 mx-auto text-center'>
-          <h1 className='text-2xl'>
-            {pathname == '/' ? `${t('articles.searchs.entersearch')}` : 'Type your search'}
-          </h1>
+          <h1 className='text-2xl'>Type your search</h1>
           <div className='mt-10'>
             {/* <SearchForm key={searchValue} searchValue={searchValue} autoFocus /> */}
           </div>
@@ -40,9 +33,7 @@ export default function Search({ searchValue, searchResult }: SearchResult) {
               ))}
             </div>
           ) : (
-            <div className='text-center'>
-              {pathname == '/' ? `${t('articles.searchs.noresultsfound')}` : 'No results found'}
-            </div>
+            <div className='text-center'>No results found</div>
           )}
         </div>
       </div>
@@ -50,11 +41,7 @@ export default function Search({ searchValue, searchResult }: SearchResult) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps<SearchResult> = async ({
-  query,
-  params,
-  locale
-}) => {
+export const getServerSideProps: GetServerSideProps<SearchResult> = async ({ query, params }) => {
   const slug = params?.slug;
 
   if (typeof slug !== 'string') {
@@ -93,8 +80,7 @@ export const getServerSideProps: GetServerSideProps<SearchResult> = async ({
     props: {
       blogProperties,
       searchValue: slug,
-      searchResult: result,
-      ...(await serverSideTranslations(locale as string, ['common']))
+      searchResult: result
     }
   };
 };

@@ -2,7 +2,6 @@ import type React from 'react';
 
 import { useEffect } from 'react';
 
-import { appWithTranslation } from 'next-i18next';
 import { NextSeo } from 'next-seo';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
@@ -84,4 +83,4 @@ function MyApp({ Component, pageProps }: AppProps) {
   );
 }
 
-export default appWithTranslation(MyApp);
+export default MyApp;
