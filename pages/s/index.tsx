@@ -14,7 +14,9 @@ const SearchIndex: NextPage<SearchIndexProps> = ({ blogProperties }) => {
     <div className='w-full max-w-[var(--article-max-width)] m-auto my-6 px-3'>
       <div className='max-w-screen-sm mt-4 mx-auto text-center'>
         <h1 className='text-2xl'>Type your search</h1>
-        <div className='mt-10'>{/* <SearchForm autoFocus /> */}</div>
+        <div className='mt-10'>
+          <SearchForm autoFocus />
+        </div>
       </div>
     </div>
   );

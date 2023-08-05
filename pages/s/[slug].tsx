@@ -18,7 +18,7 @@ export default function Search({ searchValue, searchResult }: SearchResult) {
         <div className='max-w-screen-sm mt-4 mx-auto text-center'>
           <h1 className='text-2xl'>Type your search</h1>
           <div className='mt-10'>
-            {/* <SearchForm key={searchValue} searchValue={searchValue} autoFocus /> */}
+            <SearchForm key={searchValue} searchValue={searchValue} autoFocus />
           </div>
         </div>
         <div className='mt-10'>

@@ -81,9 +81,9 @@ const Header: React.FC = (): JSX.Element => {
             Articles
           </Link>
         </div>
-        {/*         <div className='max-w-[150px] sm:max-w-[200px]'>
+        <div className='max-w-[150px] sm:max-w-[200px]'>
           <SearchForm />
-        </div> */}
+        </div>
 
         <div>
           <a
@@ -92,8 +92,9 @@ const Header: React.FC = (): JSX.Element => {
                 focus:bg-blue-800 focus:shadow-lg active:bg-blue-900'
             href='#'
             onClick={() => window.open('resume.pdf')}
-            /* `/${t('header.resume')}` */
-          ></a>
+          >
+            RESUME
+          </a>
         </div>
         <div className='flex items-center'>
           <ThemeChangeButton />

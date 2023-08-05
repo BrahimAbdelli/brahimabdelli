@@ -58,9 +58,9 @@ const SideBarMenuInner: React.FC<SideBarMenuInnerProps> = ({
               {enableSideBarMenu ? <FaArrowRight /> : <FaArrowLeft />}
             </button>
           </div>
-          {/*           <div className='m-2 p-4 py-3 sm:py-2 sm:px-3 bg-base-100/60 rounded-md shadow-xl'>
+          <div className='m-2 p-4 py-3 sm:py-2 sm:px-3 bg-base-100/60 rounded-md shadow-xl'>
             <SearchForm />
-          </div> */}
+          </div>
         </div>
         <div className='flex-auto grow shrink overflow-y-auto'>
           <div className='m-2 mt-0 p-4 sm:py-2 sm:px-3 bg-base-100/60 rounded-md shadow-xl'>
