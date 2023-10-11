@@ -7,6 +7,16 @@ export default function ProjectsList() {
   return (
     <CardGrid>
       <Card
+        title='NestJS Boilerplate'
+        link='https://github.com/BrahimAbdelli/brahimabdelli'
+        tags={['NestJS, MongoDB, TypeORM, Typescript']}
+        highlighted
+      >
+        This is a boilerplate that uses abstraction to create generic controller,
+        service, dtos and entity, aiming to encapsulate the reusable logic
+        throughout the project in one centralized base module.
+      </Card>
+      <Card
         title='Personal Portfolio'
         link='https://github.com/BrahimAbdelli/brahimabdelli'
         tags={['NextJS, TailwindCSS, Typescript']}
