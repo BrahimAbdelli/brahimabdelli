@@ -14,7 +14,9 @@ import InternshipsList from '../src/components/index/InternshipsList';
 import LinkToSection from '../src/components/index/LinkToSection';
 import NameTitle from '../src/components/index/NameTitle';
 import ProjectsList from '../src/components/index/ProjectsList';
+import Certifications from 'src/components/index/Certifications';
 import SectionTitle from '../src/components/index/SectionTitle';
+
 import {
   containerClasses,
   linkClasses,
@@ -68,11 +70,14 @@ const Home: NextPage<HomeProps> = () => {
                       <br />
                       Also in optimization, enhancing app performance and SEO.
                     </LinkToSection>
+                    <LinkToSection title='WORK EXPERIENCE' href='experience'>
+                      Currently a Full Stack Developer at MSS.
+                    </LinkToSection>
                     <LinkToSection title='PROJECTS' href='projects'>
                       I&apos;m always cooking something new.
                     </LinkToSection>
-                    <LinkToSection title='WORK EXPERIENCE' href='experience'>
-                      Currently a Full Stack Developer at MSS.
+                    <LinkToSection title='CERTIFICATIONS' href='certifications'>
+                      Certifications that i&apos;ve passed.
                     </LinkToSection>
                     <LinkToSection title='INTERNSHIPS' href='internships'>
                       As a software engineering student I did multiple internships.
@@ -142,30 +147,6 @@ const Home: NextPage<HomeProps> = () => {
                 </motion.div>
               </div>
 
-              <div className={containerClasses} id='projects'>
-                <motion.div
-                  initial='hidden'
-                  whileInView='visible'
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.2, delay: 0 }}
-                  variants={{
-                    visible: { opacity: 1, scale: 1 },
-                    hidden: { opacity: 0, scale: 0 }
-                  }}
-                >
-                  <SectionTitle big accentText='02'>
-                    PROJECTS
-                  </SectionTitle>
-                  <div className={sectionBodyClasses}>
-                    <p className={`${switchableTexts}`}>
-                      Catch all my public repositories on my GitHub profile.
-                    </p>
-                  </div>
-                  <div className='h-8 lg:h-12'></div>
-                  <ProjectsList />
-                </motion.div>
-              </div>
-
               <div className={containerClasses} id='experience'>
                 <motion.div
                   initial='hidden'
@@ -177,7 +158,7 @@ const Home: NextPage<HomeProps> = () => {
                     hidden: { opacity: 0, scale: 0 }
                   }}
                 >
-                  <SectionTitle big accentText='03'>
+                  <SectionTitle big accentText='02'>
                     WORK EXPERIENCE
                   </SectionTitle>
                   <div className={`${sectionBodyClasses} ${switchableTexts}`}>
@@ -196,7 +177,31 @@ const Home: NextPage<HomeProps> = () => {
                 </motion.div>
               </div>
 
-              <div className={containerClasses} id='internships'>
+              <div className={containerClasses} id='projects'>
+                <motion.div
+                  initial='hidden'
+                  whileInView='visible'
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.2, delay: 0 }}
+                  variants={{
+                    visible: { opacity: 1, scale: 1 },
+                    hidden: { opacity: 0, scale: 0 }
+                  }}
+                >
+                  <SectionTitle big accentText='03'>
+                    PROJECTS
+                  </SectionTitle>
+                  <div className={sectionBodyClasses}>
+                    <p className={`${switchableTexts}`}>
+                      Catch all my public repositories on my GitHub profile.
+                    </p>
+                  </div>
+                  <div className='h-8 lg:h-12'></div>
+                  <ProjectsList />
+                </motion.div>
+              </div>
+
+              <div className={containerClasses} id='projects'>
                 <motion.div
                   initial='hidden'
                   whileInView='visible'
@@ -208,6 +213,30 @@ const Home: NextPage<HomeProps> = () => {
                   }}
                 >
                   <SectionTitle big accentText='04'>
+                    CERTIFICATIONS
+                  </SectionTitle>
+                  <div className={sectionBodyClasses}>
+                    <p className={`${switchableTexts}`}>
+                      The certifications that i&apos;ve earned.
+                    </p>
+                  </div>
+                  <div className='h-8 lg:h-12'></div>
+                  <Certifications />
+                </motion.div>
+              </div>
+
+              <div className={containerClasses} id='internships'>
+                <motion.div
+                  initial='hidden'
+                  whileInView='visible'
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.2, delay: 0 }}
+                  variants={{
+                    visible: { opacity: 1, scale: 1 },
+                    hidden: { opacity: 0, scale: 0 }
+                  }}
+                >
+                  <SectionTitle big accentText='05'>
                     INTERNSHIPS
                   </SectionTitle>
                   <div className={sectionBodyClasses}>
@@ -229,7 +258,7 @@ const Home: NextPage<HomeProps> = () => {
                     hidden: { opacity: 0, scale: 0 }
                   }}
                 >
-                  <SectionTitle big accentText='05'>
+                  <SectionTitle big accentText='06'>
                     SCHOOL
                   </SectionTitle>
                   <div className={sectionBodyClasses}>
@@ -241,8 +270,8 @@ const Home: NextPage<HomeProps> = () => {
                       Studied software engineering for 3 years.
                     </Card>
                     <Card title='ESPRIT' link='https://esprit.tn/' highlighted>
-                      Pursued studies in electromechanical engineering for 2 years before changing
-                      the course.
+                      Pursued studies in electromechanical engineering for more than 2 years before
+                      changing the course.
                     </Card>
                     <Card title='ISET Rades' link='http://www.isetr.rnu.tn/' highlighted>
                       Bachelor&apos;s degree in mechanical engineering specializing in energy.
@@ -262,7 +291,7 @@ const Home: NextPage<HomeProps> = () => {
                     hidden: { opacity: 0, scale: 0 }
                   }}
                 >
-                  <SectionTitle big accentText='06'>
+                  <SectionTitle big accentText='07'>
                     ACTIVITIES
                   </SectionTitle>
                   <div className={sectionBodyClasses}>
@@ -274,7 +303,7 @@ const Home: NextPage<HomeProps> = () => {
               </div>
 
               <div className={containerClasses} id='contact'>
-                <SectionTitle big accentText='07'>
+                <SectionTitle big accentText='08'>
                   Contact Me
                 </SectionTitle>
                 <div className='flex space-x-3 font-mono text-slate-400 sm:text-lg md:text-xl'>

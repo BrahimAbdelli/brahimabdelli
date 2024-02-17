@@ -38,9 +38,12 @@ export default function NameTitle({
           big ? sectionTitleBigClasses : sectionTitleClasses
         } dark:text-white text-black mt-4`}
       >
-        <span className='relative'>
+        <span className='flex flex-col'>
           <span className='h-20 pt-2 overflow-x-hidden whitespace-nowrap text-brand-accent text-3xl'>
             I build things.
+          </span>
+          <span className='h-20 overflow-x-hidden whitespace-nowrap text-brand-accent text-xl'>
+            Nantes, France
           </span>
           <span className={`inline-block 4 w-full dark:bg-gray-900 bg-gray-50`}></span>
         </span>
