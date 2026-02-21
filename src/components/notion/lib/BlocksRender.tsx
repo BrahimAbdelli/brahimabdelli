@@ -2,7 +2,7 @@
 
 import React, { Fragment } from 'react';
 
-import type { NotionBlocksRetrieve } from 'src/types/notion';
+import type { LinkPreviewBlock, NotionBlocksRetrieve } from 'src/types/notion';
 
 import {
   NotionCalloutBlock,
@@ -30,14 +30,12 @@ export type NotionBlocksProps = {
 };
 
 export const BlocksRender: React.FC<NotionBlocksProps> = ({ blocks }) => {
-  // If useRef is used, when rendering children, even if the next block is a list type
-  // If there are other types of blocks in children, initialize them during rendering and use them as general variables.
-  let repeatedSameTagName = 0;
+  let repeatedSameTagName: number = 0;
 
   return (
     <>
       {blocks?.map((block, i) => {
-        const prevBlockIsListItem = blocks?.[i - 1]?.type === blocks?.[i]?.type;
+        const prevBlockIsListItem: boolean = blocks?.[i - 1]?.type === blocks?.[i]?.type;
         if (prevBlockIsListItem) {
           repeatedSameTagName++;
         } else {
@@ -106,7 +104,7 @@ export const BlocksRender: React.FC<NotionBlocksProps> = ({ blocks }) => {
             );
           }
           case 'link_preview': {
-            const { url } = block.link_preview;
+            const { url }: LinkPreviewBlock = block.link_preview;
             if (!url) {
               return <NotionParagraphText key={`block-${block.id}-${i}`}></NotionParagraphText>;
             }
@@ -163,7 +161,6 @@ export const BlocksRender: React.FC<NotionBlocksProps> = ({ blocks }) => {
             );
           }
           case 'toggle': {
-            // Toggle BlockRender inside.
             return <NotionToggleBlock key={`block-${block.id}-${i}`} block={block} />;
           }
           case 'synced_block': {

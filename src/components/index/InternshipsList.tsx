@@ -1,14 +1,18 @@
 import type React from 'react';
 
+import { useTranslation } from 'next-i18next';
+
 import Card from '../cards/Card';
 import CardGrid from '../cards/CardGrid';
+import type { UseTranslationCommon } from 'src/types/types';
 
-export default function InternshipsList() {
+export default function InternshipsList(): React.ReactElement {
+  const { t } = useTranslation('common') as UseTranslationCommon;
   return (
     <CardGrid>
       <Card
         title='Placeholder'
-        link='https://auto-sans-risque.tn/home'
+        link='https://www.auto-sans-risque.com/'
         tags={[
           'NodeJS',
           'NestJS',
@@ -28,9 +32,7 @@ export default function InternshipsList() {
         ]}
         highlighted
       >
-        Development of a website that connects car experts and clients
-        <br />
-        This project is still in the development phase with other developers.
+        {`${t('home.internships.placeholder.description')}`}
       </Card>
       <Card
         title='ESPRIT DSI'
@@ -38,18 +40,16 @@ export default function InternshipsList() {
         tags={['NestJS', 'NodeJS', 'React', 'Javascript', 'Typescript', 'MongoDB', 'TypeORM']}
         highlighted
       >
-        Internal site scrapping and automatic update of the indexing dictionary.
+        {`${t('home.internships.espritdsi.description1')}`}
         <br />
-        Development of member management, a project management and an RDI (Research, Development and
-        Innovation).
-        <br />
+        {`${t('home.internships.espritdsi.description2')}`}
       </Card>
 
       <Card
-        title='Tunisian Company of Electricity and Gas'
+        title={`${t('home.internships.steg.name')}`}
         tags={['Spring Boot', 'Angular', 'MySQL']}
       >
-        Development of an internal website for library management.
+        {`${t('home.internships.steg.description')}`}
       </Card>
     </CardGrid>
   );

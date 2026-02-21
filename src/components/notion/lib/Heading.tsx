@@ -37,7 +37,7 @@ export const HeadingContainer: React.FC<HeadingContainerProps> = ({ id, type, ch
 };
 
 export const HeadingInner: React.FC<HeadingInnerProps> = ({ type, children }) => {
-  const props = {
+  const props: { className: string } = {
     className: 'notion-heading-link-copy flex mb-1 font-bold'
   };
 
@@ -67,8 +67,8 @@ export const CopyHeadingLink: React.FC<{
   href: string;
   children: React.ReactNode;
 }> = ({ href, children }) => {
-  const handleClick = (url: string) => () => {
-    const { href } = new URL(location.origin + url);
+  const handleClick: (url: string) => () => void = (url: string) => () => {
+    const { href }: URL = new URL(location.origin + url);
 
     href && copyTextAtClipBoard(href);
   };
@@ -83,30 +83,33 @@ interface HeadingProps {
   block: NotionBlocksRetrieve;
 }
 
-export const Heading: React.FC<HeadingProps> = ({ block }) => {
-  const router = useRouter();
-  const type = block.type as 'heading_1' | 'heading_2' | 'heading_3';
-  const isToggleableHeading = block.has_children;
+export const Heading: React.FC<HeadingProps> = ({ block }): React.JSX.Element => {
+  const router: ReturnType<typeof useRouter> = useRouter();
+  const headingType: 'heading_1' | 'heading_2' | 'heading_3' = block.type as
+    | 'heading_1'
+    | 'heading_2'
+    | 'heading_3';
+  const isToggleableHeading: boolean = block.has_children;
 
-  const path = router.asPath.replace(/#.*$/, '');
-  const hash = richTextToPlainText(block[type].rich_text);
-  const href = `${path}#${encodeURIComponent(hash)}`;
+  const currentPath: string = router.asPath.replace(/#.*$/, '');
+  const headingHash: string = richTextToPlainText(block[headingType].rich_text);
+  const headingHref: string = `${currentPath}#${encodeURIComponent(headingHash)}`;
 
-  const headingEl = (
+  const headingContent: React.ReactElement = (
     <NotionParagraphBlock
       blockId={block.id}
-      richText={block[type].rich_text}
-      color={block[type].color}
-      headingLink={href}
+      richText={block[headingType].rich_text}
+      color={block[headingType].color}
+      headingLink={headingHref}
     />
   );
 
   if (isToggleableHeading) {
     return (
-      <HeadingContainer id={hash} type={type}>
+      <HeadingContainer id={headingHash} type={headingType}>
         <details>
           <summary className='cursor-pointer [&>*]:inline [&>*>*]:inline'>
-            <HeadingInner type={type}>{headingEl}</HeadingInner>
+            <HeadingInner type={headingType}>{headingContent}</HeadingInner>
           </summary>
           <div className='pl-[0.9em]'>
             <div className='text-base'>
@@ -119,8 +122,8 @@ export const Heading: React.FC<HeadingProps> = ({ block }) => {
   }
 
   return (
-    <HeadingContainer id={hash} type={type}>
-      <HeadingInner type={type}>{headingEl}</HeadingInner>
+    <HeadingContainer id={headingHash} type={headingType}>
+      <HeadingInner type={headingType}>{headingContent}</HeadingInner>
     </HeadingContainer>
   );
 };

@@ -1,11 +1,16 @@
 import type React from 'react';
 
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
-import type { BlogProperties, GetNotionBlock } from 'src/types/notion';
-import { siteConfig } from 'site-config';
-import { NotionClient } from 'lib/notion/Notion';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+
+import { featureFlags } from 'src/lib/featureFlags';
 import { NotionRender } from 'src/components/notion';
-import { REVALIDATE } from 'src/lib/notion';
+import type {
+  BlogProperties,
+  GetNotionBlock,
+  MultiSelect,
+  NotionDatabasesRetrieve,
+} from 'src/types/notion';
 
 interface TagProps {
   slug: string;
@@ -13,61 +18,80 @@ interface TagProps {
   blogProperties: BlogProperties;
 }
 const Tag: NextPage<TagProps> = () => {
+  if (!featureFlags.useNotion) return null;
   return <NotionRender />;
 };
 
-export const getStaticPaths: GetStaticPaths<{ tag: string }> = async () => {
-  const notionClient = new NotionClient();
+export const getStaticPaths: GetStaticPaths<{ tag: string }> = async (): Promise<{
+  paths: Array<{ params: { tag: string } }>;
+  fallback: 'blocking';
+}> => {
+  if (!featureFlags.useNotion) {
+    return { paths: [], fallback: 'blocking' };
+  }
 
-  const paths: Awaited<ReturnType<GetStaticPaths<{ tag: string }>>>['paths'] = [];
+  const { NotionClient } = await import('lib/notion/Notion');
+  const { siteConfig } = await import('site-config');
+  const notionClient: InstanceType<typeof NotionClient> = new NotionClient();
 
-  const database = await notionClient.getDatabaseInfo({
-    databaseId: siteConfig.notion.baseBlock
+  const paths: Array<{ params: { tag: string } }> = [];
+
+  const database: NotionDatabasesRetrieve = await notionClient.getDatabaseInfo({
+    databaseId: siteConfig.notion.baseBlock,
   });
 
-  const tags = database?.properties?.tags?.multi_select?.options || [];
+  const tags: MultiSelect = database?.properties?.tags?.multi_select?.options ?? [];
   for (const tag of tags) {
     paths.push({
       params: {
-        tag: tag.name
-      }
+        tag: tag.name,
+      },
     });
   }
 
   return {
     paths,
-    fallback: 'blocking'
+    fallback: 'blocking',
   };
 };
 
-export const getStaticProps: GetStaticProps<TagProps> = async ({ params, locale }) => {
-  const tag = params?.tag;
+export const getStaticProps: GetStaticProps<TagProps> = async ({
+  params,
+  locale,
+}): Promise<
+  | { props: TagProps & Awaited<ReturnType<typeof serverSideTranslations>>; revalidate: number }
+  | { notFound: true }
+> => {
+  if (!featureFlags.useNotion) {
+    return { notFound: true };
+  }
+
+  const tag: string | string[] | undefined = params?.['tag'];
   try {
     if (typeof tag !== 'string') {
-      throw 'page is not found';
+      throw new TypeError('tag must be a string');
     }
-    const notionClient = new NotionClient();
+    const { NotionClient } = await import('lib/notion/Notion');
+    const { siteConfig } = await import('site-config');
+    const { REVALIDATE } = await import('src/lib/notion');
+    const notionClient: InstanceType<typeof NotionClient> = new NotionClient();
 
-    const database = await notionClient.getDatabaseByDatabaseId({
-      databaseId: siteConfig.notion.baseBlock
-      // filter: {
-      //   tag
-      // }
+    const database: GetNotionBlock = await notionClient.getDatabaseByDatabaseId({
+      databaseId: siteConfig.notion.baseBlock,
     });
-    const blogProperties = await notionClient.getBlogProperties();
+    const blogProperties: BlogProperties = await notionClient.getBlogProperties();
 
     return {
       props: {
         slug: siteConfig.notion.baseBlock,
         notionBlock: database,
-        blogProperties
+        blogProperties,
+        ...(await serverSideTranslations(locale as string, ['common'])),
       },
-      revalidate: REVALIDATE
+      revalidate: REVALIDATE,
     };
-  } catch (e) {
-    return {
-      notFound: true
-    };
+  } catch {
+    return { notFound: true };
   }
 };
 

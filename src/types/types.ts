@@ -1,3 +1,7 @@
+export type TranslationFunction = (key: string, options?: { defaultValue?: string; [key: string]: unknown }) => string;
+
+export type UseTranslationCommon = { readonly t: TranslationFunction };
+
 export type LinkPreview = {
   icon: string | null;
   title: string | null;

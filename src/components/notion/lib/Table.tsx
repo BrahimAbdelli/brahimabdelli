@@ -2,8 +2,8 @@ import type React from 'react';
 
 import classnames from 'classnames';
 
-import { useNotionStore } from 'src/store/notion';
-import type { NotionBlocksRetrieve } from 'src/types/notion';
+import { useNotionStore, type NotionStore } from 'src/store/notion';
+import type { NotionBlocksChildren, NotionBlocksRetrieve } from 'src/types/notion';
 
 import { NotionParagraphBlock } from '.';
 
@@ -12,9 +12,8 @@ interface TableProps {
 }
 
 export const Table: React.FC<TableProps> = ({ block }) => {
-  const { childrensRecord } = useNotionStore();
-  // ((state) => state.childrenRecord, shallow);
-  const tbodyBlock = childrensRecord?.[block.id];
+  const { childrensRecord }: NotionStore = useNotionStore();
+  const tbodyBlock: NotionBlocksChildren | undefined = childrensRecord?.[block.id];
 
   if (!block?.table || !tbodyBlock) {
     return null;
@@ -37,7 +36,7 @@ export const Table: React.FC<TableProps> = ({ block }) => {
         )}
       >
         <tbody>
-          {tbodyBlock.results.map((rowBlock, rowIdx) => (
+          {tbodyBlock.results.map((rowBlock, _rowIdx) => (
             <tr key={`table-row-${rowBlock.id}`}>
               {rowBlock.table_row.cells.map((cellBlocks, cellIdx) => (
                 <td key={`table-row-${rowBlock.id}-cell-${cellIdx}`}>

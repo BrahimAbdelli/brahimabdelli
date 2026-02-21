@@ -13,14 +13,14 @@ interface TableOfContentsProps {
 }
 
 export const TableOfContents: React.FC<TableOfContentsProps> = ({ blocks, block }) => {
-  const headers = blocks.filter((block) => /^heading_(1|2|3)/i.test(block.type));
+  const headers: Array<NotionBlocksRetrieve> = blocks.filter((block) => /^heading_(1|2|3)/i.test(block.type));
 
   return (
     <div className={notionColorClasses[block.table_of_contents.color]}>
       {headers.map((header) => {
-        const headerBlock = header?.[header?.type] as RichTextObject;
-        const title = richTextToPlainText(headerBlock?.rich_text);
-        const headingLevel = Number(header.type.match(/^heading_(1|2|3)/)?.[1] || 1);
+        const headerBlock: RichTextObject = header?.[header?.type] as RichTextObject;
+        const title: string = richTextToPlainText(headerBlock?.rich_text);
+        const headingLevel: number = Number(header.type.match(/^heading_(1|2|3)/)?.[1] || 1);
 
         return (
           <div

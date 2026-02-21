@@ -1,17 +1,21 @@
 import type React from 'react';
 
+import { useTranslation } from 'next-i18next';
+
 import { RiGitRepositoryFill } from 'react-icons/ri';
 import { SiGithub, SiMaildotru } from 'react-icons/si';
 
 import { siteConfig } from 'site-config';
+import type { UseTranslationCommon } from 'src/types/types';
 
-const Footer: React.FC = (): JSX.Element => {
+const Footer: React.FC = (): React.JSX.Element => {
+  const { t } = useTranslation('common') as UseTranslationCommon;
   return (
     <footer className='text-base-content'>
       {!siteConfig.hidePoweredBy && (
         <div className='mt-4 mb-2 text-zinc-400 dark:text-zinc-700 text-center text-xs'>
           <p>
-            Powered by
+            {t('footer.poweredby')}
             <a
               className='underline'
               href='https://github.com/BrahimAbdelli/brahimabdelli'

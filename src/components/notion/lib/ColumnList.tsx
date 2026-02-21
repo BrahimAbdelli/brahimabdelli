@@ -1,6 +1,6 @@
 import type React from 'react';
 
-import { useNotionStore } from 'src/store/notion';
+import { useNotionStore, type NotionStore } from 'src/store/notion';
 import type { NotionBlocksRetrieve } from 'src/types/notion';
 
 import { NotionBlocksRender } from '.';
@@ -10,9 +10,9 @@ export interface ColumnListProps {
 }
 
 export const ColumnList: React.FC<ColumnListProps> = ({ block }) => {
-  const { childrensRecord } = useNotionStore();
+  const { childrensRecord }: NotionStore = useNotionStore();
 
-  const columns = childrensRecord[block.id]?.results;
+  const columns: NotionBlocksRetrieve[] | undefined = childrensRecord[block.id]?.results;
   return (
     <div
       className='[&>div]:my-0.5 sm:[&>div]:my-0 sm:grid sm:gap-x-1 md:gap-x-2 [&>*]:overflow-x-auto'
@@ -23,7 +23,7 @@ export const ColumnList: React.FC<ColumnListProps> = ({ block }) => {
       {columns?.map((columnBlock, i) => {
         return (
           <div key={`block-${block.id}-${i}`}>
-            <NotionBlocksRender blocks={childrensRecord[columnBlock.id]?.results} />
+            <NotionBlocksRender blocks={childrensRecord[columnBlock.id]?.results || []} />
           </div>
         );
       })}

@@ -20,24 +20,22 @@ export type NotionImageFetcherParams = {
   refreshInterval?: number;
 };
 
-export function isExpired({ expiry_time, url }: NonNullable<FileObject['file']>) {
-  const now = Date.now();
+export function isExpired({ expiry_time, url }: NonNullable<FileObject['file']>): boolean {
+  const now: number = Date.now();
   if (url && expiry_time && new Date(expiry_time).getTime() < now) {
     return true;
   }
   return false;
 }
 
-export const useRenewExpiredFile = ({
+export const useRenewExpiredFile: (params: NotionImageFetcherParams) => SWRResponse<FileObject & IconObject> = ({
   blockId,
   blockType,
   useType,
   initialFileObject,
   autoRefresh = true,
-  refreshInterval = 5 * 60 * 1000 // 5분
+  refreshInterval = 5 * 60 * 1000
 }: NotionImageFetcherParams) => {
-  // const EXTERNAL_IS_AVAILABLE = 'external is available.';
-
   return useSWR(
     `${siteConfig.path}/notion/${blockType}/${blockId}?useType=${useType}`,
     async () => {
@@ -57,16 +55,18 @@ export const useRenewExpiredFile = ({
           case 'database':
           case 'page': {
             if (useType !== 'cover' && useType !== 'icon') {
-              throw 'not support use type';
+              const error: Error = new Error('not support use type');
+              throw error;
             }
-            const page = await axios
+            const page: NotionDatabasesRetrieve | NotionPagesRetrieve = await axios
               .get<NotionDatabasesRetrieve | NotionPagesRetrieve>(
                 `${siteConfig.path}/notion/${blockType}s/${blockId}`
               )
               .then((res) => res?.data);
 
             if (!page[useType]) {
-              throw 'not support use type';
+              const error: Error = new Error('not support use type');
+              throw error;
             }
             return page[useType];
           }
@@ -75,9 +75,10 @@ export const useRenewExpiredFile = ({
           case 'callout':
           case 'image': {
             if (useType !== 'image' && useType !== 'video' && useType !== 'icon') {
-              throw 'not support use type';
+              const error: Error = new Error('not support use type');
+              throw error;
             }
-            const block = await axios
+            const block: NotionBlocksRetrieve = await axios
               .get<NotionBlocksRetrieve>(`${siteConfig.path}/notion/blocks/${blockId}`)
               .then((res) => res?.data);
 
@@ -87,12 +88,7 @@ export const useRenewExpiredFile = ({
             return block?.[blockType];
           }
         }
-      } catch (e) {
-        // switch (e) {
-        //   case EXTERNAL_IS_AVAILABLE: {
-        //     return initialFileObject;
-        //   }
-        // }
+      } catch (e: unknown) {
         if (blockType === 'video') {
           throw e;
         }
@@ -100,13 +96,7 @@ export const useRenewExpiredFile = ({
         return {
           type: 'file',
           file: {
-            url:
-              // awsImageObjectUrlToNotionUrl({
-              //   s3ObjectUrl: initialFileObject?.file?.url || initialFileObject?.external?.url || '',
-              //   blockId,
-              //   table: 'block'
-              // })
-              null,
+            url: null,
             expiry_time: ''
           }
         };
@@ -114,16 +104,16 @@ export const useRenewExpiredFile = ({
     },
     {
       errorRetryCount: 1,
-      fallbackData: initialFileObject,
+      ...(initialFileObject ? { fallbackData: initialFileObject } : {}),
       revalidateOnFocus: false,
-      refreshInterval: autoRefresh ? refreshInterval : undefined
+      ...(autoRefresh ? { refreshInterval } : {})
     }
   ) as SWRResponse<FileObject & IconObject>;
 };
 
-export function richTextToPlainText(richText?: Array<RichText>) {
+export function richTextToPlainText(richText?: Array<RichText>): string {
   if (!Array.isArray(richText)) {
     return '';
   }
-  return richText?.map((text) => text.plain_text.trim()).join('') || '';
+  return richText?.map((text: RichText): string => text.plain_text.trim()).join('') || '';
 }

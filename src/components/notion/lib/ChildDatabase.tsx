@@ -8,8 +8,8 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { BsArrowDownShort, BsArrowUpShort } from 'react-icons/bs';
 
-import { useNotionStore } from 'src/store/notion';
-import type { NotionBlocksRetrieve, PropertyType } from 'src/types/notion';
+import { useNotionStore, type NotionStore } from 'src/store/notion';
+import type { NotionBlocksRetrieve, NotionDatabasesQuery, NotionPagesRetrieve } from 'src/types/notion';
 import { URL_PAGE_TITLE_MAX_LENGTH } from 'src/types/notion';
 
 import { ChildDatabaseItem } from './ChildDatabaseItem';
@@ -22,34 +22,30 @@ export interface ChildDatabaseProps {
 
 type SortKeys = 'title' | 'created_time' | 'last_edited_time';
 
-const sortablePropertyTypes: Array<PropertyType | string> = [
-  'title',
-  'rich_text',
-  'text',
-  'date',
-  'select',
-  'number'
-];
-const defaultSortRecord = {
+const defaultSortRecord: {
+  readonly title: 'title';
+  readonly created_time: 'created time';
+  readonly last_edited_time: 'edited time';
+} = {
   title: 'title',
   created_time: 'created time',
   last_edited_time: 'edited time'
 } as const;
-const orderKeys = Object.keys(defaultSortRecord) as Array<keyof typeof defaultSortRecord>;
+const orderKeys: Array<keyof typeof defaultSortRecord> = Object.keys(defaultSortRecord) as Array<keyof typeof defaultSortRecord>;
 
 export const ChildDatabase: React.FC<ChildDatabaseProps> = ({ block }) => {
-  const { databasesRecord } = useNotionStore();
-  const database = databasesRecord?.[block.id];
+  const { databasesRecord }: NotionStore = useNotionStore();
+  const database: NotionDatabasesQuery | undefined = databasesRecord?.[block.id];
 
-  const pathname = usePathname();
+  const pathname: string | null = usePathname();
 
-  const [blocks, setBlocks] = useState(
+  const [blocks, setBlocks] = useState<Array<NotionPagesRetrieve & { title?: string }>>(
     sortBy(
       database?.results?.[0]?.properties?.title?.type === 'title'
-        ? database?.results.map((databaseBlock) => {
-            const title =
+        ? database?.results.map((databaseBlock: NotionPagesRetrieve) => {
+            const title: string =
               richTextToPlainText(databaseBlock?.properties?.title?.title) || 'Untitled';
-            const newBlock = {
+            const newBlock: NotionPagesRetrieve & { title: string } = {
               ...databaseBlock,
               title
             };
@@ -60,51 +56,52 @@ export const ChildDatabase: React.FC<ChildDatabaseProps> = ({ block }) => {
     ).reverse()
   );
   const [sortKey, setSortKey] = useState<SortKeys>('created_time');
-  const [isOrderAsc, setIsOrderAsc] = useState(true);
+  const [isOrderAsc, setIsOrderAsc] = useState<boolean>(true);
 
-  const handleCloseSortMenu = (newSortKey: SortKeys) => () => {
-    switch (newSortKey) {
-      // Time is reversed, rest is normal
-      case 'last_edited_time':
-      case 'created_time': {
-        if (newSortKey === sortKey) {
-          const newIsOrderAsc = !isOrderAsc;
-          setBlocks((prevBlocks) =>
-            newIsOrderAsc
-              ? sortBy(prevBlocks, newSortKey).reverse()
-              : sortBy(prevBlocks, newSortKey)
-          );
-          setSortKey(newSortKey);
-          setIsOrderAsc(newIsOrderAsc);
-        } else {
-          setBlocks((prevBlocks) => sortBy(prevBlocks, newSortKey).reverse());
-          setSortKey(newSortKey);
-          setIsOrderAsc(true);
-        }
-        break;
-      }
-      case 'title': {
-        if (newSortKey === sortKey) {
-          const newIsOrderAsc = !isOrderAsc;
-          setBlocks((prevBlocks) =>
-            newIsOrderAsc
-              ? sortBy(prevBlocks, newSortKey)
-              : sortBy(prevBlocks, newSortKey).reverse()
-          );
-          setSortKey(newSortKey);
-          setIsOrderAsc(newIsOrderAsc);
-        } else {
-          setBlocks((prevBlocks) => sortBy(prevBlocks, newSortKey));
-          setSortKey(newSortKey);
-          setIsOrderAsc(true);
-        }
-        break;
-      }
+  const sortByTimeKey: (key: 'last_edited_time' | 'created_time') => void = (key: 'last_edited_time' | 'created_time'): void => {
+    if (key === sortKey) {
+      const newIsOrderAsc: boolean = !isOrderAsc;
+      setBlocks((prevBlocks) =>
+        newIsOrderAsc ? sortBy(prevBlocks, key).reverse() : sortBy(prevBlocks, key)
+      );
+      setSortKey(key);
+      setIsOrderAsc(newIsOrderAsc);
+    } else {
+      setBlocks((prevBlocks) => sortBy(prevBlocks, key).reverse());
+      setSortKey(key);
+      setIsOrderAsc(true);
     }
   };
-  const type = block.type as 'child_database';
-  const hash = `${block?.child_database?.title.trim().slice(0, URL_PAGE_TITLE_MAX_LENGTH) || ''}`;
-  const href = useMemo(() => `${pathname?.replace(/#.*/, '')}#${hash}`, [hash, pathname]);
+
+  const sortByTitleKey: () => void = (): void => {
+    if (sortKey === 'title') {
+      const newIsOrderAsc: boolean = !isOrderAsc;
+      setBlocks((prevBlocks) =>
+        newIsOrderAsc ? sortBy(prevBlocks, 'title') : sortBy(prevBlocks, 'title').reverse()
+      );
+      setSortKey('title');
+      setIsOrderAsc(newIsOrderAsc);
+    } else {
+      setBlocks((prevBlocks) => sortBy(prevBlocks, 'title'));
+      setSortKey('title');
+      setIsOrderAsc(true);
+    }
+  };
+
+  const handleCloseSortMenu: (newSortKey: SortKeys) => () => void = (newSortKey: SortKeys) => (): void => {
+    switch (newSortKey) {
+      case 'last_edited_time':
+      case 'created_time':
+        sortByTimeKey(newSortKey);
+        break;
+      case 'title':
+        sortByTitleKey();
+        break;
+    }
+  };
+  const type: 'child_database' = block.type as 'child_database';
+  const hash: string = `${block?.child_database?.title.trim().slice(0, URL_PAGE_TITLE_MAX_LENGTH) || ''}`;
+  const href: string = useMemo(() => `${pathname?.replace(/#.*/, '')}#${hash}`, [hash, pathname]);
 
   return (
     <div>

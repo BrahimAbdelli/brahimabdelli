@@ -5,36 +5,58 @@
   "header": {
     "download": "CV",
     "home": "Acceuil",
-    "resume": "cv.pdf",
+    "resume": "CV.pdf",
     "titlesearch": "Recherche par titre"
   },
   "footer": {
     "poweredby": "Réalisé par"
   },
   "home": {
+    "name": "Brahim Abdelli",
     "hello": "Salut! C'est moi",
     "description": "Je construis des choses.",
+    "location": "Nantes, France",
+    "bio": "Ingénieur logiciel, je développe des backends robustes avec NestJS & Spring Boot et des frontends soignés avec React & Angular. Tous mes projets sont sur GitHub, prêts à être forkés et explorés.",
+    "links": {
+      "email": "Email",
+      "github": "Github",
+      "linkedin": "Linkedin"
+    },
+    "company": {
+      "softeam": "Softeam",
+      "excellia": "Excellia Solutions",
+      "name": "Softeam"
+    },
+    "schools": {
+      "esprit": "ESPRIT",
+      "isetrades": "ISET Tunis"
+    },
     "aboutme": {
       "name": "A propos de moi",
-      "bio1": "Je suis un développeur Full Stack passionné par la construction des solutions webs, le développement est une activité que j'exerce quotidiennement avec passion.",
-      "bio2": "En dehors de ça, j'écoute et je fais de la musique, j'aime sortir et exploré des nouveaux endroits, J'aime les jeux vidéo, lire, regarder des anciens films et faire du sport",
+      "bio1": "Je suis un ingénieur logiciel passionné par la construction des solutions webs, le développement est une activité que j'exerce quotidiennement avec passion.",
+      "bio2": "En dehors du code et des sujets liés au logiciel, j'aime voyager, jouer aux jeux vidéo, lire, regarder des séries et faire du sport en compétition.",
       "bio3": "Je m'efforce d'apporter une bonne énergie, les connaissances techniques et une forte envie d'apprendre avec moi partout où je vais.",
-      "description1": "J'ai acquis une expérience pendant deux ans dans la conception, développement, test et déploiement des solutions webs",
-      "description2": "J'ai un intérêt particulier pour Javascript, Typescript et Java.",
-      "description3": "Également dans l'optimisation, l'amélioration des performances des applications et du référencement."
+      "description1": "J'ai plus de 4 ans d'expérience dans la conception, le développement, les tests et le déploiement d'applications web.",
+      "description2": "Je travaille avec Javascript, Typescript et Java.",
+      "backend": "Backend : NestJS, Spring Boot.",
+      "frontend": "Frontend : React, Angular.",
+      "description3": "J'aime aussi des sujets comme le clean code, l'optimisation, les performances applicatives et le SEO."
     },
     "projects": {
       "name": "PROJETS",
       "bio": "Je suis toujours entrain de développer une nouvelle chose.",
       "description": "Vous pouvez trouver toutes mes respositories publiques sur mon profil GitHub.",
       "portfolio": {
-        "description": "Ce portfolio a été créé pour montrer mes expériences. Je vais essayer de toujours mettre à jour le projet."
+        "description": "Ce portfolio a été créé pour présenter mon travail d'ingénieur logiciel. J'essaie de le tenir à jour."
+      },
+      "nestier": {
+        "description": "Boilerplate NestJS prêt pour la production, soutenu par le projet officiel awesome-nestjs. Architecture hexagonale, Domain-Driven Design et Generic Repository Pattern."
       },
       "autosansrisque": {
         "description1": "Auparavant promu sous le nom de Karhabtek.",
-        "description2": "Développement d’une plateforme Web pour la mise en relation entre les experts et les demandeurs de services dans le secteur automobile. J'ai développé le MVP pour le projet intégrant même un service de paiement en ligne.",
+        "description2": "Plateforme de mise en relation dans le secteur automobile. J'ai développé le MVP avec intégration paiement en ligne.",
         "description3": "Ce projet est soutenu par l'incubateur BiatLabs.",
-        "description4": "et toujours en phase de développement avec d'autres développeurs."
+        "description4": "Toujours en développement avec d'autres développeurs."
       },
       "clothingcompany": {
         "name": "Compagnie de Vêtements",
@@ -49,24 +71,40 @@
     },
     "workexperience": {
       "name": "EXPERIENCES PROFESSIONNELLES",
-      "bio": "Actuellement Développeur Full Stack chez MSS.",
-      "description": "Je travaille actuellement chez MSS, développant des sites Web pour des solutions bancaires. il s'agit de ma première expérience professionnelle sans compter les contributions et les projets personnelles. Vous pouvez nous consulter sur Linkedin."
+      "bio": "Ingénieur logiciel chez Softeam.",
+      "softeam": {
+        "descriptionShort": "Ingénieur logiciel chez Softeam depuis février 2024. J'ai travaillé sur deux projets à grande échelle avec des architectures complexes.",
+        "description": "Je travaille chez Softeam depuis février 2024. Je développe une plateforme de gestion des épreuves en ligne (code de la route, moto) avec une architecture hexagonale, DDD, NestJS, Angular, Kafka et Kubernetes.",
+        "tech": "Tech : NestJS, Angular, MySQL, Kafka, TypeORM, Elasticsearch, Kibana, Grafana, Kubernetes, Amazon S3, Jest, Sonar, Jenkins, Openshift."
+      },
+      "excellia": {
+        "description": "J'ai travaillé chez Excellia Solutions, développant des sites web pour des solutions bancaires et des services financiers.",
+        "tech": "Tech : Spring Boot, NestJS, React, Angular, PostgreSQL, MongoDB, ActiveMQ, TypeORM, Docker, Kubernetes."
+      }
     },
     "internships": {
       "name": "STAGES",
       "bio": "En tant qu'étudiant en génie logiciel, j'ai effectué plusieurs stages.",
       "description": "Ce sont les stages que j'ai effectués en étant un étudiant.",
       "placeholder": {
-        "description1": "Développement d'une plateforme web pour connecter les demandeurs de services aux experts dans le domaine automobile.",
-        "description2": "Ce projet est encore en phase de développement avec d'autres développeurs."
+        "description": "Développement d'une plateforme de mise en relation dans le secteur automobile."
       },
       "espritdsi": {
-        "description1": "Scrapping interne du site et mise à jour automatique du dictionnaire d’indexation.",
-        "description2": "Développement des modules de gestion des membres, projets et équipes RDI."
+        "description1": "Scrapping interne du site et mise à jour automatique du dictionnaire d'indexation.",
+        "description2": "Développement de modules internes : gestion des membres, projets et équipes."
       },
       "steg": {
         "name": "Société Tunisienne de l'Electricité et du Gaz",
         "description": "Développement d’un site web pour la gestion de la bibliothèque."
+      }
+    },
+    "certifications": {
+      "name": "CERTIFICATIONS",
+      "description": "Je les utilise pour diversifier mes compétences et mes connaissances.",
+      "ckad": {
+        "name": "CKAD : Certified Kubernetes Application Developer",
+        "description": "Une certification qui atteste que le candidat peut concevoir, construire et déployer des applications cloud-native sur Kubernetes.",
+        "tags": "Kubernetes, Devops, Docker"
       }
     },
     "school": {
@@ -99,9 +137,13 @@
         "books": "Livres"
       },
       "sports": {
-        "description": "Tout ce qui fait pomper le sang et impliquent des défis.",
+        "description": "Tout ce qui fait pomper le sang et implique des défis.",
         "jogging": "Jogging",
         "swimming": "Natation"
+      },
+      "travel": {
+        "name": "Voyage",
+        "description": "J'aime explorer de nouveaux endroits et cultures."
       }
     },
     "contanctme": "Contactez-Moi",

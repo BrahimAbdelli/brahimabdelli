@@ -1,4 +1,4 @@
-import { create } from 'zustand';
+import { create, type StoreApi, type UseBoundStore } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
 export interface ThemeState {
@@ -13,11 +13,11 @@ const defaultState: ThemeState = {
   mode: 'dark'
 };
 
-const initialState = { ...defaultState };
+const initialState: ThemeState = { ...defaultState };
 
-export const useThemeStore = create(
+export const useThemeStore: UseBoundStore<StoreApi<ThemeStore>> = create(
   persist<ThemeStore>(
-    (set, get) => ({
+    (set, _get) => ({
       ...initialState,
       changeTheme(mode) {
         switch (mode) {
@@ -38,7 +38,7 @@ export const useThemeStore = create(
       }
     }),
     {
-      name: 'theme', // unique name
+      name: 'theme',
       storage: createJSONStorage(() => localStorage), // (optional) by default, 'localStorage' is used
       version: 0.4
     }

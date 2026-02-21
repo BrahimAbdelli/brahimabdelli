@@ -5,12 +5,13 @@ import classNames from 'classnames';
 import { HiSun, HiMoon } from 'react-icons/hi';
 
 import { useThemeStore } from 'src/store/theme';
+import type { ThemeStore } from 'src/store/theme';
 
 export const ThemeChangeButton: React.FC = () => {
-  const { mode, changeTheme } = useThemeStore();
-  const [isHydrated, setIsHydrated] = useState(false);
+  const { mode, changeTheme }: ThemeStore = useThemeStore();
+  const [isHydrated, setIsHydrated]: [boolean, React.Dispatch<React.SetStateAction<boolean>>] = useState<boolean>(false);
 
-  const handleClickThemeSwap = (event: React.MouseEvent<HTMLLabelElement>) => {
+  const handleClickThemeSwap: (event: React.MouseEvent<HTMLLabelElement>) => void = (event: React.MouseEvent<HTMLLabelElement>): void => {
     event.stopPropagation();
     event.preventDefault();
     switch (mode) {

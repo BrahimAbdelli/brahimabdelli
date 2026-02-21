@@ -1,22 +1,22 @@
-import { create } from 'zustand';
+import { create, type UseBoundStore, type StoreApi } from 'zustand';
 
-interface ISiteSettingState {
+interface SiteSettingState {
   hydrated: boolean;
   enableSideBarMenu: boolean;
 }
 
-const defaultState: ISiteSettingState = {
+const defaultState: SiteSettingState = {
   hydrated: false,
   enableSideBarMenu: false
 };
 
-interface ISiteSettingStore extends ISiteSettingState {
+interface SiteSettingStore extends SiteSettingState {
   setHydrated: () => void;
   openSideBarMenu: () => void;
   closeSideBarMenu: () => void;
 }
 
-export const useSiteSettingStore = create<ISiteSettingStore>((set, get) => ({
+export const useSiteSettingStore: UseBoundStore<StoreApi<SiteSettingStore>> = create<SiteSettingStore>((set, _get) => ({
   ...defaultState,
   setHydrated() {
     set({

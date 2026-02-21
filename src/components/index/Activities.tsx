@@ -1,21 +1,28 @@
 import type React from 'react';
 
+import { useTranslation } from 'next-i18next';
+import type { UseTranslationCommon } from 'src/types/types';
+
 import Card from '../cards/Card';
 import CardGrid from '../cards/CardGrid';
 
 export default function Activities() {
+  const { t } = useTranslation('common') as UseTranslationCommon;
   return (
     <CardGrid>
-      <Card title='Music' tags={['Music', 'FL Studio']}>
-        Making and listening to music is a huge part of my life.
+      <Card
+        title={`${t('home.activities.music.name')}`}
+        tags={[t('home.activities.music.name'), 'FL Studio']}
+      >
+        {`${t('home.activities.music.description1')}`}
         <br />
-        Don&apos;t be surprised if clicking on this section one day will redirect you to Spotify.
+        {`${t('home.activities.music.description2')}`}
       </Card>
-      <Card title='Reading' tags={['Books']}>
-        I Love reading anything from history to novels.
+      <Card title='Reading' tags={[t('home.activities.reading.books')]}>
+        {`${t('home.activities.reading.description')}`}
       </Card>
-      <Card title='Sports' tags={['Jogging', 'Football', 'Music']}>
-        Anything that gets the blood pumping and involves challenges.
+      <Card title={`${t('home.activities.travel.name')}`} tags={[t('home.activities.travel.name')]}>
+        {`${t('home.activities.travel.description')}`}
       </Card>
     </CardGrid>
   );

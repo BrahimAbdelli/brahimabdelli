@@ -2,14 +2,14 @@ import type React from 'react';
 import { useState, memo, useEffect } from 'react';
 
 import { formatDistance } from 'date-fns';
-import { formatInTimeZone, utcToZonedTime } from 'date-fns-tz';
+import { formatInTimeZone, toZonedTime } from 'date-fns-tz';
 import { enUS } from 'date-fns/locale';
 import Link from 'next/link';
 import isEqual from 'react-fast-compare';
 import { SiNotion } from 'react-icons/si';
 
 import { siteConfig } from 'site-config';
-import { FileObject, NotionDatabasesRetrieve, NotionPagesRetrieve } from 'src/types/notion';
+import type { FileObject, NotionDatabasesRetrieve, NotionPagesRetrieve } from 'src/types/notion';
 
 import { NotionSecureImage } from '.';
 import { richTextToPlainText } from './utils';
@@ -18,32 +18,32 @@ export const ChildDatabaseItem: React.FC<{
   block: NotionPagesRetrieve | NotionDatabasesRetrieve;
   sortKey: 'created_time' | 'last_edited_time' | 'title';
 }> = memo(({ block, sortKey }) => {
-  const [isMounted, setMounted] = useState(false);
-  const slug = richTextToPlainText(
+  const [isMounted, setMounted] = useState<boolean>(false);
+  const slug: string = richTextToPlainText(
     block?.properties?.slug?.rich_text || block?.properties?.title?.title
   );
-  const title = richTextToPlainText(
+  const title: string = richTextToPlainText(
     block.object === 'page'
       ? block?.properties?.title?.title || block?.properties?.slug?.rich_text
       : block.title
   );
 
-  const parentDatabaseId = block?.parent?.database_id?.replace(/-/g, '');
+  const parentDatabaseId: string | undefined = block?.parent?.database_id?.replace(/-/g, '');
 
-  const href =
+  const href: string =
     parentDatabaseId === siteConfig.notion.baseBlock
       ? `/${encodeURIComponent(slug)}`
       : `/${encodeURIComponent(block.id.replace(/-/g, ''))}/${encodeURIComponent(
           slug || title || 'Untitled'
         )}`;
 
-  const date = isMounted
+  const date: string | undefined = isMounted
     ? formatDistance(
-        utcToZonedTime(
+        toZonedTime(
           new Date(block[sortKey === 'last_edited_time' ? 'last_edited_time' : 'created_time']),
           siteConfig.TZ
         ),
-        utcToZonedTime(new Date(), siteConfig.TZ),
+        toZonedTime(new Date(), siteConfig.TZ),
         {
           locale: enUS,
           addSuffix: true

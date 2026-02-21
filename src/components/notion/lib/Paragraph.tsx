@@ -33,9 +33,9 @@ export const ParagraphText: React.FC<ParagraphTextProps> = ({
   underline,
   children
 }) => {
-  const colorClass =
+  const colorClass: string | false | undefined =
     color && color !== 'default' && !color.match(/_background$/) && notionColorClasses[color];
-  const backgroundClass = color && color.match(/_background$/) && notionColorClasses[color];
+  const backgroundClass: string | null | undefined = color && color.match(/_background$/) && notionColorClasses[color];
   return (
     <span
       className={classnames(
@@ -43,9 +43,9 @@ export const ParagraphText: React.FC<ParagraphTextProps> = ({
         italic && 'italic',
         strikethrough && 'line-through',
         underline && 'underline',
-        code && paragraphTextClasses.code[code],
-        code && !colorClass && notionColorClasses.code,
-        code && !backgroundClass && notionColorClasses.code_background,
+        code && paragraphTextClasses['code']?.[code],
+        code && !colorClass && notionColorClasses['code'],
+        code && !backgroundClass && notionColorClasses['code_background'],
         colorClass,
         backgroundClass
       )}
@@ -81,39 +81,42 @@ export const Paragraph: React.FC<ParagraphProps> = ({
         color && color !== 'default' && !color.match(/_background$/)
           ? notionColorClasses[color]
           : annotationsProps?.color
-          ? notionColorClasses.gray
+          ? notionColorClasses['gray']
           : '',
         color && color.match(/_background$/) ? notionColorClasses[color] : ''
       )}
     >
       {richText.map((text, i) => {
         const {
-          type,
+          type: _type,
           plain_text,
           href,
           annotations: { bold, code, italic, strikethrough, underline, color }
-        } = text;
+        }: RichText = text;
 
-        const prevTextIsCode = code && richText[i - 1]?.annotations.code;
-        const nextTextIsCode = code && richText[i + 1]?.annotations.code;
+        const prevTextIsCode: boolean | undefined = code && richText[i - 1]?.annotations.code;
+        const nextTextIsCode: boolean | undefined = code && richText[i + 1]?.annotations.code;
 
         const annotations: Partial<ParagraphTextProps> = {
-          bold: annotationsProps?.bold || bold ? 'bold' : undefined,
-          italic: annotationsProps?.italic || italic ? 'italic' : undefined,
-          strikethrough:
-            annotationsProps?.strikethrough || strikethrough ? 'line-through' : undefined,
-          underline: annotationsProps?.underline || underline ? 'underline' : undefined,
-          color: color || undefined,
-          code: code
-            ? !prevTextIsCode && !nextTextIsCode
-              ? 'once'
-              : !prevTextIsCode && nextTextIsCode
-              ? 'first'
-              : nextTextIsCode
-              ? 'middle'
-              : 'last'
-            : undefined
-        };
+          ...(annotationsProps?.bold || bold ? { bold: 'bold' } : {}),
+          ...(annotationsProps?.italic || italic ? { italic: 'italic' } : {}),
+          ...(annotationsProps?.strikethrough || strikethrough
+            ? { strikethrough: 'line-through' }
+            : {}),
+          ...(annotationsProps?.underline || underline ? { underline: 'underline' } : {}),
+          ...(color ? { color } : {}),
+          ...(code
+            ? {
+                code: !prevTextIsCode && !nextTextIsCode
+                  ? 'once'
+                  : !prevTextIsCode && nextTextIsCode
+                  ? 'first'
+                  : nextTextIsCode
+                  ? 'middle'
+                  : 'last'
+              }
+            : {})
+        } as Partial<ParagraphTextProps>;
         if (text.type === 'mention') {
           return (
             <a

@@ -4,25 +4,35 @@ import { useEffect, useState } from 'react';
 
 import classNames from 'classnames';
 import { throttle } from 'lodash';
+import { useTranslation } from 'next-i18next';
 import Link from 'next/link';
 import { FaArrowRight } from 'react-icons/fa';
 import { HiMenu } from 'react-icons/hi';
 import { shallow } from 'zustand/shallow';
 
-import { siteConfig } from 'site-config';
 import { SearchForm } from 'src/components/search/SearchForm';
 import { useNotionStore } from 'src/store/notion';
 import { useSiteSettingStore } from 'src/store/siteSetting';
 
+import LanguageToggle from 'src/components/background/LanguageToggle';
 import { ThemeChangeButton } from '../modules/ThemeChangeButton';
 import { useRouter } from 'next/router';
+import { BlogProperties } from 'src/types/notion';
+import type { UseTranslationCommon } from 'src/types/types';
 
-const Header: React.FC = (): JSX.Element => {
-  const [visibleHeader, setVisibleHeader] = useState(true);
-  const { hydrated, enableSideBarMenu, closeSideBarMenu, openSideBarMenu } = useSiteSettingStore();
-  const blogProperties = useNotionStore(({ blogProperties }) => blogProperties, shallow);
+const Header: React.FC = (): React.JSX.Element => {
+  const [visibleHeader, setVisibleHeader]: [
+    boolean,
+    React.Dispatch<React.SetStateAction<boolean>>,
+  ] = useState<boolean>(true);
+  const { hydrated, enableSideBarMenu, closeSideBarMenu, openSideBarMenu }: ReturnType<typeof useSiteSettingStore.getState> = useSiteSettingStore();
+  const blogProperties: BlogProperties | undefined = useNotionStore(
+    ({ blogProperties }) => blogProperties,
+    shallow
+  );
+  const { t } = useTranslation('common') as UseTranslationCommon;
 
-  const handleClickSideBarMenuButton = () => {
+  const handleClickSideBarMenuButton: () => void = (): void => {
     if (enableSideBarMenu) {
       closeSideBarMenu();
     } else {
@@ -31,10 +41,10 @@ const Header: React.FC = (): JSX.Element => {
   };
 
   useEffect(() => {
-    let prevYOffset = window.pageYOffset || 0;
+    let prevYOffset: number = window.pageYOffset || 0;
 
-    const scrollEvent = () => {
-      const nextYOffset = window.pageYOffset;
+    const scrollEvent: () => void = (): void => {
+      const nextYOffset: number = window.pageYOffset;
       if (
         nextYOffset === 0 ||
         Math.round(window.innerHeight + window.pageYOffset) >
@@ -52,13 +62,14 @@ const Header: React.FC = (): JSX.Element => {
       prevYOffset = nextYOffset;
     };
 
-    const throttleScrollEvent = throttle(scrollEvent, 300);
+    const throttleScrollEvent: ReturnType<typeof throttle> = throttle(scrollEvent, 300);
 
     window.addEventListener('scroll', throttleScrollEvent);
     return () => window.removeEventListener('scroll', throttleScrollEvent);
   }, []);
 
-  const { pathname } = useRouter();
+  const router: ReturnType<typeof useRouter> = useRouter();
+  const pathname: string = router.pathname;
   return (
     <nav
       className={classNames(
@@ -72,7 +83,7 @@ const Header: React.FC = (): JSX.Element => {
             className='no-underline dark:text-gray-300 text-slate-600 hover:text-gray-800 hover:dark:text-gray-300 font-montserrat text-xs font-extrabold btn btn-ghost btn-sm'
             href='/'
           >
-            HOME
+            {pathname === '/' ? `${t('header.home')}` : 'HOME'}
           </Link>
           <Link
             className='no-underline dark:text-gray-300 text-slate-600 hover:text-gray-800 hover:dark:text-gray-300 font-montserrat text-xs font-extrabold btn btn-ghost btn-sm'
@@ -85,18 +96,8 @@ const Header: React.FC = (): JSX.Element => {
           <SearchForm />
         </div>
 
-        <div>
-          <a
-            className='flex items-center justify-center px-2 font-medium rounded-md text-black dark:text-green-custom shadow uppercase dark:hover:bg-slate-700 hover:bg-slate-100 
-                hover:shadow-lg transform transition hover:-translate-y-1 focus:ring-2 focus:ring-blue-600 ring-offset-2 outline-none 
-                focus:bg-blue-800 focus:shadow-lg active:bg-blue-900'
-            href='#'
-            onClick={() => window.open('resume.pdf')}
-          >
-            RESUME
-          </a>
-        </div>
-        <div className='flex items-center'>
+        <div className='flex items-center gap-2'>
+          <LanguageToggle />
           <ThemeChangeButton />
 
           {hydrated ? (
@@ -104,6 +105,7 @@ const Header: React.FC = (): JSX.Element => {
               <button
                 className='btn btn-circle btn-sm btn-ghost text-xl'
                 onClick={handleClickSideBarMenuButton}
+                aria-label={enableSideBarMenu ? 'Close menu' : 'Open menu'}
               >
                 {enableSideBarMenu ? <FaArrowRight /> : <HiMenu />}
               </button>

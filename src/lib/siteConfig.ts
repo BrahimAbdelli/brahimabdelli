@@ -1,18 +1,22 @@
 import { SiteConfig } from 'src/types/types';
 
-export function createSiteConfig(config: SiteConfig) {
-  const { NEXT_PUBLIC_HEADER_MENU } = process.env;
+export function createSiteConfig(config: SiteConfig): SiteConfig {
+  const { NEXT_PUBLIC_HEADER_MENU }: NodeJS.ProcessEnv = process.env;
   const headerNav: SiteConfig['headerNav'] = [];
 
   if (NEXT_PUBLIC_HEADER_MENU) {
-    const stringList = NEXT_PUBLIC_HEADER_MENU.split(',');
-    const stringListLen = stringList.length;
+    const stringList: string[] = NEXT_PUBLIC_HEADER_MENU.split(',');
+    const stringListLen: number = stringList.length;
     if (stringListLen > 1 && stringListLen % 2 === 0) {
-      for (let i = 0; i <= stringListLen / 2; i += 2) {
-        headerNav.push({
-          name: stringList[i],
-          slug: stringList[i + 1].trim(),
-        });
+      for (let i: number = 0; i <= stringListLen / 2; i += 2) {
+        const name: string = stringList[i] ?? '';
+        const slug: string = stringList[i + 1] ?? '';
+        if (name && slug) {
+          headerNav.push({
+            name,
+            slug: slug.trim(),
+          });
+        }
       }
     }
   }

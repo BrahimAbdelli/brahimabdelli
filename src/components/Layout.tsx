@@ -14,8 +14,8 @@ import Footer from './footer/Footer';
 import Header from './header/Header';
 import { SideBarMenu } from './modules/SideBarMenu';
 
-function Layout({ children }: PropsWithChildren) {
-  const mode = useThemeStore((state) => state.mode);
+function Layout({ children }: Readonly<PropsWithChildren>): React.JSX.Element {
+  const mode: 'light' | 'dark' = useThemeStore((state) => state.mode);
 
   useEffect(() => {
     useSiteSettingStore.subscribe(({ enableSideBarMenu }) => {
@@ -28,7 +28,7 @@ function Layout({ children }: PropsWithChildren) {
   }, []);
 
   useEffect(() => {
-    document.documentElement.dataset.theme = mode;
+    document.documentElement.dataset['theme'] = mode;
     document.documentElement.classList.add(mode);
     return () => {
       document.documentElement.classList.remove(mode);
@@ -51,60 +51,58 @@ function Layout({ children }: PropsWithChildren) {
   );
 }
 
-const ScrollTopButton = () => {
-  const [visibleScrollTopButton, setVisibleScrollTopButton] = useState(false);
-  const buttonRef = useRef<HTMLButtonElement>(null);
-  const SvgBorderRef = useRef<SVGSVGElement>(null);
+const ScrollTopButton: () => React.JSX.Element = (): React.JSX.Element => {
+  const [visibleScrollTopButton, setVisibleScrollTopButton]: [
+    boolean,
+    React.Dispatch<React.SetStateAction<boolean>>
+  ] = useState<boolean>(false);
+  const scrollTopButtonRef: React.RefObject<HTMLButtonElement | null> = useRef<HTMLButtonElement>(null);
+  const progressIndicatorRef: React.RefObject<SVGSVGElement | null> = useRef<SVGSVGElement>(null);
 
-  useEffect(() => {
-    let prevYOffset = window.pageYOffset || 0;
-    const circumference = 87.9;
+  useEffect((): (() => void) => {
+    const circumference: number = 87.9;
 
-    const scrollEvent = () => {
-      const gap = document.body.scrollHeight - window.innerHeight;
-      const progress = 100 * (window.scrollY / gap);
-      const correctProgress = Math.max(0, Math.min(progress || 0, 100));
+    const scrollEvent: () => void = (): void => {
+      const scrollableHeight: number = document.body.scrollHeight - globalThis.innerHeight;
+      const scrollProgress: number = 100 * (globalThis.scrollY / scrollableHeight);
+      const clampedProgress: number = Math.max(0, Math.min(scrollProgress || 0, 100));
 
-      const dashoffset = (correctProgress / 100) * circumference;
+      const dashOffset: number = (clampedProgress / 100) * circumference;
 
-      const svgBorderEl = SvgBorderRef.current;
-      if (svgBorderEl) {
-        svgBorderEl.style.strokeDashoffset = (circumference - dashoffset).toFixed(1);
-        svgBorderEl.style.strokeDasharray = circumference.toFixed(1);
+      const progressIndicator: SVGSVGElement | null = progressIndicatorRef.current;
+      if (progressIndicator) {
+        progressIndicator.style.strokeDashoffset = (circumference - dashOffset).toFixed(1);
+        progressIndicator.style.strokeDasharray = circumference.toFixed(1);
       }
-      const nextYOffset = window.pageYOffset;
       if (
-        window.pageYOffset < 100 ||
-        Math.round(window.innerHeight + window.pageYOffset) >
+        globalThis.pageYOffset < 100 ||
+        Math.round(globalThis.innerHeight + globalThis.pageYOffset) >
           Math.round(document.body.scrollHeight - 50)
       ) {
         setVisibleScrollTopButton(false);
         return;
       }
       setVisibleScrollTopButton(true);
-
-      prevYOffset = nextYOffset;
     };
 
-    const throttleScrollEvent = throttle(scrollEvent, 100);
+    const throttledScrollEvent: ReturnType<typeof throttle> = throttle(scrollEvent, 100);
 
     scrollEvent();
-    window.addEventListener('scroll', throttleScrollEvent);
-    return () => window.removeEventListener('scroll', throttleScrollEvent);
+    globalThis.addEventListener('scroll', throttledScrollEvent);
+    return (): void => globalThis.removeEventListener('scroll', throttledScrollEvent);
   }, []);
 
-  const handleClickScrollTopButton = () => {
-    if (window && window.scrollTo) {
-      window.scrollTo({
+  const handleClickScrollTopButton: () => void = (): void => {
+    if (globalThis.scrollTo) {
+      globalThis.scrollTo({
         top: 0,
         behavior: 'smooth'
       });
-      const buttonEl = buttonRef.current;
-      if (buttonEl) {
-        // .focus() is safari support
-        buttonEl.focus();
-        setTimeout(() => {
-          buttonEl.blur();
+      const scrollTopButton: HTMLButtonElement | null = scrollTopButtonRef.current;
+      if (scrollTopButton) {
+        scrollTopButton.focus();
+        setTimeout((): void => {
+          scrollTopButton.blur();
         }, 1000);
       }
     }
@@ -118,14 +116,14 @@ const ScrollTopButton = () => {
       )}
     >
       <button
-        ref={buttonRef}
+        ref={scrollTopButtonRef}
         tabIndex={-1}
         className='relative btn btn-circle btn-ghost min-w-0 min-h-0 w-[30px] h-[30px] btn-sm bg-base-100 border-none p-0 shadow-md overflow-hidden hover:bg-base-200/10 !outline-none group'
         onClick={handleClickScrollTopButton}
       >
         <FaArrowUp className='transition-transform duration-1000 group-focus:-translate-y-[200%] group-active:-translate-y-[200%]' />
         <svg
-          ref={SvgBorderRef}
+          ref={progressIndicatorRef}
           className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[inherit] h-[inherit] stroke-primary fill-transparent stroke-2 -rotate-90 transition-all'
           viewBox='0 0 30 30'
         >

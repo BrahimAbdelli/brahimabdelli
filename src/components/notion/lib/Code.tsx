@@ -6,7 +6,7 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { prism, vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 
 import { CopyButtonWrapper } from 'src/components/modules/CopyButtonWrapper';
-import { useThemeStore } from 'src/store/theme';
+import { useThemeStore, type ThemeStore } from 'src/store/theme';
 import type { NotionBlocksRetrieve } from 'src/types/notion';
 
 import { NotionParagraphBlock } from '.';
@@ -16,13 +16,13 @@ interface CodeProps {
 }
 
 export const Code: React.FC<CodeProps> = ({ block }) => {
-  const language = block?.code?.language;
-  const cantion = block?.code?.caption;
-  const { mode } = useThemeStore();
+  const language: string | undefined = block?.code?.language;
+  const caption: unknown = block?.code?.caption;
+  const { mode }: ThemeStore = useThemeStore();
 
-  const [isHydrated, setIsHydrated] = useState(false);
+  const [isHydrated, setIsHydrated] = useState<boolean>(false);
 
-  const codes = block?.code?.rich_text?.map((text) => text?.plain_text ?? '').join('') || '';
+  const codes: string = block?.code?.rich_text?.map((text) => text?.plain_text ?? '').join('') || '';
 
   useEffect(() => {
     setIsHydrated(true);
@@ -67,9 +67,9 @@ export const Code: React.FC<CodeProps> = ({ block }) => {
           </div>
         </CopyButtonWrapper>
       </div>
-      {Array.isArray(cantion) && cantion.length > 0 && (
+      {Array.isArray(caption) && caption.length > 0 && (
         <div className='w-full'>
-          <NotionParagraphBlock blockId={block.id} richText={cantion} color='gray' />
+          <NotionParagraphBlock blockId={block.id} richText={caption} color='gray' />
         </div>
       )}
     </>
