@@ -18,7 +18,7 @@ export default function Card({
   encrypted?: boolean;
   highlighted?: boolean;
 }) {
-  const content = (
+  const content: React.JSX.Element = (
     <>
       <motion.div whileHover={{ scale: 1.009 }}>
         <div className='flex justify-between'>
@@ -47,7 +47,7 @@ export default function Card({
   );
   if (link && encrypted) {
     return (
-      <button className='flex flex-col dark:bg-blue-900 bg-blue-700 dark:bg-opacity-[15%] bg-opacity-[10%] hover:bg-opacity-25 group p-6 shadow-md text-left'>
+      <button className='flex flex-col bg-blue-700/10 dark:bg-blue-900/15 hover:bg-blue-700/25 dark:hover:bg-blue-900/25 group p-6 shadow-md text-left'>
         {content}
       </button>
     );
@@ -56,7 +56,7 @@ export default function Card({
     if (link[0] === '/') {
       return (
         <Link href={link}>
-          <a className='flex flex-col dark:bg-blue-900 bg-blue-700 dark:bg-opacity-[15%] bg-opacity-[10%] hover:bg-opacity-25 group p-6 shadow-md'>
+          <a className='flex flex-col bg-blue-700/10 dark:bg-blue-900/15 hover:bg-blue-700/25 dark:hover:bg-blue-900/25 group p-6 shadow-md'>
             {content}
           </a>
         </Link>
@@ -66,7 +66,7 @@ export default function Card({
       <a
         href={link}
         target='_blank'
-        className='flex flex-col dark:bg-blue-900 bg-blue-700 dark:bg-opacity-[15%] bg-opacity-[10%] hover:bg-opacity-25 group p-6 shadow-md'
+        className='flex flex-col bg-blue-700/10 dark:bg-blue-900/15 hover:bg-blue-700/25 dark:hover:bg-blue-900/25 group p-6 shadow-md'
         rel='noreferrer'
       >
         {content}
@@ -74,7 +74,7 @@ export default function Card({
     );
   }
   return (
-    <div className='flex flex-col dark:bg-blue-900 bg-blue-700 dark:bg-opacity-[15%] bg-opacity-[10%] p-6 shadow-md'>
+    <div className='flex flex-col bg-blue-700/10 dark:bg-blue-900/15 p-6 shadow-md'>
       {content}
     </div>
   );

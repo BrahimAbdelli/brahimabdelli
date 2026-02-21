@@ -1,12 +1,14 @@
-export interface IResponseDefault {
+export interface ResponseDefault {
   success: boolean;
 }
-export interface IErrorResponse extends IResponseDefault {
+
+export interface ErrorResponse extends ResponseDefault {
   status: number;
   error: string;
   message?: string;
   code?: number;
 }
-export interface IResponseSuccess<T> extends IResponseDefault {
+
+export interface ResponseSuccess<T> extends ResponseDefault {
   result: T;
 }

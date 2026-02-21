@@ -1,13 +1,20 @@
 import type React from 'react';
 
 import type { GetStaticPaths, GetStaticProps } from 'next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
-import { NotionClient } from 'lib/notion/Notion';
-import { siteConfig } from 'site-config';
-import { NotionRender } from 'src/components/notion';
+import { featureFlags } from 'src/lib/featureFlags';
 import { richTextToPlainText } from 'src/components/notion/lib/utils';
-import { REVALIDATE } from 'src/lib/notion';
-import type { BlogArticleRelation, BlogProperties, GetNotionBlock } from 'src/types/notion';
+import { NotionRender } from 'src/components/notion';
+
+import type {
+  BlogArticleRelation,
+  BlogProperties,
+  GetNotionBlock,
+  NotionDatabasesQuery,
+  NotionDatabasesRetrieve,
+  NotionPagesRetrieve,
+} from 'src/types/notion';
 import { URL_PAGE_TITLE_MAX_LENGTH } from 'src/types/notion';
 
 interface SlugProps {
@@ -17,38 +24,52 @@ interface SlugProps {
   blogArticleRelation?: BlogArticleRelation;
 }
 
-export default function Slug() {
+export default function Slug(): React.JSX.Element | null {
+  if (!featureFlags.useNotion) return null;
   return <NotionRender />;
 }
 
-const getBlock = async (blockId: string, type: 'database' | 'page') => {
-  const notionClient = new NotionClient();
+const getBlock = async (
+  blockId: string,
+  type: 'database' | 'page'
+): Promise<GetNotionBlock> => {
+  const { NotionClient } = await import('lib/notion/Notion');
+  const notionClient: InstanceType<typeof NotionClient> = new NotionClient();
 
   switch (type) {
     case 'database': {
-      const database = await notionClient.getDatabaseByDatabaseId({
-        databaseId: blockId
+      const database: GetNotionBlock = await notionClient.getDatabaseByDatabaseId({
+        databaseId: blockId,
       });
 
       return database;
     }
     case 'page': {
-      const page = await notionClient.getPageByPageId(blockId);
+      const page: GetNotionBlock = await notionClient.getPageByPageId(blockId);
       return page;
     }
   }
 };
 
-export const getStaticPaths: GetStaticPaths<{ slug: string }> = async () => {
-  const notionClient = new NotionClient();
+export const getStaticPaths: GetStaticPaths<{ slug: string }> = async (): Promise<{
+  paths: Array<{ params: { slug: string } }>;
+  fallback: 'blocking';
+}> => {
+  if (!featureFlags.useNotion) {
+    return { paths: [], fallback: 'blocking' };
+  }
 
-  const paths: Awaited<ReturnType<GetStaticPaths<{ slug: string }>>>['paths'] = [];
+  const { NotionClient } = await import('lib/notion/Notion');
+  const { siteConfig } = await import('site-config');
+  const notionClient: InstanceType<typeof NotionClient> = new NotionClient();
 
-  const database = await notionClient.getAllPublishedPageInDatabase({
-    databaseId: siteConfig.notion.baseBlock
+  const paths: Array<{ params: { slug: string } }> = [];
+
+  const database: NotionDatabasesQuery = await notionClient.getAllPublishedPageInDatabase({
+    databaseId: siteConfig.notion.baseBlock,
   });
-  database.results.forEach((page) => {
-    const slug = page.properties.slug?.rich_text
+  for (const page of database.results) {
+    const slug: string | undefined = page.properties.slug?.rich_text
       ?.map((text) => text.plain_text.trim())
       .join('')
       .slice(0, URL_PAGE_TITLE_MAX_LENGTH);
@@ -56,20 +77,32 @@ export const getStaticPaths: GetStaticPaths<{ slug: string }> = async () => {
     if (slug) {
       paths.push({ params: { slug } });
     }
-  });
+  }
 
   return {
     paths,
-    fallback: 'blocking'
+    fallback: 'blocking',
   };
 };
 
-export const getStaticProps: GetStaticProps<SlugProps> = async ({ params, locale }) => {
-  const slug = params?.slug;
+export const getStaticProps: GetStaticProps<SlugProps> = async ({
+  params,
+  locale
+}): Promise<
+  | { redirect: { permanent: false; destination: string } }
+  | { props: SlugProps & Awaited<ReturnType<typeof serverSideTranslations>>; revalidate: number }
+  | { notFound: true }
+> => {
+  if (!featureFlags.useNotion) {
+    return { notFound: true };
+  }
+
+  const slug: string | string[] | undefined = params?.['slug'];
   try {
     if (typeof slug !== 'string') {
-      throw 'type error "slug"';
+      throw new TypeError('type error "slug"');
     }
+    const { siteConfig } = await import('site-config');
     if (slug === siteConfig.notion.baseBlock) {
       return {
         redirect: {
@@ -78,23 +111,24 @@ export const getStaticProps: GetStaticProps<SlugProps> = async ({ params, locale
         }
       };
     }
-    const notionClient = new NotionClient();
+    const { NotionClient } = await import('lib/notion/Notion');
+    const { REVALIDATE } = await import('src/lib/notion');
+    const notionClient: InstanceType<typeof NotionClient> = new NotionClient();
 
     {
-      // slug search
-      const pageInfo = await notionClient.searchSlug({
+      const pageInfo: NotionDatabasesRetrieve = await notionClient.searchSlug({
         slug,
-        property: 'slug'
+        property: 'slug',
       });
 
       if (pageInfo) {
-        const page = await getBlock(pageInfo.id, pageInfo.object);
-        const blogProperties = await notionClient.getBlogProperties();
-        let blogArticleRelation;
+        const page: GetNotionBlock = await getBlock(pageInfo.id, pageInfo.object);
+        const blogProperties: BlogProperties = await notionClient.getBlogProperties();
+        let blogArticleRelation: BlogArticleRelation | undefined;
 
         if (page?.pageInfo?.object === 'page') {
           blogArticleRelation = await notionClient.getBlogArticleRelation({
-            pageId: pageInfo.id.replace(/-/g, '')
+            pageId: pageInfo.id.replaceAll('-', ''),
           });
         }
 
@@ -103,39 +137,39 @@ export const getStaticProps: GetStaticProps<SlugProps> = async ({ params, locale
             slug,
             notionBlock: page,
             blogProperties,
-            blogArticleRelation
+            ...(blogArticleRelation && { blogArticleRelation }),
+            ...(await serverSideTranslations(locale as string, ['common'])),
           },
-          revalidate: REVALIDATE
+          revalidate: REVALIDATE,
         };
       }
     }
 
     {
-      // title
-      const pageInfo = await notionClient.searchSlug({
+      const pageInfo: NotionDatabasesRetrieve = await notionClient.searchSlug({
         slug,
-        property: 'title'
+        property: 'title',
       });
 
       if (pageInfo) {
-        if (pageInfo.parent.database_id?.replace(/-/g, '') === siteConfig.notion.baseBlock) {
-          const newSlug = richTextToPlainText(pageInfo.properties.slug?.rich_text);
+        if (pageInfo.parent.database_id?.replaceAll('-', '') === siteConfig.notion.baseBlock) {
+          const newSlug: string = richTextToPlainText(pageInfo.properties.slug?.rich_text);
           if (newSlug) {
             return {
               redirect: {
                 permanent: false,
-                destination: `/${encodeURIComponent(newSlug)}`
-              }
+                destination: `/${encodeURIComponent(newSlug)}`,
+              },
             };
           }
         }
-        const page = await getBlock(pageInfo.id, pageInfo.object);
-        const blogProperties = await notionClient.getBlogProperties();
-        let blogArticleRelation;
+        const page: GetNotionBlock = await getBlock(pageInfo.id, pageInfo.object);
+        const blogProperties: BlogProperties = await notionClient.getBlogProperties();
+        let blogArticleRelation: BlogArticleRelation | undefined;
 
         if (page?.pageInfo?.object === 'page') {
           blogArticleRelation = await notionClient.getBlogArticleRelation({
-            pageId: pageInfo.id.replace(/-/g, '')
+            pageId: pageInfo.id.replaceAll('-', ''),
           });
         }
 
@@ -144,30 +178,30 @@ export const getStaticProps: GetStaticProps<SlugProps> = async ({ params, locale
             slug,
             notionBlock: page,
             blogProperties,
-            blogArticleRelation
+            ...(blogArticleRelation && { blogArticleRelation }),
+            ...(await serverSideTranslations(locale as string, ['common'])),
           },
-          revalidate: REVALIDATE
+          revalidate: REVALIDATE,
         };
       }
     }
 
     {
-      // uuid search
-      const [_pageInfo, _databaseInfo] = await Promise.all([
+      const [_pageInfo, _databaseInfo]: [NotionPagesRetrieve | null, NotionDatabasesRetrieve] = await Promise.all([
         notionClient.getPageInfo({
-          pageId: slug
+          pageId: slug,
         }),
         notionClient.getDatabaseInfo({
-          databaseId: slug
-        })
+          databaseId: slug,
+        }),
       ]);
-      const pageInfo = (_pageInfo || _databaseInfo) as GetNotionBlock['pageInfo'];
+      const pageInfo: NotionPagesRetrieve | NotionDatabasesRetrieve = _pageInfo ?? _databaseInfo;
 
-      if (!pageInfo.object || (pageInfo.object !== 'page' && pageInfo.object !== 'database')) {
-        throw 'page is not found';
+      if (!pageInfo?.object || (pageInfo.object !== 'page' && pageInfo.object !== 'database')) {
+        throw new Error('page is not found');
       }
 
-      let searchedPageSlug = '';
+      let searchedPageSlug: string = '';
 
       switch (pageInfo.object) {
         case 'database': {
@@ -179,7 +213,7 @@ export const getStaticProps: GetStaticProps<SlugProps> = async ({ params, locale
           break;
         }
         case 'page': {
-          richTextToPlainText(
+          searchedPageSlug = richTextToPlainText(
             pageInfo?.properties?.slug?.rich_text || pageInfo.properties.title?.title
           );
           break;
@@ -191,25 +225,25 @@ export const getStaticProps: GetStaticProps<SlugProps> = async ({ params, locale
           redirect: {
             permanent: false,
             destination: `/${encodeURIComponent(
-              pageInfo.id.replace(/-/g, '')
-            )}/${encodeURIComponent(searchedPageSlug || 'Untitled')}`
-          }
+              pageInfo.id.replaceAll('-', '')
+            )}/${encodeURIComponent(searchedPageSlug)}`,
+          },
         };
       }
     }
 
-    throw 'page is not found';
-  } catch (e) {
+    throw new Error('page is not found');
+  } catch (e: unknown) {
     if (typeof slug === 'string') {
       return {
         redirect: {
           permanent: false,
-          destination: `/s/${encodeURIComponent(slug)}`
-        }
+          destination: `/s/${encodeURIComponent(slug)}`,
+        },
       };
     }
     return {
-      notFound: true
+      notFound: true,
     };
   }
 };

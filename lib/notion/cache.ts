@@ -10,81 +10,67 @@ import path from 'path';
  * Vercel uses the `/tmp` folder.
  * The project folder becomes read only.
  */
-export const CACHE_PATH =
-  process.env.VERCEL === '1'
+export const CACHE_PATH: string =
+  process.env['VERCEL'] === '1'
     ? path.join('/tmp', 'notion-blog-kit', 'notion', 'cache')
     : path.join(process.cwd(), 'lib', 'notion', 'cache');
 
-function cachePathMaker(blockId: string) {
+function cachePathMaker(blockId: string): string {
   return path.join(CACHE_PATH, `${blockId.replace(/-/g, '')}.json`);
 }
 
-export async function get<T>(blockId: string) {
+export async function get<T>(blockId: string): Promise<T | undefined> {
   try {
-    const cachePath = cachePathMaker(blockId);
-    const content = await fs.readFile(cachePath, 'utf-8');
-    const parsedData = JSON.parse(content);
-
-    if (process.env.DEBUG_LOGS && parsedData) {
-      console.log('\x1b[37m\x1b[42m');
-      console.log(`from cache data \`${blockId}\``, '\x1b[0m');
-    }
+    const cachePath: string = cachePathMaker(blockId);
+    const content: string = await fs.readFile(cachePath, 'utf-8');
+    const parsedData: unknown = JSON.parse(content);
 
     return parsedData as T;
-  } catch (e) {
-    console.error(e);
+  } catch {
+    return undefined;
   }
 }
 
-export async function set(blockId: string, content: any) {
+export async function set(blockId: string, content: any): Promise<boolean> {
   try {
-    const cachePath = cachePathMaker(blockId);
+    const cachePath: string = cachePathMaker(blockId);
     try {
       await fs.access(cachePath, fs.constants.R_OK | fs.constants.W_OK);
       return true;
-    } catch (e) {
+    } catch (e: unknown) {
       await fs.mkdir(CACHE_PATH, { recursive: true });
     }
 
     await fs.writeFile(cachePath, JSON.stringify(content), 'utf-8');
-    if (process.env.DEBUG_LOGS) {
-      console.log('\x1b[37m\x1b[42m');
-      console.log(`set cache \`${blockId}\` into \`${cachePath}\``, '\x1b[0m');
-    }
     return true;
-  } catch (e) {
-    console.error(e);
+  } catch {
     return false;
   }
 }
 
-export async function accessCache(blockId: string) {
-  const cachePath = cachePathMaker(blockId);
+export async function accessCache(blockId: string): Promise<boolean> {
+  const cachePath: string = cachePathMaker(blockId);
 
   try {
     await fs.access(cachePath, (fs.constants || fs).R_OK);
     return true;
-  } catch (e) {
+  } catch (e: unknown) {
     return false;
   }
 }
 
-export async function deleteCache(blockId: string) {
-  const cachePath = cachePathMaker(blockId);
+export async function deleteCache(blockId: string): Promise<boolean> {
+  const cachePath: string = cachePathMaker(blockId);
 
   try {
     await fs.unlink(cachePath);
-    if (process.env.DEBUG_LOGS) {
-      console.log('\x1b[37m\x1b[42m');
-      console.log(`delete cache \`${blockId}\` into \`${cachePath}\``, '\x1b[0m');
-    }
     return true;
-  } catch (e) {
+  } catch (e: unknown) {
     return false;
   }
 }
 
-export async function deleteCacheDirectory() {
+export async function deleteCacheDirectory(): Promise<boolean> {
   if (path.resolve(CACHE_PATH) === '/') {
     return false;
   }
@@ -92,7 +78,7 @@ export async function deleteCacheDirectory() {
   try {
     await fs.rm(CACHE_PATH, { recursive: true, force: true, maxRetries: 1 });
     return true;
-  } catch (e) {
+  } catch (e: unknown) {
     return false;
   }
 }

@@ -5,36 +5,57 @@
   "header": {
     "download": "Resume",
     "home": "Home",
-    "resume": "resume.pdf",
+    "resume": "Resume.pdf",
     "titlesearch": "Title Search"
   },
   "footer": {
     "poweredby": "Powered by"
   },
   "home": {
+    "name": "Brahim Abdelli",
     "hello": "Hello! It's me",
     "description": "I build things.",
+    "location": "Nantes, France",
+    "bio": "Software engineer building robust backends with NestJS & Spring Boot, and polished frontends with React & Angular. Every project lands on GitHub for you to fork & explore.",
+    "links": {
+      "email": "Email",
+      "github": "Github",
+      "linkedin": "Linkedin"
+    },
+    "company": {
+      "softeam": "Softeam",
+      "excellia": "Excellia Solutions"
+    },
+    "schools": {
+      "esprit": "ESPRIT",
+      "isetrades": "ISET Tunis"
+    },
     "aboutme": {
       "name": "ABOUT ME",
-      "bio1": "I'm a Full Stack developer with a passion for building web solutions. Coding is an activity I exercise every day with passion.",
-      "bio2": "Outside coding, I listen and make music, go out and explore new places with my friends. I love video games, reading, watching old movies, and sports.",
+      "bio1": "I'm a Software Engineer with a passion for building web solutions. Coding is an activity I exercise every day with passion.",
+      "bio2": "Outside coding and software related topics, I love traveling, playing video games, reading and watching tv shows and competing in sports.",
       "bio3": "I strive to bring good energy, technical knowledge, and a strong desire to learn with me wherever I go.",
-      "description1": "I have accumulated experience in designing, developing, testing, and deploying web apps from scratch for 2 years.",
-      "description2": "I hold a particular interest in Javascript, Typescript, and Java.",
-      "description3": "Also in optimization, enhancing app performance and SEO."
+      "description1": "I have 4+ years of experience designing, developing, testing, and deploying web applications.",
+      "description2": "I focus on Javascript, Typescript, and Java.",
+      "backend": "Backend: NestJS, Spring Boot.",
+      "frontend": "Frontend: React, Angular.",
+      "description3": "I also love topics like clean code, optimization, app performance, and SEO."
     },
     "projects": {
       "name": "PROJECTS",
       "bio": "I'm always cooking something new.",
       "description": "Catch all my public repositories on my GitHub profile.",
       "portfolio": {
-        "description": "This is a personal Portfolio I created to showcase my work as a software engineer. I will try to always update this project."
+        "description": "This is a personal portfolio I created to showcase my work as a software engineer. I try to keep it updated."
+      },
+      "nestier": {
+        "description": "Production-ready NestJS boilerplate supported by the official awesome-nestjs project. Hexagonal architecture, Domain-Driven Design, and Generic Repository Pattern."
       },
       "autosansrisque": {
         "description1": "Previously promoted as Karhabtek.",
-        "description2": "It's a website that connects car experts and clients. I developed the MVP for the project even integrating an online payment service.",
+        "description2": "A service marketplace platform for the automotive sector. I developed the MVP including online payment integration.",
         "description3": "This project is backed by BiatLabs incubator.",
-        "description4": "and still in the development phase with other developers."
+        "description4": "Still in development with other developers."
       },
       "clothingcompany": {
         "name": "Clothing Company",
@@ -49,24 +70,39 @@
     },
     "workexperience": {
       "name": "WORK EXPERIENCE",
-      "bio": "Currently a Full Stack Developer at MSS.",
-      "description": "I'm currently working at MSS, developing websites for banking solutions and financial services. this is my first work experience excluding personal projects and contributions. You can check us out in Linkedin."
+      "bio": "Software Engineer at Softeam.",
+      "softeam": {
+        "descriptionShort": "Software Engineer at Softeam since February 2024. I worked on two large scale projects involving complex architectures.",
+        "description": "I work at Softeam since February 2024. I develop an online examination management platform (driving theory, motorcycle exams) using hexagonal architecture, DDD, NestJS, Angular, Kafka, and Kubernetes.",
+        "tech": "Tech: NestJS, Angular, MySQL, Kafka, TypeORM, Elasticsearch, Kibana, Grafana, Kubernetes, Amazon S3, Jest, Sonar, Jenkins, Openshift."
+      },
+      "excellia": {
+        "description": "At Excellia Solutions I built banking and e-KYC platforms: international banking operations.",        "tech": "Tech: Spring Boot, NestJS, React, Angular, PostgreSQL, MongoDB, ActiveMQ, TypeORM, Docker, Kubernetes."
+      }
     },
     "internships": {
       "name": "INTERNSHIPS",
       "bio": "As a software engineering student I did multiple internships.",
       "description": "These are the internships that I did in the past.",
       "placeholder": {
-        "description1": "Development of a website that connects car experts and clients",
-        "description2": "This project is still in the development phase with other developers."
+        "description": "Development of a service marketplace platform for the automotive sector."
       },
       "espritdsi": {
-        "description1": "Internal site scrapping and automatic update of the indexing dictionary.",
-        "description2": "Development of member management, a project management and an RDI (Research, Development and Innovation)."
+        "description1": "Web scraping and improvement of the indexing dictionary.",
+        "description2": "Development of internal modules: member, project, and team management."
       },
       "steg": {
         "name": "Tunisian Company of Electricity and Gas",
         "description": "Development of an internal website for library management."
+      }
+    },
+    "certifications": {
+      "name": "CERTIFICATIONS",
+      "description": "I use them as a way to diversify my skills and knowledge.",
+      "ckad": {
+        "name": "CKAD : Certified Kubernetes Application Developer",
+        "description": "A certification that certifies that candidates can design, build and deploy cloud-native applications for Kubernetes.",
+        "tags": "Kubernetes, Devops, Docker"
       }
     },
     "school": {
@@ -102,6 +138,10 @@
         "description": "Anything that gets the blood pumping and involves challenges.",
         "jogging": "Jogging",
         "swimming": "Swimming"
+      },
+      "travel": {
+        "name": "Travel",
+        "description": "I love exploring new places and cultures."
       }
     },
     "contanctme": "Contact Me",

@@ -1,6 +1,5 @@
 import type React from 'react';
 
-import { NextSeo } from 'next-seo';
 import Head from 'next/head';
 
 import { GetNotionBlock, URL_PAGE_TITLE_MAX_LENGTH } from 'src/types/notion';
@@ -12,43 +11,23 @@ export interface NotionSeoProps {
 }
 
 export const NotionSeo: React.FC<NotionSeoProps> = ({ page, title, description }) => {
-  const url = page?.cover
+  const url: string = page?.cover
     ? page?.cover?.type === 'external'
       ? page.cover.external?.url ?? ''
       : page?.cover?.type === 'file'
-      ? // ? awsImageObjectUrlToNotionUrl({
-        //     blockId: page.id,
-        //     s3ObjectUrl: page.cover.file?.url || ''
-        //   }) + '&width=1200'
-        ''
+      ? ''
       : ''
     : '';
-  const icon = page.icon?.file && page.icon?.type === 'file' && '?';
-  // && awsImageObjectUrlToNotionUrl({
-  //   blockId: page.id,
-  //   s3ObjectUrl: page.icon.file.url
-  // });
+  const icon: string | false | undefined = page.icon?.file && page.icon?.type === 'file' && '?';
 
   return (
     <>
-      <NextSeo
-        title={title?.slice(0, URL_PAGE_TITLE_MAX_LENGTH) || 'Untitled'}
-        description={description?.slice(0, 155)?.trim() || undefined}
-        openGraph={{
-          // url:
-          //   config.origin + slug?.charAt(0) === '/'
-          //     ? config.origin + slug
-          //     : config.origin + '/' + slug,
-          images: url
-            ? [
-                {
-                  url
-                }
-              ]
-            : undefined
-        }}
-      />
       <Head>
+        <title>{title?.slice(0, URL_PAGE_TITLE_MAX_LENGTH) || 'Untitled'}</title>
+        {description && (
+          <meta name='description' content={description.slice(0, 155).trim()} />
+        )}
+        {url && <meta property='og:image' content={url} />}
         {icon ? (
           <>
             <link rel='apple-touch-icon' href={icon.includes('?') ? `${icon}&width=192` : icon} />

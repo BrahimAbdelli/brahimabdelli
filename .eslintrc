@@ -1,93 +1,21 @@
-// {
-//   // Configuration for JavaScript files
-//   "extends": ["airbnb-base", "plugin:prettier/recommended"],
-//   "rules": {
-//     "prettier/prettier": [
-//       "error",
-//       {
-//         "singleQuote": true
-//       }
-//     ]
-//   },
-//   "root": true,
-//   "overrides": [
-//     // Configuration for TypeScript files
-//     {
-//       "files": ["**/*.ts", "**/*.tsx"],
-//       "parser": "@typescript-eslint/parser",
-//       "plugins": ["@typescript-eslint", "react", "react-hooks", "unused-imports"],
-//       "extends": [
-//         "airbnb-typescript",
-//         "next/core-web-vitals",
-//         "plugin:prettier/recommended",
-//         "next/core-web-vitals",
-//         "eslint:recommended",
-//         "plugin:@typescript-eslint/recommended",
-//         "plugin:react/recommended",
-//         "plugin:react-hooks/recommended"
-//       ],
-//       "parserOptions": {
-//         "project": "./tsconfig.json"
-//       },
-//       "rules": {
-//         "prettier/prettier": [
-//           "error",
-//           {
-//             "singleQuote": true
-//           }
-//         ],
-//         "react/destructuring-assignment": "off", // Vscode doesn't support automatically destructuring, it's a pain to add a new variable
-//         "jsx-a11y/anchor-is-valid": "off", // Next.js use his own internal link system
-//         "react/require-default-props": "off", // Allow non-defined react props as undefined
-//         "react/jsx-props-no-spreading": "off", // _app.tsx uses spread operator and also, react-hook-form
-//         "@next/next/no-img-element": "off", // We currently not using next/image because it isn't supported with SSG mode
-//         "react/no-unescaped-entities": 0,
-//         "import/order": [
-//           "error",
-//           {
-//             "groups": ["builtin", "external", "internal"],
-//             "pathGroups": [
-//               {
-//                 "pattern": "react",
-//                 "group": "external",
-//                 "position": "before"
-//               }
-//             ],
-//             "pathGroupsExcludedImportTypes": ["react"],
-//             "newlines-between": "always",
-//             "alphabetize": {
-//               "order": "asc",
-//               "caseInsensitive": true
-//             }
-//           }
-//         ],
-//         "import/prefer-default-export": "off", // Named export is easier to refactor automatically
-//         "class-methods-use-this": "off", // _document.tsx use render method without `this` keyword
-//         "@typescript-eslint/no-unused-vars": "off",
-//         "unused-imports/no-unused-imports": "error",
-//         "unused-imports/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
-//         // to avoid == & === problems when comparing variables i disabled this rule
-//         "eqeqeq": "off",
-//         // i disabled this rule because it gives me this error in the state variable in the slices :
-//         //Assignment to property of function parameter 'state'
-//         "no-param-reassign": 0,
-//         "default-case": 0,
-//         "no-bitwise": "off"
-//       }
-//     }
-//   ]
-// }
-
 {
   "root": true,
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint", "react", "react-hooks"],
+  "parserOptions": {
+    "ecmaVersion": 2022,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "project": "./tsconfig.json"
+  },
+  "plugins": ["@typescript-eslint", "react", "unused-imports", "prettier"],
   "extends": [
     "next/core-web-vitals",
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
-    "plugin:react-hooks/recommended"
+    "prettier"
   ],
   "settings": {
     "react": {
@@ -96,12 +24,60 @@
   },
   "env": {
     "browser": true,
-    "node": true
+    "node": true,
+    "es2022": true,
+    "jest": true
   },
   "rules": {
-    "@typescript-eslint/no-explicit-any": 0,
-    "@typescript-eslint/no-non-null-assertion": 0,
-    "@typescript-eslint/no-unused-vars": 0,
-    "react/prop-types": 0
+    "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/no-non-null-assertion": "error",
+    "@typescript-eslint/typedef": [
+      "warn",
+      {
+        "variableDeclaration": true,
+        "variableDeclarationIgnoreFunction": false
+      }
+    ],
+    "@typescript-eslint/no-unused-vars": "off",
+    "@typescript-eslint/explicit-function-return-type": [
+      "error",
+      {
+        "allowExpressions": true,
+        "allowTypedFunctionExpressions": true,
+        "allowHigherOrderFunctions": true,
+        "allowDirectConstAssertionInArrowFunctions": true
+      }
+    ],
+    "@typescript-eslint/explicit-module-boundary-types": "error",
+    "@typescript-eslint/no-unsafe-assignment": "error",
+    "@typescript-eslint/no-unsafe-member-access": "error",
+    "@typescript-eslint/no-unsafe-call": "error",
+    "@typescript-eslint/no-unsafe-return": "error",
+    "@typescript-eslint/no-unsafe-argument": "error",
+    "@typescript-eslint/strict-boolean-expressions": "error",
+    "@typescript-eslint/no-floating-promises": "error",
+    "@typescript-eslint/no-misused-promises": "error",
+    "@typescript-eslint/require-await": "error",
+    "@typescript-eslint/no-throw-literal": "error",
+    "@typescript-eslint/prefer-nullish-coalescing": "error",
+    "@typescript-eslint/prefer-optional-chain": "error",
+    "@typescript-eslint/return-await": "error",
+    "unused-imports/no-unused-imports": "error",
+    "unused-imports/no-unused-vars": [
+      "error",
+      {
+        "vars": "all",
+        "varsIgnorePattern": "^_",
+        "args": "after-used",
+        "argsIgnorePattern": "^_"
+      }
+    ],
+    "react/prop-types": "off",
+    "react/react-in-jsx-scope": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "no-console": ["warn", { "allow": ["warn", "error"] }],
+    "prefer-const": "error",
+    "no-var": "error"
   }
 }

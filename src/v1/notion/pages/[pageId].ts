@@ -1,24 +1,24 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from 'next';
+import type { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
+// @ts-expect-error next-connect types
 import nc from 'next-connect';
-import { Error } from 'lib/Error';
+import { ApiError } from 'lib/Error';
 import { Client, LogLevel } from '@notionhq/client';
 import { NotionPagesRetrieve } from 'src/types/notion';
 
-const handler = nc<NextApiRequest, NextApiResponse>({
-  onError: Error.handleError,
-  onNoMatch: Error.handleNoMatch
+const handler: NextApiHandler = nc<NextApiRequest, NextApiResponse>({
+  onError: ApiError.handleError,
+  onNoMatch: ApiError.handleNoMatch
 }).get(async (req: NextApiRequest, res: NextApiResponse<NotionPagesRetrieve>) => {
-  const { pageId } = req.query;
+  const pageId: string | string[] | undefined = req.query?.['pageId'];
   if (typeof pageId !== 'string') {
-    throw 'type error "pageId"';
+    throw new TypeError('type error "pageId"');
   }
-  const notion = new Client({
-    auth: process.env.NOTION_API_SECRET_KEY,
-    logLevel: process.env.DEBUG_LOGS ? LogLevel.DEBUG : undefined
+  const notion: Client = new Client({
+    auth: process.env['NOTION_API_SECRET_KEY'] ?? '',
+    ...(process.env['DEBUG_LOGS'] ? { logLevel: LogLevel.DEBUG } : {})
   });
 
-  const result = (await notion.pages.retrieve({
+  const result: NotionPagesRetrieve = (await notion.pages.retrieve({
     page_id: pageId
   })) as NotionPagesRetrieve;
 

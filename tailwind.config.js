@@ -148,10 +148,5 @@ module.exports = {
       }
     ]
   },
-  plugins: [
-    //require('@tailwindcss/line-clamp'),
-    require('daisyui')
-    /*     require('@emotion/babel-plugin'),
-    require('babel-plugin-macros') */
-  ]
+  plugins: []
 };

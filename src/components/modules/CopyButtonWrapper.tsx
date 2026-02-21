@@ -9,7 +9,7 @@ export const CopyButtonWrapper: FC<PropsWithChildren<{ content?: string }>> = ({
   content,
   children
 }) => {
-  const handleClickCopyButton = () => {
+  const handleClickCopyButton: () => void = (): void => {
     if (content) copyTextAtClipBoard(content);
   };
   return (

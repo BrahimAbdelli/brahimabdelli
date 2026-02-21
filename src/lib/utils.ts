@@ -2,7 +2,7 @@ export function copyTextAtClipBoard(text: string) {
   if (!document.queryCommandSupported && document.queryCommandSupported('copy')) {
     return false;
   }
-  const textarea = document.createElement('textarea');
+  const textarea: HTMLTextAreaElement = document.createElement('textarea');
   textarea.value = text;
   textarea.style.top = '0';
   textarea.style.left = '0';

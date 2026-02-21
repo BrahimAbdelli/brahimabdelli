@@ -1,10 +1,15 @@
 import type React from 'react';
+
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
-import type { BlogProperties, GetNotionBlock } from 'src/types/notion';
-import { siteConfig } from 'site-config';
-import { NotionClient } from 'lib/notion/Notion';
+
+import { featureFlags } from 'src/lib/featureFlags';
 import { NotionRender } from 'src/components/notion';
-import { REVALIDATE } from 'src/lib/notion';
+import type {
+  BlogProperties,
+  GetNotionBlock,
+  NotionDatabasesRetrieve,
+  Select,
+} from 'src/types/notion';
 
 interface CategoryProps {
   slug: string;
@@ -12,19 +17,29 @@ interface CategoryProps {
   blogProperties: BlogProperties;
 }
 const Category: NextPage<CategoryProps> = () => {
+  if (!featureFlags.useNotion) return null;
   return <NotionRender />;
 };
 
-export const getStaticPaths: GetStaticPaths<{ category: string }> = async () => {
-  const notionClient = new NotionClient();
+export const getStaticPaths: GetStaticPaths<{ category: string }> = async (): Promise<{
+  paths: Array<{ params: { category: string } }>;
+  fallback: 'blocking';
+}> => {
+  if (!featureFlags.useNotion) {
+    return { paths: [], fallback: 'blocking' };
+  }
 
-  const paths: Awaited<ReturnType<GetStaticPaths<{ category: string }>>>['paths'] = [];
+  const { NotionClient } = await import('lib/notion/Notion');
+  const { siteConfig } = await import('site-config');
+  const notionClient: InstanceType<typeof NotionClient> = new NotionClient();
 
-  const database = await notionClient.getDatabaseInfo({
+  const paths: Array<{ params: { category: string } }> = [];
+
+  const database: NotionDatabasesRetrieve = await notionClient.getDatabaseInfo({
     databaseId: siteConfig.notion.baseBlock
   });
 
-  const categories = database?.properties?.category?.select?.options || [];
+  const categories: Array<Select> = database?.properties?.category?.select?.options || [];
   for (const category of categories) {
     paths.push({
       params: {
@@ -39,22 +54,31 @@ export const getStaticPaths: GetStaticPaths<{ category: string }> = async () => 
   };
 };
 
-export const getStaticProps: GetStaticProps<CategoryProps> = async ({ params }) => {
-  const category = params?.category;
+export const getStaticProps: GetStaticProps<CategoryProps> = async ({
+  params
+}): Promise<
+  | { props: CategoryProps; revalidate: number }
+  | { notFound: true }
+> => {
+  if (!featureFlags.useNotion) {
+    return { notFound: true };
+  }
+
+  const category: string | string[] | undefined = params?.['category'];
   try {
     if (typeof category !== 'string') {
-      throw 'page is not found';
+      throw new TypeError('category must be a string');
     }
-    const notionClient = new NotionClient();
+    const { NotionClient } = await import('lib/notion/Notion');
+    const { siteConfig } = await import('site-config');
+    const { REVALIDATE } = await import('src/lib/notion');
+    const notionClient: InstanceType<typeof NotionClient> = new NotionClient();
 
-    const database = await notionClient.getDatabaseByDatabaseId({
+    const database: GetNotionBlock = await notionClient.getDatabaseByDatabaseId({
       databaseId: siteConfig.notion.baseBlock
-      // filter: {
-      //   category
-      // }
     });
 
-    const blogProperties = await notionClient.getBlogProperties();
+    const blogProperties: BlogProperties = await notionClient.getBlogProperties();
 
     return {
       props: {
@@ -64,10 +88,8 @@ export const getStaticProps: GetStaticProps<CategoryProps> = async ({ params }) 
       },
       revalidate: REVALIDATE
     };
-  } catch (e) {
-    return {
-      notFound: true
-    };
+  } catch {
+    return { notFound: true };
   }
 };
 

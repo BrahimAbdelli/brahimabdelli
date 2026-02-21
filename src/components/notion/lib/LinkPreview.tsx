@@ -2,7 +2,7 @@
 import type React from 'react';
 
 import { AiOutlineLink, AiOutlineLoading } from 'react-icons/ai';
-import useSWR from 'swr';
+import useSWR, { type SWRResponse } from 'swr';
 
 import { siteConfig } from 'site-config';
 import { notionBlockUrlToRelativePath } from 'src/lib/notion';
@@ -16,7 +16,7 @@ export interface LinkPreviewProps {
 }
 
 export const LinkPreview: React.FC<LinkPreviewProps> = ({ url }) => {
-  const { data, error, isValidating } = useSWR<ILinkPreview>(
+  const { data, error, isValidating }: SWRResponse<ILinkPreview> = useSWR<ILinkPreview>(
     `${siteConfig.path}/linkPreview/${encodeURIComponent(url)}`,
     fetcher,
     {
@@ -36,7 +36,7 @@ export const LinkPreview: React.FC<LinkPreviewProps> = ({ url }) => {
     }
   );
 
-  const relativePath = notionBlockUrlToRelativePath(url);
+  const relativePath: string = notionBlockUrlToRelativePath(url);
 
   if (error) {
     return (

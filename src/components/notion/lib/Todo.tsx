@@ -25,14 +25,9 @@ export const Todo: React.FC<TodoProps> = ({ block }) => {
             blockId={block.id}
             richText={block.to_do.rich_text}
             color={block.to_do.color}
-            annotations={
-              block?.to_do?.checked
-                ? {
-                    color: 'gray',
-                    strikethrough: true
-                  }
-                : undefined
-            }
+            {...(block?.to_do?.checked
+              ? { annotations: { color: 'gray' as const, strikethrough: true } }
+              : {})}
           />
         </div>
       </label>

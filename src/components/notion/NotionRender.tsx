@@ -5,18 +5,21 @@
 import type React from 'react';
 
 import classNames from 'classnames';
+import { useTranslation } from 'next-i18next';
 import Link from 'next/link';
 import { GrLinkNext, GrLinkPrevious } from 'react-icons/gr';
 import { HiHome, HiMenu } from 'react-icons/hi';
 import { shallow } from 'zustand/shallow';
 
 import { siteConfig } from 'site-config';
-import { useNotionStore } from 'src/store/notion';
+import { useNotionStore, type NotionStore } from 'src/store/notion';
 import type {
+  BlogArticleRelation,
   RichText,
   GetNotionBlock,
   NotionDatabaseBlocks,
-  NotionBlocksRetrieve
+  NotionBlocksRetrieve,
+  NotionPagesRetrieve
 } from 'src/types/notion';
 
 import { NotionBlocksRender, NotionPageHeader, NotionSeo } from '.';
@@ -29,8 +32,9 @@ export interface NotionRenderProps {
 }
 
 export const NotionRender: React.FC<NotionRenderProps> = () => {
-  const { baseBlock, pageInfo, userInfo } = useNotionStore((state) => state, shallow);
-  const blocks = baseBlock?.results;
+  const { baseBlock, pageInfo, userInfo }: NotionStore = useNotionStore((state) => state, shallow);
+  const { t: _t }: ReturnType<typeof useTranslation> = useTranslation('common');
+  const blocks: NotionBlocksRetrieve[] | NotionPagesRetrieve[] | undefined = baseBlock?.results;
 
   if (!blocks || !pageInfo) {
     return (
@@ -43,12 +47,12 @@ export const NotionRender: React.FC<NotionRenderProps> = () => {
     );
   }
 
-  const title =
+  const title: string =
     richTextToPlainText(
       pageInfo.object === 'database' ? pageInfo.title : pageInfo.properties?.title?.title
     ) || '';
 
-  const description = blocks
+  const description: string | undefined = blocks
     ?.slice(0, 10)
     ?.map((block: any) =>
       block?.[block.type]?.rich_text?.map((text: RichText) => text?.plain_text || '')?.join('')
@@ -60,7 +64,7 @@ export const NotionRender: React.FC<NotionRenderProps> = () => {
     //! Don't delete key
     <div key={pageInfo.id} className='w-full mb-5 whitespace-pre-wrap'>
       <NotionSeo page={pageInfo} title={title} description={description} />
-      <NotionPageHeader pageInfo={pageInfo} title={title} userInfo={userInfo} />
+      <NotionPageHeader pageInfo={pageInfo} title={title} userInfo={userInfo ?? null} />
       <div className='max-w-[var(--article-max-width)] mx-auto mt-10 sm:px-4'>
         <div className={classNames(pageInfo ? 'px-3' : null)}>
           {pageInfo.object === 'page' ? (
@@ -81,21 +85,21 @@ export const NotionRender: React.FC<NotionRenderProps> = () => {
 const NotionFooter: React.FC<{
   pageInfo: GetNotionBlock['pageInfo'];
 }> = ({ pageInfo }) => {
-  const parentDatabaseId = pageInfo?.parent.database_id?.replace(/-/g, '') || '';
-  const blogArticleRelation = useNotionStore((state) => state.blogArticleRelation);
+  const parentDatabaseId: string = pageInfo?.parent.database_id?.replace(/-/g, '') || '';
+  const blogArticleRelation: BlogArticleRelation | undefined = useNotionStore((state) => state.blogArticleRelation);
 
   if (!parentDatabaseId) {
     return <></>;
   }
 
-  const pageId = pageInfo.id.replace(/-/g, '');
-  const parentIsBaseDatabase = parentDatabaseId == siteConfig.notion.baseBlock;
-  const havePrev =
+  const pageId: string = pageInfo.id.replace(/-/g, '');
+  const parentIsBaseDatabase: boolean = parentDatabaseId == siteConfig.notion.baseBlock;
+  const havePrev: boolean | null | undefined =
     blogArticleRelation &&
     blogArticleRelation?.prev &&
     parentIsBaseDatabase &&
     pageId === blogArticleRelation.id;
-  const haveNext =
+  const haveNext: boolean | null | undefined =
     blogArticleRelation &&
     blogArticleRelation?.next &&
     parentIsBaseDatabase &&
@@ -106,7 +110,7 @@ const NotionFooter: React.FC<{
       <div className='divider'></div>
       <div className='m-2 flex flex-col gap-3 [&>a]:normal-case sm:flex-row text-base'>
         <div className='basis-1/2 shrink-0'>
-          {haveNext && (
+          {haveNext && blogArticleRelation && (
             <Link
               className='flex items-center gap-x-4 py-2 px-4 text-zinc-500 bg-base-content/5 hover:bg-base-content/10 rounded-md shadow-md '
               href={`/${
@@ -126,7 +130,7 @@ const NotionFooter: React.FC<{
           )}
         </div>
         <div className='basis-1/2 shrink-0'>
-          {havePrev && (
+          {havePrev && blogArticleRelation && (
             <Link
               className='flex items-center gap-x-4 py-2 px-4 text-zinc-500 bg-base-content/5 hover:bg-base-content/10 rounded-md shadow-md '
               href={`/${

@@ -1,7 +1,9 @@
-import { useLayoutEffect } from 'react';
+import { useLayoutEffect, useContext, useSyncExternalStore, type Context } from 'react';
 
-import { create, StoreApi } from 'zustand';
-import createContext from 'zustand/context';
+import { StoreApi } from 'zustand';
+import { createStore } from 'zustand';
+import { createContext } from 'react';
+import { shallow } from 'zustand/shallow';
 
 import {
   BlogArticleRelation,
@@ -31,10 +33,10 @@ const defaultState: NotionState = {
   databasesRecord: {}
 };
 
-const initialState = { ...defaultState };
+const initialState: NotionState = { ...defaultState };
 
-export const initializeNotionStore = (preloadedState = {}) =>
-  create<NotionStore>((set) => ({
+export const initializeNotionStore: (preloadedState?: NotionState) => StoreApi<NotionStore> = (preloadedState: NotionState = defaultState) =>
+  createStore<NotionStore>((set) => ({
     ...initialState,
     ...preloadedState,
     init(params) {
@@ -47,7 +49,7 @@ export const initializeNotionStore = (preloadedState = {}) =>
 /** Dashboard Store with zustand and context api */
 let store: ReturnType<typeof initializeNotionStore>;
 
-export const useCreateNotionStore = (initialState: NotionState) => {
+export const useCreateNotionStore: (initialState: NotionState) => () => StoreApi<NotionStore> = (initialState: NotionState) => {
   if (typeof window === 'undefined') {
     return () => initializeNotionStore(initialState);
   }
@@ -67,7 +69,38 @@ export const useCreateNotionStore = (initialState: NotionState) => {
   return () => store;
 };
 
-export const NotionZustandContext = createContext<StoreApi<NotionState>>();
+export const NotionZustandContext: Context<StoreApi<NotionStore> | null> = createContext<StoreApi<NotionStore> | null>(null);
 
-const useNotionStore = NotionZustandContext.useStore;
-export { useNotionStore };
+export const useNotionStore: <T = NotionStore>(
+  selector?: (state: NotionStore) => T,
+  _equalityFn?: (a: T, b: T) => boolean
+) => T = <T = NotionStore>(
+  selector?: (state: NotionStore) => T,
+  _equalityFn?: (a: T, b: T) => boolean
+): T => {
+  const store: StoreApi<NotionStore> | null = useContext(NotionZustandContext);
+  if (!store) {
+    const error: Error = new Error('NotionZustandContext.Provider is missing');
+    throw error;
+  }
+
+  const actualSelector: (state: NotionStore) => T = selector || ((state: NotionStore) => state as T);
+
+  const getSnapshot: () => T = (): T => {
+    const currentState: NotionStore = store.getState();
+    return actualSelector(currentState);
+  };
+
+  const state: T = useSyncExternalStore(
+    store.subscribe,
+    getSnapshot,
+    getSnapshot
+  );
+
+  return state;
+};
+
+// Helper for shallow comparison (commonly used pattern)
+export const useNotionStoreShallow: <T>(selector: (state: NotionStore) => T) => T = <T,>(selector: (state: NotionStore) => T): T => {
+  return useNotionStore(selector, shallow);
+};

@@ -6,32 +6,35 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
   openAnalyzer: false
 });
+const { i18n } = require('./next-i18next.config');
 
 const isProduction = process.env.NODE_ENV === 'production';
 const debugLogs = Boolean(process.env.DEBUG_LOGS);
 const enableProgressiveWebApp = process.env.ENABLE_PROGRESSIVE_WEB_APP === 'true';
 
-try {
-  if (!process.env.NOTION_API_SECRET_KEY) {
-    throw String('NOTION_API_SECRET_KEY');
-  }
-  if (!process.env.NEXT_PUBLIC_NOTION_DATABASE_ID) {
-    throw String('NEXT_PUBLIC_NOTION_DATABASE_ID');
-  }
-  if (!process.env.NEXT_PUBLIC_INFOMATION_BLOGNAME) {
-    throw String('NEXT_PUBLIC_INFOMATION_BLOGNAME');
-  }
-} catch (err) {
-  if (typeof err === 'string') {
-    const message = `The environment variable \`${err}\` is required. Please check the \`/.env\` and correct it.`;
-    console.log('\x1b[37m\x1b[41m');
-    console.log(`ERROR - ${message}`, '\x1b[0m');
-    throw String(`\`${err}\` is invalide value`);
+const useNotion = process.env.NEXT_PUBLIC_FEATURE_USE_NOTION === 'true';
+
+if (useNotion) {
+  try {
+    if (!process.env.NOTION_API_SECRET_KEY) {
+      throw String('NOTION_API_SECRET_KEY');
+    }
+    if (!process.env.NEXT_PUBLIC_NOTION_DATABASE_ID) {
+      throw String('NEXT_PUBLIC_NOTION_DATABASE_ID');
+    }
+    if (!process.env.NEXT_PUBLIC_INFOMATION_BLOGNAME) {
+      throw String('NEXT_PUBLIC_INFOMATION_BLOGNAME');
+    }
+  } catch (err) {
+    if (typeof err === 'string') {
+      throw new Error(`The environment variable \`${err}\` is required when Notion is enabled. Please check the \`/.env\` and correct it.`);
+    }
   }
 }
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  i18n,
   reactStrictMode: false,
   swcMinify: true,
   images: {
@@ -47,7 +50,7 @@ const nextConfig = {
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     minimumCacheTTL: 1800
-  }
+  },
   // experimental: {
   //   appDir: true
   // },
@@ -79,7 +82,7 @@ const nextConfig = {
   // }
 };
 
-module.exports = enableProgressiveWebApp
+const configWithPWA = enableProgressiveWebApp
   ? withPWA({
       dest: 'public',
       disable: !isProduction,
@@ -88,14 +91,14 @@ module.exports = enableProgressiveWebApp
     })(nextConfig)
   : nextConfig;
 
-module.exports = withBundleAnalyzer({
+const finalConfig = {
+  ...configWithPWA,
   poweredByHeader: false,
   trailingSlash: true,
   basePath: '',
-  // The starter code load resources from `public` folder with `router.basePath` in React components.
-  // So, the source code is "basePath-ready".
-  // You can remove `basePath` if you don't need it.
   reactStrictMode: true
-});
+};
 
-module.exports = withBundleAnalyzer(nextConfig);
+// Only use bundle analyzer when explicitly requested (avoids "no such file" errors in dev)
+module.exports =
+  process.env.ANALYZE === 'true' ? withBundleAnalyzer(finalConfig) : finalConfig;

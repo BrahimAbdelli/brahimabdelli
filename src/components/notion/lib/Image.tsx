@@ -9,7 +9,7 @@ interface ImageProps {
 }
 
 export const Image: React.FC<ImageProps> = ({ block }) => {
-  const caption = Array.isArray(block.image.caption)
+  const caption: string = Array.isArray(block.image.caption)
     ? block.image.caption
         .map((richText) => richText.plain_text)
         .join('')

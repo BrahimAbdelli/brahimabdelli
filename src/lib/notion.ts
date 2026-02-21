@@ -1,19 +1,19 @@
 import { siteConfig } from 'site-config';
 
-export const AWS_PUBLIC_NOTION_STATIC =
+export const AWS_PUBLIC_NOTION_STATIC: string =
   'https://s3-us-west-2.amazonaws.com/public.notion-static.com';
-export const PROXY_PUBLIC_NOTION_STATIC = '/aws-public-notion-static/';
-export const AWS_SECURE_NOTION_STATIC =
+export const PROXY_PUBLIC_NOTION_STATIC: string = '/aws-public-notion-static/';
+export const AWS_SECURE_NOTION_STATIC: string =
   'https://s3.us-west-2.amazonaws.com/secure.notion-static.com/';
-export const PROXY_SECURE_NOTION_STATIC = '/aws-secure-notion-static/';
-export const REVALIDATE = 120;
+export const PROXY_SECURE_NOTION_STATIC: string = '/aws-secure-notion-static/';
+export const REVALIDATE: number = 120;
 
 export function notionBlockUrlToRelativePath(url: string): string {
   if (!siteConfig?.notion) {
     return url;
   }
 
-  const { customDomain, notionSoRegExp, notionSiteRegExp } = siteConfig.notion;
+  const { customDomain, notionSoRegExp, notionSiteRegExp }: typeof siteConfig.notion = siteConfig.notion;
 
   if (!url || !customDomain || !notionSoRegExp || !notionSiteRegExp) {
     return url;
@@ -60,12 +60,12 @@ export function notionBlockUrlToRelativePath(url: string): string {
 //     return `https://www.notion.so/image/${encodeURIComponent(
 //       AWS_SECURE_NOTION_STATIC + s3FileUuid
 //     )}?table=${table}&id=${blockId}`;
-//   } catch (e) {
+//   } catch (e: unknown) {
 //     return s3ObjectUrl;
 //   }
 // }
 
-export const notionTagColorClasses = {
+export const notionTagColorClasses: Record<string, string> = {
   gray: 'text-notion-tag-gray',
   default: 'text-notion-tag-default',
   brown: 'text-notion-tag-brown',
@@ -86,9 +86,9 @@ export const notionTagColorClasses = {
   purple_background: 'bg-notion-tag-purple',
   pink_background: 'bg-notion-tag-pink',
   red_background: 'bg-notion-tag-red'
-} as const;
+};
 
-export const notionColorClasses = {
+export const notionColorClasses: Record<string, string> = {
   default: 'text-notion-default',
   gray: 'text-notion-gray',
   brown: 'text-notion-brown',
@@ -110,18 +110,18 @@ export const notionColorClasses = {
   red_background: 'bg-notion-red',
   code: 'text-notion-code',
   code_background: 'bg-notion-code'
-} as const;
+};
 
-export const paragraphTextClasses = {
+export const paragraphTextClasses: Record<string, Record<string, string>> = {
   code: {
     once: `py-[0.0625rem] px-1 font-mono rounded-l rounded-r`,
     first: `py-[0.0625rem] pl-1 font-mono rounded-l`,
     last: `py-[0.0625rem] pr-1 font-mono rounded-r`,
     middle: `py-[0.0625rem] font-mono`
   }
-} as const;
+};
 
-export const NEXT_IMAGE_DOMAINS = [
+export const NEXT_IMAGE_DOMAINS: string[] = [
   'www.notion.so',
   'notion.so'
   // 's3.us-west-2.amazonaws.com',

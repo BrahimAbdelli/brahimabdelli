@@ -1,21 +1,22 @@
 import type React from 'react';
 
+import { useTranslation } from 'next-i18next';
+import type { UseTranslationCommon } from 'src/types/types';
+
 import Card from '../cards/Card';
 import CardGrid from '../cards/CardGrid';
 
 export default function ProjectsList() {
+  const { t } = useTranslation('common') as UseTranslationCommon;
   return (
     <CardGrid>
       <Card
-        title='NestJS Boilerplate'
+        title='Nestier'
         link='https://github.com/BrahimAbdelli/nestjs-boilerplate'
-        tags={['NestJS, MongoDB, TypeORM, Typescript']}
+        tags={['NodeJS', 'NestJS', 'MongoDB', 'TypeORM', 'Typescript']}
         highlighted
       >
-        Supported by the NestJS official awesome-nestjs project that supports curated repositories
-        build by the framework,This is a boilerplate that uses abstraction to create generic
-        controller, service, dtos and entity, aiming to encapsulate the reusable logic throughout
-        the project in one centralized base module.
+        {`${t('home.projects.nestier.description')}`}
       </Card>
       <Card
         title='Personal Portfolio'
@@ -23,26 +24,27 @@ export default function ProjectsList() {
         tags={['NextJS, TailwindCSS, Typescript']}
         highlighted
       >
-        This is a personal Portfolio I created to showcase my work as a software engineer. I will
-        try to always update this project.
+        {`${t('home.projects.portfolio.description')}`}
       </Card>
       <Card
         title='Auto Sans Risque'
-        link='https://auto-sans-risque.tn/home'
-        tags={['React, NestJS, TailwindCSS, Javascript, Typescript, MongoDB, TypeORM']}
+        link='https://www.auto-sans-risque.com/'
+        tags={['React, NodeJS, NestJS, TailwindCSS, Javascript, Typescript, MongoDB, TypeORM']}
         highlighted
       >
-        Previously promoted as Karhabtek.
+        {`${t('home.projects.autosansrisque.description1')}`}
         <br />
-        It&apos;s a website that connects car experts and clients. I developed the MVP for the
-        project even integrating an online payment service.
+        {`${t('home.projects.autosansrisque.description2')}`}
         <br />
-        This project is backed by BiatLabs incubator.
+        {`${t('home.projects.autosansrisque.description3')}`}
         <br />
-        and still in the development phase with other developers.
+        {`${t('home.projects.autosansrisque.description4')}`}
       </Card>
-      <Card title='Clothing Company' tags={['NextJS, React ,NestJS, TailwindCSS, MongoDB']}>
-        Developed a website for a clothing company allowing administrators to manage the stock.
+      <Card
+        title={`${t('home.projects.clothingcompany.name')}`}
+        tags={['NextJS, React, NodeJS, NestJS, TailwindCSS, MongoDB']}
+      >
+        {`${t('home.projects.clothingcompany.description')}`}
       </Card>
       <Card
         title='Advent of Code'
@@ -50,7 +52,7 @@ export default function ProjectsList() {
         tags={['Javascript']}
         highlighted
       >
-        This repository contains my attempt at solving Advent of Code by annual set.
+        {`${t('home.projects.adventofcode.description')}`}
       </Card>
 
       <Card
@@ -59,8 +61,7 @@ export default function ProjectsList() {
         tags={['NextJS, ReactJS, Styled Components']}
         highlighted
       >
-        I contributed by adding and implementing some features for this food services platform, my
-        contribution was mainly in the Frontend part.
+        {`${t('home.projects.tekmanda.description')}`}
       </Card>
     </CardGrid>
   );

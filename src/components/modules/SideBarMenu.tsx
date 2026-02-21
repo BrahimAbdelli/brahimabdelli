@@ -20,12 +20,12 @@ type SideBarMenuInnerProps = {
 const SideBarMenuInner: React.FC<SideBarMenuInnerProps> = ({
   blogProperties: { categories, tags }
 }) => {
-  const { enableSideBarMenu, openSideBarMenu, closeSideBarMenu } = useSiteSettingStore();
+  const { enableSideBarMenu, openSideBarMenu, closeSideBarMenu }: ReturnType<typeof useSiteSettingStore.getState> = useSiteSettingStore();
 
-  const handleClose = () => {
+  const handleClose: () => void = (): void => {
     closeSideBarMenu();
   };
-  const handleClickSideBarMenuButton = () => {
+  const handleClickSideBarMenuButton: () => void = (): void => {
     if (enableSideBarMenu) {
       closeSideBarMenu();
     } else {
@@ -120,7 +120,7 @@ const SideBarMenuInner: React.FC<SideBarMenuInnerProps> = ({
 };
 
 export const SideBarMenu: React.FC = memo(() => {
-  const blogProperties = useNotionStore((state) => state.blogProperties);
+  const blogProperties: BlogProperties | undefined = useNotionStore((state) => state.blogProperties);
 
   if (!blogProperties) {
     return <></>;

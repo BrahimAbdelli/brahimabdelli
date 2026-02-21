@@ -2,7 +2,7 @@ import type React from 'react';
 
 import classNames from 'classnames';
 
-import { useNotionStore } from 'src/store/notion';
+import { useNotionStore, type NotionStore } from 'src/store/notion';
 import type { NotionBlocksRetrieve } from 'src/types/notion';
 
 import { NotionBlocksRender } from '.';
@@ -20,7 +20,7 @@ export const HasChildrenRender: React.FC<HasChildrenRenderProps> = ({
   noLeftPadding,
   className
 }) => {
-  const { childrensRecord } = useNotionStore();
+  const { childrensRecord }: NotionStore = useNotionStore();
 
   return (
     <>
@@ -28,8 +28,7 @@ export const HasChildrenRender: React.FC<HasChildrenRenderProps> = ({
       {block?.has_children && (
         <div className={classNames(className || '', noLeftPadding ? '' : 'pl-6')}>
           <NotionBlocksRender
-            blocks={childrensRecord[block.id]?.results}
-            // baseBlock={childrensRecord[block.id] as unknown as NotionBlocksRetrieve}
+            blocks={childrensRecord[block.id]?.results || []}
           />
         </div>
       )}

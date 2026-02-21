@@ -1,19 +1,15 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { NextHandler } from 'next-connect';
 
-import { IErrorResponse } from 'lib/types/response';
+import { ErrorResponse } from 'lib/types/response';
 
-export class Error {
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  constructor() {}
-
+export class ApiError {
   static handleError(
-    err: IErrorResponse,
-    req: NextApiRequest,
-    res: NextApiResponse<IErrorResponse>,
-    next?: NextHandler
-  ) {
-    console.error(err);
+    err: ErrorResponse,
+    _req: NextApiRequest,
+    res: NextApiResponse<ErrorResponse>,
+    _next?: NextHandler
+  ): void {
     if (typeof err === 'string') {
       res.status(400).json({
         status: 400,
@@ -27,12 +23,12 @@ export class Error {
       status: err?.status || 400,
       error: err?.error || err?.message || 'Something broke!',
       success: err?.success || false,
-      code: err?.code,
+      ...(err?.code !== undefined && { code: err.code }),
     });
     res.end();
   }
 
-  static handleNoMatch(req: NextApiRequest, res: NextApiResponse) {
+  static handleNoMatch(_req: NextApiRequest, res: NextApiResponse): void {
     res.status(404).end('Page is not found');
   }
 }

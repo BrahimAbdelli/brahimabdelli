@@ -1,6 +1,4 @@
-export const URL_PAGE_TITLE_MAX_LENGTH = 100;
-
-export declare type ID = string;
+export const URL_PAGE_TITLE_MAX_LENGTH: number = 100;
 
 export declare type Code =
   | 'abap'
@@ -331,7 +329,7 @@ export type Property = {
   type: PropertyType;
 };
 
-export interface DatabasesRetrieveProperties extends Partial<Record<PropertyType | string, any>> {
+export interface DatabasesRetrieveProperties extends Partial<Record<PropertyType, any>> {
   title?: Property & {
     title?: Array<RichText>;
   };
@@ -362,7 +360,7 @@ export interface DatabasesRetrieveProperties extends Partial<Record<PropertyType
   };
 }
 
-export interface PagesRetrieveProperties extends Partial<Record<PropertyType | string, any>> {
+export interface PagesRetrieveProperties extends Partial<Record<PropertyType, any>> {
   title?: Property & {
     title?: Array<RichText>;
   };
@@ -395,7 +393,7 @@ export type NotionBlocksRetrieve = NotionBlockRetrieveItem & {
   created_by: UserObject;
   created_time: string;
   has_children: boolean;
-  id: ID;
+  id: string;
   last_edited_by: UserObject;
   last_edited_time: string;
   object: 'block';
@@ -409,7 +407,7 @@ export type NotionPagesRetrieve = {
   created_by: UserObject;
   created_time: string;
   icon: IconObject;
-  id: ID;
+  id: string;
   last_edited_by: UserObject;
   last_edited_time: string;
   object: 'page';
@@ -425,7 +423,7 @@ export type NotionDatabasesRetrieve = {
   created_time: string;
   description: Array<RichText>;
   icon: IconObject;
-  id: ID;
+  id: string;
   is_inline?: boolean;
   last_edited_by: UserObject;
   last_edited_time: string;
@@ -447,7 +445,7 @@ export type NotionDatabasesQuery = {
 
 export type NotionUser = {
   object: string;
-  id: ID;
+  id: string;
   type?: 'person' | 'bot';
   name?: string | null;
   avatar_url?: string | null;
@@ -537,7 +535,7 @@ export type BlogArticleRelation = {
   prev: BlogArticle | null;
 };
 
-export type BlogArticleRelationRecord = Record<ID, BlogArticleRelation>;
+export type BlogArticleRelationRecord = Record<string, BlogArticleRelation>;
 
 export type CachedObject = {
   cachedTime: number;

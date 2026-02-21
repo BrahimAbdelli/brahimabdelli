@@ -6,10 +6,9 @@ import Image from 'next/image';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 
 import { siteConfig } from 'site-config';
-import { NEXT_IMAGE_DOMAINS } from 'src/lib/notion';
-import { FileObject, IconObject } from 'src/types/notion';
+import type { FileObject, IconObject } from 'src/types/notion';
 
-import { isExpired, NotionImageFetcherParams, useRenewExpiredFile } from './utils';
+import { isExpired, type NotionImageFetcherParams, useRenewExpiredFile } from './utils';
 
 /* eslint-disable @next/next/no-img-element */
 interface NotionSecureImageProps extends NotionImageFetcherParams {
@@ -23,8 +22,6 @@ interface NotionSecureImageProps extends NotionImageFetcherParams {
   };
 }
 
-// placeholder = 'blur',
-// blurDataURL = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
 export const NotionSecureImage: React.FC<NotionSecureImageProps> = ({
   blockId,
   blockType,
@@ -35,36 +32,26 @@ export const NotionSecureImage: React.FC<NotionSecureImageProps> = ({
   quality,
   sizes,
   useNextImage = false
-}) => {
-  const [isOriginalImageLoaded, setOriginalImageLoaded] = useState(
+}): React.JSX.Element => {
+  const [isOriginalImageLoaded, setOriginalImageLoaded]: [
+    boolean,
+    React.Dispatch<React.SetStateAction<boolean>>
+  ] = useState<boolean>(
     initialFileObject?.file?.url ? !isExpired(initialFileObject?.file) : true
   );
-  const cachedFileObject = useRef<(FileObject & IconObject) | undefined>(
-    initialFileObject as FileObject & IconObject
-  );
+  const cachedFileObject: React.MutableRefObject<(FileObject & IconObject) | undefined> = useRef<
+    (FileObject & IconObject) | undefined
+  >(initialFileObject as FileObject & IconObject);
 
-  const { data: fileObject } = useRenewExpiredFile({
+  const { data: fileObject }: { data: (FileObject & IconObject) | undefined } = useRenewExpiredFile({
     blockId,
     blockType,
     useType,
-    initialFileObject: cachedFileObject.current,
+    ...(cachedFileObject.current ? { initialFileObject: cachedFileObject.current } : {}),
     autoRefresh: loading !== 'eager'
-  });
+  } as Parameters<typeof useRenewExpiredFile>[0]);
 
   const bulrImage: string | null = null;
-  {
-    if (fileObject?.file?.url) {
-      const s3AmazonImageSrc = fileObject?.file?.url;
-      const { host } = new URL(s3AmazonImageSrc);
-      if (NEXT_IMAGE_DOMAINS.includes(host)) {
-        // const notiomImageSrc = awsImageObjectUrlToNotionUrl({
-        //   s3ObjectUrl: s3AmazonImageSrc,
-        //   blockId
-        // });
-        // bulrImage = notiomImageSrc + '&width=24';
-      }
-    }
-  }
 
   useEffect(() => {
     if (isOriginalImageLoaded) {
@@ -95,11 +82,9 @@ export const NotionSecureImage: React.FC<NotionSecureImageProps> = ({
             loading={loading || 'eager'}
             src={fileObject?.file?.url || fileObject?.external?.url || ''}
             alt={alt!}
-            fill={sizes ? undefined : true}
-            width={sizes?.width}
-            height={sizes?.height}
-            quality={quality}
-            onLoad={() => {
+            {...(sizes ? { width: sizes.width, height: sizes.height } : { fill: true })}
+            {...(quality !== undefined ? { quality } : {})}
+            onLoad={(): void => {
               if (!isOriginalImageLoaded) {
                 setOriginalImageLoaded(true);
               }
@@ -115,7 +100,7 @@ export const NotionSecureImage: React.FC<NotionSecureImageProps> = ({
             loading={loading || 'eager'}
             src={fileObject?.file?.url || fileObject?.external?.url || ''}
             alt={alt}
-            onLoad={() => {
+            onLoad={(): void => {
               if (!isOriginalImageLoaded) {
                 setOriginalImageLoaded(true);
               }

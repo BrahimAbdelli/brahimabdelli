@@ -1,7 +1,6 @@
 const authRegex = /^Bearer /i;
 
 export class Authorization {
-  // constructor() {}
 
   static check(token?: string): string {
     try {
@@ -9,7 +8,7 @@ export class Authorization {
         throw 'Authorization no token information.';
       }
       return token;
-    } catch (e) {
+    } catch (e: unknown) {
       return e as string;
     }
   }

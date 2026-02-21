@@ -43,3 +43,8 @@ next-env.d.ts
 /lib/notion/cache/*
 
 .env
+
+# build/test artifacts
+test-output.txt
+tsc-output.txt
+analyze

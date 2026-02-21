@@ -10,7 +10,7 @@ import { BsDot } from 'react-icons/bs';
 import { siteConfig } from 'site-config';
 import { OptionalNextLink } from 'src/components/modules/OptionalNextLink';
 import { notionTagColorClasses } from 'src/lib/notion';
-import { FileObject, GetNotionBlock, NotionUser } from 'src/types/notion';
+import type { FileObject, GetNotionBlock, MultiSelect, NotionUser, Select } from 'src/types/notion';
 
 import { NotionParagraphText, NotionSecureImage } from '.';
 import { Paragraph } from './Paragraph';
@@ -26,11 +26,11 @@ export const NotionPageHeader: React.FC<NotionPageHeaderProps> = ({
   title,
   userInfo
 }) => {
-  const tags = pageInfo?.properties?.tags?.multi_select;
-  const date = pageInfo?.properties?.publishedAt?.date?.start;
-  const category =
+  const tags: MultiSelect | { options: Array<Select> } | undefined = pageInfo?.properties?.tags?.multi_select;
+  const date: string | null | undefined = pageInfo?.properties?.publishedAt?.date?.start;
+  const category: string | null =
     (pageInfo.object === 'page' && pageInfo?.properties.category?.select?.name) || null;
-  const parentIsBaseDatabase = Boolean(
+  const parentIsBaseDatabase: boolean = Boolean(
     pageInfo.parent.database_id &&
       siteConfig.notion.baseBlock === pageInfo.parent.database_id.replace(/-/g, '')
   );

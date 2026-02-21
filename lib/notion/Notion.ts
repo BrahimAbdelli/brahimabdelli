@@ -149,10 +149,7 @@ export class NotionClient {
               .then((database) => {
                 databasesRecord[block.id] = database;
               })
-              .catch(() => {
-                // TODO Modify link database if supported.
-                console.warn('Linked Database is not supported.');
-              })
+              .catch(() => {})
           );
           continue;
         }
@@ -176,10 +173,7 @@ export class NotionClient {
               .then((database) => {
                 databasesRecord[block.id] = database;
               })
-              .catch(() => {
-                // TODO Modify link database if supported.
-                console.warn('Linked Database is not supported.');
-              })
+              .catch(() => {})
           );
         }
       }

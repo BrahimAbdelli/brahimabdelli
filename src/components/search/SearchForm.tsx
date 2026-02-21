@@ -7,6 +7,9 @@ import { useRouter } from 'next/navigation';
 import { AiOutlineSearch } from 'react-icons/ai';
 
 import { useSiteSettingStore } from 'src/store/siteSetting';
+import { useTranslation } from 'next-i18next';
+import type { UseTranslationCommon } from 'src/types/types';
+
 interface SearchFormProps {
   searchValue?: string;
   autoInputHidden?: boolean;
@@ -17,61 +20,62 @@ export const SearchForm: React.FC<SearchFormProps> = ({
   searchValue,
   autoInputHidden = false,
   autoFocus = false
-}): JSX.Element => {
-  const router = useRouter();
-  const inputRef = useRef<HTMLInputElement>(null);
+}): React.JSX.Element => {
+  const router: ReturnType<typeof useRouter> = useRouter();
+  const searchInputRef: React.RefObject<HTMLInputElement | null> = useRef<HTMLInputElement>(null);
+  const { t } = useTranslation('common') as UseTranslationCommon;
 
-  const handleSearchSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
+  const handleSearchSubmit: (evt: React.FormEvent<HTMLFormElement>) => void = (evt: React.FormEvent<HTMLFormElement>): void => {
     evt.stopPropagation();
     evt.preventDefault();
-    const form = evt.target as HTMLFormElement;
-    const value = form?.search?.value?.trim();
-    if (value) {
+    const form: HTMLFormElement = evt.target as HTMLFormElement;
+    const searchValueFromForm: string | undefined = form?.['search']?.value?.trim();
+    if (searchValueFromForm) {
       useSiteSettingStore.getState().closeSideBarMenu();
-      router.push(`/s/${value}`);
+      router.push(`/s/${searchValueFromForm}`);
     }
   };
 
-  useEffect(() => {
-    const inputEl = inputRef.current;
-    if (searchValue || !autoFocus || !inputEl) {
+  useEffect((): void => {
+    const searchInput: HTMLInputElement | null = searchInputRef.current;
+    if (searchValue || !autoFocus || !searchInput) {
       return;
     }
-    inputEl.focus();
-    if (typeof inputEl.selectionStart == 'number') {
-      inputEl.selectionStart = inputEl.selectionEnd = inputEl.value.length;
+    searchInput.focus();
+    if (typeof searchInput.selectionStart === 'number') {
+      searchInput.selectionStart = searchInput.selectionEnd = searchInput.value.length;
     }
   }, [autoFocus, searchValue]);
 
   return (
-    <form
-      onSubmit={handleSearchSubmit}
-      className={classNames(
-        'rounded-lg',
-        autoInputHidden ? 'sm:bg-base-content/5' : 'bg-base-content/5'
-      )}
-    >
-      <div className='form-control md:overflow-visible'>
-        <div className={autoInputHidden ? 'sm:input-group' : 'input-group'}>
-          <input
-            ref={inputRef}
-            className={classNames(
-              'input input-sm w-full bg-transparent focus:outline-none placeholder:text-base-content/60',
-              autoInputHidden ? 'hidden sm:block' : null
-            )}
-            defaultValue={searchValue}
-            type='text'
-            name='search'
-            placeholder='Title Search'
-            aria-label='search-input'
-          />
-          <button
-            className='btn btn-sm btn-ghost btn-circle sm:btn-square text-lg'
-            aria-label='search-button'
-          >
-            <AiOutlineSearch />
-          </button>
-        </div>
+    <form onSubmit={handleSearchSubmit} className='w-full'>
+      <div
+        className={classNames(
+          'flex items-center overflow-hidden rounded-lg border border-base-300 bg-base-200/80 shadow-sm',
+          'focus-within:outline focus-within:outline-2 focus-within:outline-offset-0 focus-within:outline-base-content/20',
+          autoInputHidden ? 'hidden sm:flex' : 'flex'
+        )}
+      >
+        <input
+          ref={searchInputRef}
+          className={classNames(
+            'min-w-0 flex-1 border-0 bg-transparent px-3 py-2 text-sm',
+            'placeholder:text-base-content/50 focus:outline-none focus:ring-0',
+            autoInputHidden ? 'hidden sm:block' : null
+          )}
+          defaultValue={searchValue}
+          type='text'
+          name='search'
+          placeholder={t('header.titlesearch')}
+          aria-label='search-input'
+        />
+        <button
+          type='submit'
+          className='flex shrink-0 items-center justify-center p-2 text-base-content/70 transition-colors hover:bg-base-300/50 hover:text-base-content'
+          aria-label='search-button'
+        >
+          <AiOutlineSearch className='text-lg' />
+        </button>
       </div>
     </form>
   );

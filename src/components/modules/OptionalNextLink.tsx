@@ -6,12 +6,12 @@ export const OptionalNextLink: React.FC<
   LinkProps &
     React.AnchorHTMLAttributes<HTMLAnchorElement> & {
       wrappingAnchor: boolean;
-      children: JSX.Element;
+      children: React.JSX.Element;
     }
 > = ({ wrappingAnchor, children, ...props }) => {
   if (wrappingAnchor) {
     return <Link {...props}>{children}</Link>;
   }
-  const { scroll, shallow, prefetch, as, replace, passHref, ...spanProps } = props;
+  const { scroll: _scroll, shallow: _shallow, prefetch: _prefetch, as: _as, replace: _replace, passHref: _passHref, ...spanProps }: typeof props = props;
   return <span {...spanProps}>{children}</span>;
 };

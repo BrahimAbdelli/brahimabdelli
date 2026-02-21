@@ -11,8 +11,8 @@ interface ListProps {
 }
 
 export const List: React.FC<ListProps> = ({ block, startValue }) => {
-  const LIST_TYPE = block.type as 'bulleted_list_item' | 'numbered_list_item';
-  const ListTagName = LIST_TYPE === 'numbered_list_item' ? 'ol' : 'ul';
+  const LIST_TYPE: 'bulleted_list_item' | 'numbered_list_item' = block.type as 'bulleted_list_item' | 'numbered_list_item';
+  const ListTagName: 'ol' | 'ul' = LIST_TYPE === 'numbered_list_item' ? 'ol' : 'ul';
 
   return (
     <ListTagName className='list-style-type pl-6'>

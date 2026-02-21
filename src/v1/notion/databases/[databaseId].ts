@@ -1,24 +1,25 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from 'next';
+import type { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
+// @ts-expect-error next-connect types
 import nc from 'next-connect';
-import { Error } from 'lib/Error';
+import { ApiError } from 'lib/Error';
 import { Client, LogLevel } from '@notionhq/client';
 import { NotionDatabasesRetrieve } from 'src/types/notion';
 
-const handler = nc<NextApiRequest, NextApiResponse>({
-  onError: Error.handleError,
-  onNoMatch: Error.handleNoMatch
+const handler: NextApiHandler = nc<NextApiRequest, NextApiResponse>({
+  onError: ApiError.handleError,
+  onNoMatch: ApiError.handleNoMatch
 }).get(async (req: NextApiRequest, res: NextApiResponse<NotionDatabasesRetrieve>) => {
-  const { databaseId } = req.query;
+  const databaseId: string | string[] | undefined = req.query?.['databaseId'];
   if (typeof databaseId !== 'string') {
-    throw 'type error "databaseId"';
+    throw new TypeError('type error "databaseId"');
   }
-  const notion = new Client({
-    auth: process.env.NOTION_API_SECRET_KEY,
-    logLevel: process.env.DEBUG_LOGS ? LogLevel.DEBUG : undefined
+  const notion: Client = new Client({
+    auth: process.env['NOTION_API_SECRET_KEY'] ?? '',
+    ...(process.env['DEBUG_LOGS'] ? { logLevel: LogLevel.DEBUG } : {})
   });
 
-  const result = (await notion.databases.retrieve({
+  const result: NotionDatabasesRetrieve = (await notion.databases.retrieve({
     database_id: databaseId
   })) as NotionDatabasesRetrieve;
 
