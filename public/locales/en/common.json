@@ -144,6 +144,22 @@
         "description": "I love exploring new places and cultures."
       }
     },
+    "resources": {
+      "name": "RESOURCES I USE TO STAY UPDATED",
+      "description": "Tech content creators, courses and channels I follow.",
+      "items": {
+        "hussein": "Hussein Nasser",
+        "husseinDescription": "Deep dives into networking, databases, system design and backend. Clear explanations and real-world scenarios. Structured courses on Udemy too.",
+        "webdevcody": "Web Dev Cody",
+        "webdevcodyDescription": "Web development tutorials and project walkthroughs. React, Next.js and full-stack content.",
+        "primeagen": "The Primeagen",
+        "primeagenDescription": "Vim, TypeScript, system design and engineering practices. Straight-talking and highly technical.",
+        "devto": "dev.to",
+        "devtoDescription": "Developer community and blog. Articles, discussions and tutorials from developers worldwide.",
+        "fireship": "Fireship",
+        "fireshipDescription": "Short, high-energy tech explainers and tutorials. Frameworks, tools and concepts in minutes."
+      }
+    },
     "contanctme": "Contact Me",
     "copyright": "Copyright ",
     "takecare": "Take care and remember, health comes first."

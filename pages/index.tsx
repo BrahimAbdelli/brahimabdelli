@@ -16,6 +16,7 @@ import InternshipsList from 'src/components/index/InternshipsList';
 import LatestArticles from 'src/components/index/LatestArticles';
 import NameTitle from 'src/components/index/NameTitle';
 import ProjectsList from 'src/components/index/ProjectsList';
+import ResourcesList from 'src/components/index/ResourcesList';
 import Certifications from 'src/components/index/Certifications';
 import SectionTitle from 'src/components/index/SectionTitle';
 import TechStack from 'src/components/index/TechStack';
@@ -282,8 +283,30 @@ const Home: NextPage<HomeProps> = ({ latestArticles = [] }) => {
                 </motion.div>
               </div>
 
+              <div className={containerClasses} id='resources'>
+                <motion.div
+                  initial='hidden'
+                  whileInView='visible'
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.2, delay: 0 }}
+                  variants={{
+                    visible: { opacity: 1, scale: 1 },
+                    hidden: { opacity: 0, scale: 0 }
+                  }}
+                >
+                  <SectionTitle big accentText='08'>
+                    {`${t('home.resources.name')}`}
+                  </SectionTitle>
+                  <div className={sectionBodyClasses}>
+                    <p>{`${t('home.resources.description')}`}</p>
+                  </div>
+                  <div className='h-8 lg:h-12'></div>
+                  <ResourcesList />
+                </motion.div>
+              </div>
+
               <div className={containerClasses} id='contact'>
-                <SectionTitle big accentText='08'>
+                <SectionTitle big accentText='09'>
                   {`${t('home.contanctme')}`}
                 </SectionTitle>
                 <div className='flex items-center gap-5'>
