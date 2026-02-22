@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 import matter from 'gray-matter';
-import readingTime from 'reading-time';
+import readingTime, { type ReadTimeResults } from 'reading-time';
 import { z } from 'zod';
 
 const ARTICLES_DIR: string = path.join(process.cwd(), 'content', 'articles');
@@ -64,12 +64,12 @@ function parseArticle(filepath: string, slug: string): Article | null {
   const raw: string = fs.readFileSync(filepath, 'utf-8');
   const { data, content }: matter.GrayMatterFile<string> = matter(raw);
 
-  const parsed: z.SafeParseReturnType<unknown, ArticleFrontmatter> = ArticleSchema.safeParse(data);
+  const parsed = ArticleSchema.safeParse(data);
   if (!parsed.success) {
     return null;
   }
 
-  const stats: readingTime.ReadTimeResults = readingTime(content);
+  const stats: ReadTimeResults = readingTime(content);
 
   return {
     slug,
