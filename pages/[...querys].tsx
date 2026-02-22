@@ -5,12 +5,7 @@ import type { GetStaticPaths, GetStaticProps } from 'next';
 import { featureFlags } from 'src/lib/featureFlags';
 import { richTextToPlainText } from 'src/components/notion/lib/utils';
 import { NotionRender } from 'src/components/notion';
-import type {
-  BlogProperties,
-  GetNotionBlock,
-  NotionDatabasesRetrieve,
-  NotionPagesRetrieve,
-} from 'src/types/notion';
+import type { BlogProperties, GetNotionBlock } from 'src/types/notion';
 
 interface SlugProps {
   slug: string;
@@ -86,17 +81,17 @@ export const getStaticProps: GetStaticProps<SlugProps> = async ({
     const notionClient: InstanceType<typeof NotionClient> = new NotionClient();
 
     {
-      const [_pageInfo, _databaseInfo]: [NotionPagesRetrieve | null, NotionDatabasesRetrieve] = await Promise.all([
-        notionClient.getPageInfo({
-          pageId: uuid
-        }),
-        notionClient.getDatabaseInfo({
-          databaseId: uuid
-        })
+      const [_pageInfo, _databaseInfo] = await Promise.all([
+        notionClient.getPageInfo({ pageId: uuid }),
+        notionClient.getDatabaseInfo({ databaseId: uuid })
       ]);
-      const pageInfo: NotionPagesRetrieve | NotionDatabasesRetrieve = _pageInfo || _databaseInfo || ({} as NotionPagesRetrieve);
+      const pageInfo = _pageInfo ?? _databaseInfo;
 
-      if (!pageInfo.object || (pageInfo.object !== 'page' && pageInfo.object !== 'database')) {
+      if (
+        !pageInfo ||
+        !('object' in pageInfo) ||
+        (pageInfo.object !== 'page' && pageInfo.object !== 'database')
+      ) {
         throw new Error('page is not found');
       }
 
@@ -131,17 +126,17 @@ export const getStaticProps: GetStaticProps<SlugProps> = async ({
         }
       };
     }
-  } catch (e: unknown) {
-    if (uuid && slug) {
+  } catch {
+    /* Intentional: redirect to search or return 404 */
+    if (typeof uuid === 'string' && typeof slug === 'string') {
+      const searchQuery = `${uuid} ${slug}`;
       return {
         redirect: {
           permanent: false,
-          destination: `/s/${encodeURIComponent(`${uuid} ${slug}`)}`
+          destination: `/s/${encodeURIComponent(searchQuery)}`
         }
       };
     }
-    return {
-      notFound: true
-    };
+    return { notFound: true };
   }
 };

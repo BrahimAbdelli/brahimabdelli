@@ -1,5 +1,3 @@
-import type React from 'react';
-
 import { US, FR } from 'country-flag-icons/react/3x2';
 import { motion } from 'framer-motion';
 import Link from 'next/link';

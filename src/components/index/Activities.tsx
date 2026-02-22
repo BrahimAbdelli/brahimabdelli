@@ -1,4 +1,5 @@
-import type React from 'react';
+import { useTranslation } from 'next-i18next';
+import type { UseTranslationCommon } from 'src/types/types';
 
 import { useTranslation } from 'next-i18next';
 import type { UseTranslationCommon } from 'src/types/types';

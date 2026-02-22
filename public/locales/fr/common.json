@@ -146,6 +146,22 @@
         "description": "J'aime explorer de nouveaux endroits et cultures."
       }
     },
+    "resources": {
+      "name": "RESSOURCES POUR RESTER À JOUR",
+      "description": "Créateurs de contenu tech, formations et chaînes que je suis.",
+      "items": {
+        "hussein": "Hussein Nasser",
+        "husseinDescription": "Approfondissements sur le réseau, les BDD, le system design et le backend. Explications claires et cas concrets. Formations structurées sur Udemy aussi.",
+        "webdevcody": "Web Dev Cody",
+        "webdevcodyDescription": "Tutoriels web et projets pas à pas. Contenu React, Next.js et full-stack.",
+        "primeagen": "The Primeagen",
+        "primeagenDescription": "Vim, TypeScript, system design et pratiques d'ingénierie. Direct et très technique.",
+        "devto": "dev.to",
+        "devtoDescription": "Communauté et blog développeurs. Articles, discussions et tutoriels du monde entier.",
+        "fireship": "Fireship",
+        "fireshipDescription": "Explications tech courtes et rythmées. Frameworks, outils et concepts en quelques minutes."
+      }
+    },
     "contanctme": "Contactez-Moi",
     "copyright": "Droits d'auteur",
     "takecare": "Prenez soin de vous et rappelez-vous, votre santé est votre priorité."

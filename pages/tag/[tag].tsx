@@ -1,5 +1,3 @@
-import type React from 'react';
-
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
