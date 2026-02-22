@@ -47,14 +47,14 @@ export class NotionClient {
   protected notion;
 
   constructor() {
-    const { NOTION_API_SECRET_KEY } = process.env;
-    if (!NOTION_API_SECRET_KEY) {
-      throw '`NOTION_API_SECRET_KEY` environment variable setting missing';
+    const auth = process.env['NOTION_API_SECRET_KEY'];
+    if (!auth) {
+      throw new Error('NOTION_API_SECRET_KEY environment variable is required.');
     }
-
+    const logLevel = process.env['DEBUG_LOGS'] ? LogLevel.DEBUG : undefined;
     this.notion = new Client({
-      auth: process.env.NOTION_API_SECRET_KEY,
-      logLevel: process.env.DEBUG_LOGS ? LogLevel.DEBUG : undefined
+      auth,
+      ...(logLevel !== undefined && { logLevel })
     });
   }
 
@@ -65,8 +65,8 @@ export class NotionClient {
   }: BlocksParams): Promise<NotionBlocksChildren> {
     const blocks = (await this.notion.blocks.children.list({
       block_id: blockId,
-      page_size: pageSize,
-      start_cursor: startCursor
+      ...(pageSize !== undefined && { page_size: pageSize }),
+      ...(startCursor !== undefined && { start_cursor: startCursor })
     })) as unknown as NotionBlocksChildren;
 
     return blocks;
@@ -81,8 +81,8 @@ export class NotionClient {
     do {
       const childrens = await this.notion.blocks.children.list({
         block_id: params.blockId,
-        page_size: params.pageSize,
-        start_cursor: params.startCursor
+        ...(params.pageSize !== undefined && { page_size: params.pageSize }),
+        ...(params.startCursor !== undefined && { start_cursor: params.startCursor })
       });
 
       hasMore = childrens.has_more;
@@ -94,7 +94,8 @@ export class NotionClient {
       } as unknown as ChildrensRecord[string];
     } while (hasMore && startCursor);
 
-    for await (const block of childrenRecord[params.blockId].results) {
+    const results = childrenRecord[params.blockId]?.results ?? [];
+    for (const block of results) {
       const { has_children } = block;
       if (has_children) {
         await this.getAllChildrensRecordByBlockId({
@@ -108,73 +109,69 @@ export class NotionClient {
     return childrenRecord;
   }
 
-  async getAllBlocksAndChildrens(blockId: string): Promise<NotionPageBlocks> {
-    const databasesRecord: DatabasesRecord = {};
-    let childrensRecord: ChildrensRecord = {};
-    const moreFetch: Array<any> = [];
+  private pushChildDatabaseFetch(
+    arr: Array<Promise<unknown>>,
+    databasesRecord: DatabasesRecord,
+    blockId: string
+  ): void {
+    arr.push(
+      this.getPagesInDatabaseByDatabaseId({ id: blockId })
+        .then((database) => {
+          databasesRecord[blockId] = database;
+        })
+        .catch(() => {
+          /* ignore: linked database may be unavailable */
+        })
+    );
+  }
 
-    const blocks = await this.getBlocksByBlockId({ blockId });
-
-    // Get all blocks
+  private async fetchAllBlockPages(
+    blockId: string,
+    blocks: NotionBlocksChildren
+  ): Promise<void> {
     let hasMore = blocks.has_more;
     let startCursor = blocks.next_cursor;
     while (hasMore && startCursor) {
       const moreBlocks = await this.getBlocksByBlockId({
         blockId,
-        startCursor: startCursor || undefined
+        ...(startCursor != null && { startCursor })
       });
-
       blocks.results.push(...moreBlocks.results);
-
       hasMore = moreBlocks.has_more;
       startCursor = moreBlocks.next_cursor;
     }
+  }
+
+  async getAllBlocksAndChildrens(blockId: string): Promise<NotionPageBlocks> {
+    const databasesRecord: DatabasesRecord = {};
+    let childrensRecord: ChildrensRecord = {};
+    const moreFetch: Array<Promise<unknown>> = [];
+
+    const blocks = await this.getBlocksByBlockId({ blockId });
+    await this.fetchAllBlockPages(blockId, blocks);
 
     // has_children import blocks
     for (const block of blocks.results) {
       if (block.has_children) {
-        // recursive function
         moreFetch.push(
           this.getAllChildrensRecordByBlockId({ blockId: block.id }).then((result) => {
             childrensRecord = { ...childrensRecord, ...result };
           })
         );
       }
-      switch (block.type) {
-        case 'child_database': {
-          moreFetch.push(
-            this.getPagesInDatabaseByDatabaseId({
-              id: block.id
-            })
-              .then((database) => {
-                databasesRecord[block.id] = database;
-              })
-              .catch(() => {})
-          );
-          continue;
-        }
+      if (block.type === 'child_database') {
+        this.pushChildDatabaseFetch(moreFetch, databasesRecord, block.id);
       }
     }
 
     await Promise.all(moreFetch);
 
-    const childDatabaseFetching: Array<any> = [];
-    const childrens = Object.values(childrensRecord);
-    for (const children of childrens) {
-      if (!Array.isArray(children.results)) {
-        continue;
-      }
+    const childDatabaseFetching: Array<Promise<unknown>> = [];
+    for (const children of Object.values(childrensRecord)) {
+      if (!Array.isArray(children?.results)) continue;
       for (const block of children.results) {
         if (block.type === 'child_database') {
-          childDatabaseFetching.push(
-            this.getPagesInDatabaseByDatabaseId({
-              id: block.id
-            })
-              .then((database) => {
-                databasesRecord[block.id] = database;
-              })
-              .catch(() => {})
-          );
+          this.pushChildDatabaseFetch(childDatabaseFetching, databasesRecord, block.id);
         }
       }
     }
@@ -196,8 +193,8 @@ export class NotionClient {
   }): Promise<NotionDatabasesQuery> {
     const database = (await this.notion.databases.query({
       database_id: querys.id,
-      start_cursor: querys.startCursor,
-      page_size: querys.pageSize
+      ...(querys.startCursor !== undefined && { start_cursor: querys.startCursor }),
+      ...(querys.pageSize !== undefined && { page_size: querys.pageSize })
     })) as unknown as NotionDatabasesQuery;
 
     return database;
@@ -214,9 +211,9 @@ export class NotionClient {
     do {
       const getDatabase = (await this.notion.databases.query({
         database_id: querys.databaseId,
-        sorts: querys.sorts,
-        filter: querys.filter,
-        start_cursor: database?.next_cursor || undefined
+        ...(querys.sorts !== undefined && { sorts: querys.sorts }),
+        ...(querys.filter !== undefined && { filter: querys.filter }),
+        ...(database?.next_cursor != null && { start_cursor: database.next_cursor })
       })) as unknown as NotionDatabasesQuery;
 
       if (!getDatabase) {
@@ -228,7 +225,7 @@ export class NotionClient {
       }
     } while (database.has_more && database.next_cursor);
 
-    return database;
+    return { ...database, results: blocks };
   }
 
   async getDatabaseInfo(querys: { databaseId: string }): Promise<NotionDatabasesRetrieve> {
@@ -264,15 +261,10 @@ export class NotionClient {
             contains: searchValue
           }
         },
-        sorts: direction
-          ? [
-              {
-                direction,
-                timestamp: 'created_time'
-              }
-            ]
-          : undefined,
-        start_cursor
+        ...(direction !== undefined && {
+          sorts: [{ direction, timestamp: 'created_time' as const }]
+        }),
+        ...(start_cursor !== undefined && { start_cursor })
       })) as unknown as NotionDatabasesQuery;
 
       if (Array.isArray(search?.results) && search.results.length > 0) {
@@ -298,19 +290,13 @@ export class NotionClient {
     do {
       const search = (await this.notion.search({
         query: searchValue,
-        filter: filter
-          ? {
-              property: 'object',
-              value: filter
-            }
-          : undefined,
-        sort: direction
-          ? {
-              direction,
-              timestamp: 'last_edited_time'
-            }
-          : undefined,
-        start_cursor
+        ...(filter !== undefined && {
+          filter: { property: 'object' as const, value: filter }
+        }),
+        ...(direction !== undefined && {
+          sort: { direction, timestamp: 'last_edited_time' as const }
+        }),
+        ...(start_cursor !== undefined && { start_cursor })
       })) as NotionSearch;
 
       if (Array.isArray(search?.results) && search.results.length > 0) {
@@ -385,7 +371,8 @@ export class NotionClient {
         return pageBlocks;
       }
       throw NO_CACHED;
-    } catch (e) {
+    } catch {
+      /* Cache miss or stale: fetch fresh data */
       const [blocksAndChildrens, pageInfo] = await Promise.all([
         this.getAllBlocksAndChildrens(blockId),
         this.getPageInfo({ pageId: blockId })
@@ -513,12 +500,17 @@ export class NotionClient {
         return page;
       }
       throw NO_CACHED;
-    } catch (e) {
+    } catch {
       const databaseInfo = await this.getDatabaseInfo({ databaseId });
+      if (!databaseInfo?.created_by?.id) {
+        throw new Error('Database info or creator not found.');
+      }
       const database = await this.getAllPublishedPageInDatabase({
         databaseId,
-        filter: querys.filter,
-        databaseProperties: databaseInfo.properties
+        ...(querys.filter !== undefined && { filter: querys.filter }),
+        ...(databaseInfo.properties !== undefined && {
+          databaseProperties: databaseInfo.properties
+        })
       });
       const userInfo = await this.getUserInfoByUserId(databaseInfo.created_by.id);
 
@@ -615,7 +607,8 @@ export class NotionClient {
         return { categories, tags };
       }
       throw NO_CACHED;
-    } catch (e) {
+    } catch {
+      /* Cache miss or stale: fetch fresh blog properties */
       const database = (await this.getDatabaseByDatabaseId({
         databaseId
       })) as NotionDatabase;
@@ -637,9 +630,10 @@ export class NotionClient {
             return prev;
           }
 
+          const existing = prev[category.name];
           const newCategory = {
             ...category,
-            count: prev[category.name]?.count ? prev[category.name]?.count + 1 : 1
+            count: existing ? (existing.count ?? 0) + 1 : 1
           };
 
           return {
@@ -648,8 +642,11 @@ export class NotionClient {
           };
         }, {});
 
-        const keys = Object.keys(categoriesRecord).sort();
-        keys.forEach((category) => categories.push(categoriesRecord[category]));
+        const keys = Object.keys(categoriesRecord).sort((a, b) => a.localeCompare(b));
+        keys.forEach((key) => {
+          const entry = categoriesRecord[key];
+          if (entry) categories.push(entry);
+        });
       }
 
       const blogProperties = {
@@ -660,7 +657,7 @@ export class NotionClient {
       const cacheBlogProperties: CachedBlogProperties = {
         ...blogProperties,
         databaseId,
-        lastEditedTime: database.pageInfo.last_edited_time,
+        lastEditedTime: database.pageInfo?.last_edited_time ?? '',
         cachedTime: Date.now()
       };
 
@@ -675,7 +672,11 @@ export class NotionClient {
     const databaseId = siteConfig.notion.baseBlock;
     const cacheKey = 'blog-article-relations';
     const NO_CACHED = 'no cached';
-    const defaultRelation = { prev: null, next: null };
+    const defaultRelation: BlogArticleRelation = {
+      id: '',
+      prev: null,
+      next: null
+    };
     try {
       const exists = await this.accessCache(cacheKey);
       if (!exists) {
@@ -713,18 +714,24 @@ export class NotionClient {
       }
 
       throw NO_CACHED;
-    } catch (e) {
+    } catch {
       const databaseInfo = await this.getDatabaseInfo({ databaseId });
+      if (!databaseInfo) {
+        throw new Error('Database not found');
+      }
       const relationRecord = await this.getAllPublishedPageInDatabase({
         databaseId,
-        databaseProperties: databaseInfo.properties
+        ...(databaseInfo.properties !== undefined && {
+          databaseProperties: databaseInfo.properties
+        })
       }).then((res) => {
-        const pages = res.results.map<BlogArticle>((page) => {
+        const pages: BlogArticle[] = res.results.map((page) => {
+          const publishedAt = page.properties.publishedAt?.date;
           return {
             title: richTextToPlainText(page.properties.title?.title),
             slug: richTextToPlainText(page.properties.slug?.rich_text),
-            id: page.id.replace(/-/g, ''),
-            publishedAt: page.properties.publishedAt?.date,
+            id: page.id.replaceAll('-', ''),
+            ...(publishedAt != null && { publishedAt }),
             url: page.url
           };
         });

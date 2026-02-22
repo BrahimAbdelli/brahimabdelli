@@ -66,10 +66,10 @@ export default function Search({ searchValue, searchResult }: Readonly<SearchRes
   if (featureFlags.useNotion) {
     return (
       <NotionSearchView
-        searchValue={searchValue}
-        searchResult={searchResult}
         pathname={pathname}
-        t={t}
+        t={(key: string) => t(key)}
+        {...(searchValue !== undefined && { searchValue })}
+        {...(searchResult !== undefined && { searchResult })}
       />
     );
   }
