@@ -1,5 +1,3 @@
-import type React from 'react';
-
 import { LazyMotion, domAnimation, m, motion, useAnimation } from 'framer-motion';
 import type { NextPage } from 'next';
 import { useTranslation } from 'next-i18next';
@@ -25,7 +23,6 @@ import type { Article } from 'src/lib/articles';
 import {
   containerClasses,
   containerClassesNoYPadding,
-  linkClasses,
   sectionBodyClasses,
   switchableTexts
 } from 'src/components/styles';

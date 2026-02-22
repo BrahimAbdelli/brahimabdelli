@@ -1,5 +1,3 @@
-import type React from 'react';
-
 import type { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 
 import { featureFlags } from 'src/lib/featureFlags';
