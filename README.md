@@ -1,46 +1,124 @@
 # Personal Portfolio
 
-### Built With 🏗️
+A Next.js portfolio and blog with optional Notion CMS integration, i18n (en/fr), and local Markdown articles.
 
-- [NextJS](https://nextjs.org/) - NextJS
-- [TailwindCSS](https://tailwindcss.com/) - TailwindCSS
+---
 
-### Author 🙋
+## Built with
 
-- **Brahim Abdelli** - _Initial work_ - [brahimabdelli](https://github.com/brahimabdelli)
+- **[Next.js](https://nextjs.org/)** 16 – React framework
+- **[React](https://react.dev/)** 19
+- **[Tailwind CSS](https://tailwindcss.com/)** 4 + **[DaisyUI](https://daisyui.com/)**
+- **[next-i18next](https://github.com/i18next/next-i18next)** – i18n (en/fr)
+- **[Notion API](https://developers.notion.com/)** – optional CMS (feature-flagged)
+- **[Framer Motion](https://www.framer.com/motion/)** – animations
+- **[Zod](https://zod.dev/)** – schema validation
+- **[Jest](https://jestjs.io/)** + **Cypress** – tests
 
+---
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Prerequisites
 
-## Getting Started
+- **Node.js** `24.x` (see [.nvmrc](.nvmrc))
+- Yarn or npm
 
-First, run the development server:
+---
+
+## Getting started
 
 ```bash
-npm run dev
-# or
+# Install dependencies
+yarn install
+# or: npm install
+
+# Run development server
 yarn dev
+# or: npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+---
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## Scripts
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+| Command | Description |
+|--------|-------------|
+| `yarn dev` | Start dev server |
+| `yarn build` | Production build |
+| `yarn start` | Start production server |
+| `yarn lint` | Run ESLint |
+| `yarn lint:fix` | Fix lint issues |
+| `yarn format` | Format with Prettier |
+| `yarn format:check` | Check formatting |
+| `yarn test` | Run Jest tests |
+| `yarn test:watch` | Jest watch mode |
+| `yarn test:coverage` | Jest with coverage |
+| `yarn test:ci` | CI test run |
+| `yarn cypress` | Open Cypress |
+| `yarn cypress:headless` | Cypress headless |
+| `yarn e2e` | E2E (dev + Cypress) |
+| `yarn analyze` | Build with bundle analyzer |
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## Git workflow and branches
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Branch overview
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+| Branch | Role |
+|--------|------|
+| **master** | Production-ready releases. Only merged from `release/*` or hotfixes. |
+| **preprod** | Staging / pre-production. `origin/HEAD` points here by default. |
+| **dev** | Integration branch for features. Merge feature branches here first. |
+| **release/1.0.x** | Release preparation. Bump version, fix release-only issues, then merge to **master**. |
+| **release/v1.0.0** | Historical release branch. |
 
-## Deploy on Vercel
+### Recommended workflow (pro-style)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. **Base branch for new work:** `dev`  
+   - Create feature branches from `dev`, not from `master`.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+2. **Feature work**
+   - Branch from `dev`:  
+     `git checkout dev && git pull && git checkout -b feature/your-feature`
+   - Commit and push to `feature/your-feature`.
+   - Open a PR **into `dev`**. Merge after review/tests.
+
+3. **Releases**
+   - Branch from `dev`:  
+     `git checkout dev && git pull && git checkout -b release/1.0.2`
+   - Bump version in `package.json`, update changelog if you have one, fix any release-blocking bugs.
+   - Run tests and build:  
+     `yarn test:ci && yarn build`
+   - Open a PR **into `master`** (or merge when ready).  
+   - Tag after merge:  
+     `git checkout master && git pull && git tag v1.0.2 && git push origin v1.0.2`  
+     (Do not push if you prefer to tag later.)
+
+4. **Preprod**
+   - Keep `preprod` in sync with `master` (or with the latest release):  
+     `git checkout preprod && git pull origin master && git push origin preprod`  
+     Only when you are ready to deploy; no push was done from here.
+
+5. **Hotfixes (production-only fixes)**
+   - Branch from `master`:  
+     `git checkout master && git pull && git checkout -b hotfix/short-fix`
+   - Fix, test, then merge into `master` (and optionally into `dev` so history stays aligned).
+
+6. **Do not**
+   - Put platform-specific binaries (e.g. `@next/swc-win32-x64-msvc`) in `dependencies`; Next.js installs the right SWC via optionalDependencies.
+   - Merge directly to `master` from feature branches; use `dev` → `release/*` → `master`.
+   - Force-push to `master` or `preprod`.
+
+---
+
+## Author
+
+**Brahim Abdelli** – [brahimabdelli](https://github.com/BrahimAbdelli)
+
+---
+
+## Deploy
+
+The project can be deployed on [Vercel](https://vercel.com) or any Node-friendly host. Ensure `NODE_VERSION` or `.nvmrc` is set to `24` if required by the platform.

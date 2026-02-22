@@ -1,9 +1,6 @@
 import { useTranslation } from 'next-i18next';
 import type { UseTranslationCommon } from 'src/types/types';
 
-import { useTranslation } from 'next-i18next';
-import type { UseTranslationCommon } from 'src/types/types';
-
 import Card from '../cards/Card';
 import CardGrid from '../cards/CardGrid';
 
